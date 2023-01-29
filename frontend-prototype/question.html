@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Question</title>
+</head>
+
+<body>
+    <nav class="navbar nav navbar-dark navbar-expand-sm fixed-top">
+        <div class="container">
+            <button class="navbar-toggler my-auto" type="button" data-bs-toggle="collapse" data-bs-target="#Navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="./index.html"><img src="img/logo.png" height="40"></a>
+            <div class="collapse navbar-collapse" id="Navbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="./index.html"><span class="fa fa-home fa-lg"></span> Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Question Number Card -->
+        <div class="row row-content align-self-center">
+            <div class="col-12 col-sm-8 offset-sm-2">
+                <div class="card question-number-card d-flex align-items-center justify-content-center">
+                    <div class="card-body">
+                        <p class="text-center"><strong>Question #1</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Body Card -->
+        <div class="row row-content align-self-center">
+            <div class="col-12 col-sm-8 offset-sm-2 mt-2">
+                <div class="card question-body-card d-flex align-items-center justify-content-center">
+                    <div class="card-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Choies Card -->
+        <div class="row row-content align-self-center">
+            <div class="col-12 col-sm-8 offset-sm-2 mt-2">
+                <div class="card question-choices-card d-flex align-items-center justify-content-center w-100">
+                    <div class="card-body col-12">
+                        <form>
+                            <div class="form-group text-center">
+                                <button type="button" class="btn btn-block choice-button my-2 mx-auto" name="choice" data-bs-toggle="button" id="choice-1"><b>A) </b>Alcohol</button>
+                                <button type="button" class="btn btn-block choice-button my-1 mx-auto" name="choice" data-bs-toggle="button" id="choice-2"><b>B) </b>Cotton</button>
+                                <button type="button" class="btn btn-block choice-button my-2 mx-auto" name="choice" data-bs-toggle="button" id="choice-3"><b>C) </b>Paper</button>
+                                <button type="button" class="btn btn-block choice-button my-2 mx-auto" name="choice" data-bs-toggle="button" id="choice-4"><b>D) </b>Wood</button>
+                            </div>
+
+                            <div class="form-group text-center mt-3">
+                                <button type="submit" class="btn btn-primary btn-block w-50">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
