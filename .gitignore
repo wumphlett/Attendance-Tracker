@@ -1,0 +1,7 @@
+# backend
+**/*.pyc
+
+# frontend
+
+# personal
+.idea/
