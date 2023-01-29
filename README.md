@@ -17,3 +17,14 @@ Senior Design
   - `poetry run python manage.py runserver`
 - In the frontend directory:
   - `yarn start`
+
+## Special Django Links:
+- `http://127.0.0.1:8000/admin`
+- `http://127.0.0.1:8000/api`
+
+## Links
+- https://medium.com/swlh/full-stack-with-django-and-react-django-4dcd87d57356
+- https://medium.com/swlh/full-stack-with-django-and-react-react-afae36017852
+- https://javascript.plainenglish.io/react-django-full-stack-the-best-web-integration-e9d92af43b96
+- https://blog.logrocket.com/build-chat-application-react-django-channels/
+- https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme

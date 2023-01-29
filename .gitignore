@@ -1,5 +1,6 @@
 # backend
 **/*.pyc
+**/db.sqlite3
 
 # frontend
 
