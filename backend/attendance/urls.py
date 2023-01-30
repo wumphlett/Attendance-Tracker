@@ -9,6 +9,7 @@ router.register('presentations', views.PresentationViewSet, basename="presentati
 router.register('questions', views.QuestionViewSet, basename="question")
 router.register('answers', views.AnswerViewSet, basename="answer")
 router.register('sessions', views.SessionViewSet, basename="session")
+router.register('responses', views.ResponseViewSet, basename="response")
 
 urlpatterns = [
     path('', include(router.urls)),

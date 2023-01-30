@@ -7,9 +7,10 @@ from .managers import UserManager
 
 class User(AbstractUser):
     username = None
+    email = models.EmailField(_("email address"), max_length=150, unique=True)
     first_name = models.CharField(max_length=150, blank=False)
     last_name = models.CharField(max_length=150, blank=False)
-    email = models.EmailField(_("email address"), max_length=150, unique=True)
+    is_presenter = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
@@ -73,7 +74,6 @@ class Session(models.Model):
         verbose_name = "Session"
 
 
-# TODO add model validation in form.clean()
 class Response(models.Model):
     session = models.ForeignKey(Session, on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.PROTECT)

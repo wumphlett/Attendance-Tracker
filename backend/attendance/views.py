@@ -1,7 +1,4 @@
 from datetime import datetime
-import string
-
-from django.utils.crypto import get_random_string
 
 from rest_framework import mixins, status, viewsets
 from rest_framework import permissions
@@ -10,9 +7,7 @@ from rest_framework.response import Response
 
 from . import models
 from . import serializers
-
-
-# TODO find a way to filter questions by current presentation or
+from .permissions import PresentersViewAndEditOnly, SessionPresentersCreateAndRespondersViewOnly
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -24,7 +19,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class PresentationViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [PresentersViewAndEditOnly]
 
     def get_queryset(self):
         return models.Presentation.objects.filter(owner=self.request.user)
@@ -47,7 +42,7 @@ class QuestionViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet
 ):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [PresentersViewAndEditOnly]
 
     def get_queryset(self):
         return models.Question.objects.filter(presentation__owner=self.request.user).order_by('index')
@@ -59,6 +54,12 @@ class QuestionViewSet(
             return serializers.QuestionUpdateSerializer
         return serializers.QuestionDetailSerializer
 
+    @action(detail=True, methods=['get'])
+    def view(self, request, pk=None):
+        question = self.get_object()
+        serializer = serializers.QuestionDetailSerializer(question, context={'request': request})
+        return Response(serializer.data)
+
 
 class AnswerViewSet(
     mixins.CreateModelMixin,
@@ -67,7 +68,7 @@ class AnswerViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet
 ):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [PresentersViewAndEditOnly]
 
     def get_queryset(self):
         return models.Answer.objects.filter(question__presentation__owner=self.request.user).order_by('index')
@@ -81,7 +82,7 @@ class AnswerViewSet(
 
 
 class SessionViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [SessionPresentersCreateAndRespondersViewOnly]
     http_method_names = ['get', 'post', 'head', 'options']
 
     def get_queryset(self):
@@ -92,8 +93,17 @@ class SessionViewSet(viewsets.ModelViewSet):
             return serializers.SessionListSerializer
         return serializers.SessionDetailSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(join_code=get_random_string(5, string.ascii_uppercase))
+    @action(detail=False, methods=['get'])
+    def join(self, request):
+        if request.query_params.get('token') is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        session = models.Session.objects.filter(join_code=request.query_params.get('token')).first()
+        if session is None:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = serializers.SessionJoinSerializer(session, context={'request': request})
+        return Response(serializer.data)
 
     @action(detail=True, methods=['post'])
     def next(self, request, pk=None):
@@ -106,7 +116,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         if len(questions) == 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        question_idx = questions.index(session.current_question) if session.current_question is not None else 0
+        question_idx = questions.index(session.current_question) if session.current_question is not None else -1
         if question_idx == len(questions) - 1:
             session.join_code = None
             session.current_question = None
@@ -116,3 +126,11 @@ class SessionViewSet(viewsets.ModelViewSet):
 
         session.save()
         return Response({'status': 'ok'})
+
+
+class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    serializer_class = serializers.ResponseDetailSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

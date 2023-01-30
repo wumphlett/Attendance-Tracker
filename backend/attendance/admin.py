@@ -10,9 +10,9 @@ class UserAdmin(DefaultUserAdmin):
     add_form = UserCreationForm
     form = UserChangeForm
     model = models.User
-    list_display = ("full_name", "email", "is_staff")
+    list_display = ("full_name", "email", "is_presenter", "is_staff")
     fieldsets = (
-        (None, {"fields": (("first_name", "last_name"), "email", "password")}),
+        (None, {"fields": (("first_name", "last_name"), "email", "password", "is_presenter")}),
     )
     add_fieldsets = (
         (
@@ -24,6 +24,7 @@ class UserAdmin(DefaultUserAdmin):
                     "email",
                     "password1",
                     "password2",
+                    "is_presenter",
                     "is_staff",
                     "is_active",
                 ),

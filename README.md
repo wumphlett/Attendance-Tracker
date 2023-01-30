@@ -32,3 +32,4 @@ Senior Design
 - https://javascript.plainenglish.io/react-django-full-stack-the-best-web-integration-e9d92af43b96
 - https://blog.logrocket.com/build-chat-application-react-django-channels/
 - https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme
+- https://testdriven.io/blog/custom-permission-classes-drf/
