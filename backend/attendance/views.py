@@ -3,13 +3,16 @@ import string
 
 from django.utils.crypto import get_random_string
 
-from rest_framework import status, viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework import permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from . import models
 from . import serializers
+
+
+# TODO find a way to filter questions by current presentation or
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -37,7 +40,13 @@ class PresentationViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
 
-class QuestionViewSet(viewsets.ModelViewSet):
+class QuestionViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet
+):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
@@ -51,7 +60,13 @@ class QuestionViewSet(viewsets.ModelViewSet):
         return serializers.QuestionDetailSerializer
 
 
-class AnswerViewSet(viewsets.ModelViewSet):
+class AnswerViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet
+):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
