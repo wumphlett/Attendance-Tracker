@@ -67,6 +67,6 @@ class SessionAdmin(admin.ModelAdmin):
 
 @admin.register(models.Response)
 class ResponseAdmin(admin.ModelAdmin):
-    list_display = ("user", "question", "answer")
+    list_display = ("user", "answer")
     list_filter = ("user", "session")
-    fields = ("session", "user", "question", "answer")
+    fields = ("session", "user", "answer")

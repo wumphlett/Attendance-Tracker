@@ -12,6 +12,10 @@ Senior Design
   - Install `poetry`
 - Install `npm`
 
+## QoL
+- In the backend directory:
+  - `poetry run python manage.py createsuperuser`
+
 ## Running
 - In the backend directory:
   - `poetry run python manage.py runserver`

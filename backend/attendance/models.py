@@ -63,9 +63,9 @@ class Answer(models.Model):
 
 
 class Session(models.Model):
-    join_code = models.PositiveSmallIntegerField()  # TODO generate on_create
     presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
     current_question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, blank=True)
+    join_code = models.CharField(max_length=5, unique=True, null=True, blank=True)
     start_time = models.DateTimeField(auto_now_add=True, editable=False)
     end_time = models.DateTimeField(null=True, blank=True)
 
@@ -77,7 +77,6 @@ class Session(models.Model):
 class Response(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
     class Meta:
