@@ -1,0 +1,16 @@
+.content {
+    position: absolute;
+    top: 60px;
+}
+
+.page-dark {
+    background-color: #131313;
+}
+
+.card-dark {
+    background-color: #1f1f1f;
+}
+
+.card-format {
+    height: 100%;
+}

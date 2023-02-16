@@ -74,7 +74,7 @@ body {
 }
 
 .question-bank {
-    height: 300px;
+    height: 20vh;
     line-height: 300px;
 }
 
@@ -86,4 +86,41 @@ body {
 .horizontal-scrollable > .question-mini-card {
     display: inline-block;
     float: none;
+}
+
+.question-preview-card {
+    padding-top: 15px;
+    background-color: #1f1f1f;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.height-full {
+    height: 75vh;
+}
+
+.bg-dark {
+    background-color: #1f1f1f;
+    color: white;
+}
+
+.card-dark {
+    background-color: #1f1f1f;
+    color: white
+}
+
+.card-header-dark {
+    background-color: #a15f08;
+    color: white;
+    font-weight: bold;
+}
+
+.card-clickable {
+    background-color: white;
+}
+.card-clickable.active {
+    background-color: #a15f08;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
 }

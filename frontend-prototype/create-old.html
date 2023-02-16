@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <title>Create Quiz</title>
+</head>
+
+<body>
+    <nav class="navbar nav navbar-dark navbar-expand-sm fixed-top">
+        <div class="container">
+            <button class="navbar-toggler my-auto" type="button" data-bs-toggle="collapse" data-bs-target="#Navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="./index.html"><img src="img/logo.png" height="40"></a>
+            <div class="collapse navbar-collapse" id="Navbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="./index.html"><span class="fa fa-home fa-lg"></span> Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Active Question Interaction-->
+    <div class="container-fluid mt-4 height-full">
+        <div class="row row-content align-self-center mb-2">
+            <div class="container-fluid height-full col-12">
+                <div class="row row-content align-self-center h-100">
+                    <div class="col-sm-7 col-md-8 col-lg-9 h-100"> <!-- Question Editor -->
+                        <div class="card card-dark h-100">
+                            <h3 class="card-header card-header-dark text-white align-items-center w-100 text-center">Question #1</h3>
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 col-md-4 col-lg-3 h-100"> <!-- Question Options -->
+                        <div class="card card-dark h-100">
+                            <h3 class="card-header card-header-dark text-white align-items-center w-100 text-center">Options</h3>
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-content align-self-center mt-2">
+            <div class="container-fluid py-2 bg-dark col-12 h-100">
+                <div class="d-flex flex-row flex-nowrap overflow-auto h-100">
+                    <div class="card card-clickable card-body question-mini-card mx-2 mb-3" onclick="cardClick(this)">1/7</div>
+                    <div class="card card-clickable card-body question-mini-card mx-2">2/7</div>
+                    <div class="card card-clickable card-body question-mini-card mx-2">3/7</div>
+                    <div class="card card-clickable card-body question-mini-card mx-2">4/7</div>
+                    <div class="card card-clickable card-body question-mini-card mx-2">5/7</div>
+                    <div class="card card-clickable card-body question-mini-card mx-2">6/7</div>
+                    <div class="card card-clickable card-body question-mini-card mx-2">7/7</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function cardClick() {
+            $(".card-clickable").removeClass("active");
+            $(this).addClass("active");
+        }
+    </script>
+
+</body>
+</html>
