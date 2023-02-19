@@ -22,8 +22,8 @@ function QuizCreation() {
             <div>
                 <Navbar />
             </div>
-            <div className="container-fluid content page-dark h-100">
-                <div className="row h-75 flex-fill">
+            <div className="container-fluid content-container page-dark">
+                <div className="row h-75">
                     <div> {/* Quiz options */}
 
                     </div>
@@ -31,8 +31,8 @@ function QuizCreation() {
                         <QuestionEditor />
                     </div>
                 </div>
-                <div className="row h-25 flex-fill">
-                    <div classname="h-100"> {/* Question card deck */}
+                <div className="row h-25">
+                    <div className="container-fluid"> {/* Question card deck */}
                         <QuestionDeck />
                     </div>
                 </div>

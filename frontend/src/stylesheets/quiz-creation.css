@@ -1,16 +1,60 @@
-.content {
+.content-container {
     position: absolute;
     top: 60px;
+    height: calc(100vh - 60px);
+}
+
+.container-no-padding {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .page-dark {
     background-color: #131313;
 }
 
+.card-very-dark {
+    background-color: #131313;
+    color: floralwhite;
+}
+
 .card-dark {
     background-color: #1f1f1f;
 }
 
+
 .card-format {
     height: 100%;
+}
+
+.background-light {
+    background: whitesmoke;
+}
+
+.question-mini-card {
+    min-height: 15vh;
+    min-width: calc((15vh / 9) * 16);
+    aspect-ratio: 16/9;
+    max-width: 15vw;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.button-card {
+    display: flex;
+    border: 2px solid white;
+    align-items: center;
+    justify-content: center;
+}
+
+.horizontal-scrollable > .row {
+    overflow-x: scroll;
+    whitespace: nowrap;
+}
+
+.horizontal-scrollable > .question-mini-card {
+    display: inline-block;
+    float: none;
 }
