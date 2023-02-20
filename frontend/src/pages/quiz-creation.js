@@ -7,7 +7,7 @@
  * Quiz creator UI
  */
 // Main
-import React from 'react'
+import React, {useState} from 'react'
 // Components
 import Navbar from '../components/global/navbar'
 import QuestionEditor from '../components/quiz-creation/question-editor'
@@ -17,6 +17,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '../stylesheets/quiz-creation.css'
 
 function QuizCreation() {
+    const [activeQuestion, setActiveQuestion] = useState(null);
+
     return (
         <div>
             <div>
@@ -28,12 +30,12 @@ function QuizCreation() {
 
                     </div>
                     <div className="h-100"> {/* Question card editor */}
-                        <QuestionEditor />
+                        <QuestionEditor activeQuestion={activeQuestion} />
                     </div>
                 </div>
                 <div className="row h-25">
                     <div className="container-fluid"> {/* Question card deck */}
-                        <QuestionDeck />
+                        <QuestionDeck activeQuestion={activeQuestion} setActiveQuestion={setActiveQuestion}/>
                     </div>
                 </div>
             </div>
