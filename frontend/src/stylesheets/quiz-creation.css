@@ -7,6 +7,8 @@
 .container-no-padding {
     padding-left: 0;
     padding-right: 0;
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
 .page-dark {
@@ -33,8 +35,9 @@
 
 .question-mini-card {
     min-height: 15vh;
+    height: 15vh;
     min-width: calc((15vh / 9) * 16);
-    aspect-ratio: 16/9;
+    max-height: 20vh;
     max-width: 15vw;
     color: white;
     font-weight: bold;
