@@ -2,7 +2,7 @@
  * quiz-creation.js
  *
  * @Author - Ethan Brown - ewb0020@auburn.edu
- * @Version - 16 FEB 23
+ * @Version - 21 FEB 23
  *
  * Quiz creator UI
  */
@@ -31,7 +31,8 @@ function QuizCreation() {
 
                     </div>
                     <div className="h-100"> {/* Question card editor */}
-                        <QuestionEditor questions={questions} activeQuestion={activeQuestion} />
+                        <QuestionEditor questions={questions} setQuestions={setQuestions}
+                                        activeQuestion={activeQuestion} setActiveQuestion={setActiveQuestion}/>
                     </div>
                 </div>
                 <div className="row h-25">

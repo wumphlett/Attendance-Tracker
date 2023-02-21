@@ -2,50 +2,50 @@
  * question-editor.js
  *
  * @Author - Ethan Brown - ewb0020@auburn.edu
- * @Version - 17 FEB 23
+ * @Version - 21 FEB 23
  *
  * Question preview and options for a quiz currently loaded in the quiz creator
  */
 // Main
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 // Components
 
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../../stylesheets/quiz-creation.css'
 import '../../stylesheets/quiz-creation/quiz-editor.css'
+import TemplateFactory from "bootstrap/js/src/util/template-factory";
 
 function QuestionEditor(props) {
     return (
         <div className="container-fluid h-100">
-            <div className="row h-100">
-                <div className="col-9 container-fluid container-no-padding h-100"> {/* Question card preview */}
-                    <QuestionPreview questions={props.questions} activeQuestion={props.activeQuestion}/>
-                </div>
-                <div className="col-3 container-fluid container-no-padding h-100"> {/* Question options */}
-                    <QuestionOptions />
-                </div>
-            </div>
+            {props.activeQuestion === null ? <PlaceholderContainer
+                    questions={props.questions} setQuestions={props.setQuestions} setActiveQuestion={props.setActiveQuestion}/> :
+                <div className="row h-100">
+                    <div className="col-9 container-fluid container-no-padding h-100"> {/* Question card preview */}
+                        <QuestionPreview questions={props.questions} setQuestions={props.setQuestions}
+                                         activeQuestion={props.activeQuestion}/>
+                    </div>
+                    <div className="col-3 container-fluid container-no-padding h-100"> {/* Question options */}
+                        <QuestionOptions />
+                    </div>
+                </div>}
         </div>
     );
 }
 
+// Contains text editor for creating and modifying prompts
 function QuestionPreview(props) {
-    let questionNumber = "0"
+    // Set question number
+    let questionNumber;
     if (props.questions !== null && props.activeQuestion !== null) {
         questionNumber = (props.questions.findIndex(question => question.id === props.activeQuestion.id) + 1).toString();
     }
-    let body = "Enter question here..."
-    if (props.activeQuestion !== null && props.activeQuestion.prompt !== null) {
-        body = props.activeQuestion.prompt;
-    }
-    body = "Enter question here..."
 
-    const [promptText, setPromptText] = useState("");
-    const textareaRef = useRef(null)
+    // Display info about the questions (TEMP)
     useEffect(() => {
-        console.log(`${promptText}`);
-    }, [promptText]);
+        console.log(props.questions)
+    });
 
     return (
         <div className="container-fluid h-100 p-2">
@@ -58,9 +58,9 @@ function QuestionPreview(props) {
                     </div>
                     <div className="card card-very-dark" style={{ flex: 1 }}> {/* Question Content */}
                         <div className="card-body">
-                            <textarea className="question-input" ref={textareaRef} placeholder={body}
-                                      value={promptText}
-                                      onChange={handleTextAreaType} onPaste={handleTextAreaPaste} />
+                            <textarea className="question-input" placeholder={"Enter a question here..."}
+                                      value={props.activeQuestion.prompt}
+                                      onChange={onChange} onPaste={onPaste} />
                         </div>
                     </div>
                 </div>
@@ -68,28 +68,45 @@ function QuestionPreview(props) {
         </div>
     );
 
-    function handleTextAreaType(event) {
-        setPromptText(event.target.value);
+    // Modify the question object when the prompt is changed (characters are typed)
+    function onChange(event) {
+        let questionToModify = props.activeQuestion;
+        questionToModify.prompt = event.target.value;
+        modifyQuestion(questionToModify);
     }
 
-    // When text is copy-pasted in, onChange won't grab it until that text is changed.
-    function handleTextAreaPaste(event) {
+    // When text is copy-pasted in, onChange won't grab it until that pasted text is changed.
+    function onPaste(event) {
+        // So create new prompt from combination of existing prompt and the pasted text
         event.preventDefault();
         const pastedText = event.clipboardData.getData('Text');
         const { selectionStart, selectionEnd } = event.target;
-        const textBeforeSelection = promptText.slice(0, selectionStart);
-        const textAfterSelection = promptText.slice(selectionEnd);
+        const textBeforeSelection = props.activeQuestion.prompt.slice(0, selectionStart);
+        const textAfterSelection = props.activeQuestion.prompt.slice(selectionEnd);
         const newText = textBeforeSelection + pastedText + textAfterSelection;
-        event.target.value = newText
-        setPromptText(newText);
 
-        // Set cursor position to end of pasted text
+        // then assign that new prompt to the question object
+        let questionToModify = props.activeQuestion;
+        questionToModify.prompt = newText;
+        modifyQuestion(questionToModify);
+
+        // finally, set the cursor position to end of pasted text
+        event.target.value = props.activeQuestion.prompt
         const cursorPosition = selectionStart + pastedText.length;
         event.target.selectionStart = cursorPosition;
         event.target.selectionEnd = cursorPosition;
     }
+
+    // Modify the prompt of an existing question
+    function modifyQuestion(questionToModify) {
+        let newQuestions = [...props.questions];
+        const index = newQuestions.findIndex((question) => question.id === questionToModify.id);
+        newQuestions[index] = questionToModify;
+        props.setQuestions(newQuestions);
+    }
 }
 
+// Contains various options for the associated question
 function QuestionOptions() {
     return (
         <div className="container-fluid h-100 p-2">
@@ -104,6 +121,40 @@ function QuestionOptions() {
             </div>
         </div>
     )
+}
+
+// Container in place of the preview containing only a button to create an initial question
+function PlaceholderContainer(props) {
+
+    // When an initial question is created, set that question to active
+    useEffect(() => {
+        if (props.questions.length > 0) {
+            props.setActiveQuestion(props.questions[0])
+        }
+    }, [props.questions]);
+
+    return (
+        <div className="row h-100">
+            <div className="container-fluid h-100 p-2">
+                <div className="card card-dark card-format h-100">
+                    <div className="card-body justify-content-center" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+                        <div className="card card-very-dark align-self-center btn btn-danger" onClick={addQuestion}>
+                            <div className="card-body">
+                                <h3 className="text-center"><strong>Add a question...</strong></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
+    // Add a new question to the deck
+    function addQuestion() {
+        const newQuestion = {id: Math.random().toString(36).substring(2) + Date.now().toString(36),
+            prompt: "", image: "", potentialAnswers: [], correctAnswers: [], timeLimit: 0};
+        props.setQuestions([...props.questions, newQuestion]);
+    }
 }
 
 export default QuestionEditor;

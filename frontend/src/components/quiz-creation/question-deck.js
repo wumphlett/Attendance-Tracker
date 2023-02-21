@@ -63,8 +63,8 @@ function QuestionDeck(props) {
     }
 
     // Load a question into the editor
-    function selectQuestion(question) {
-        props.setActiveQuestion(question);
+    function selectQuestion(questionToSelect) {
+        props.setActiveQuestion(props.questions.find(question => question.id === questionToSelect.id));
     }
 }
 
