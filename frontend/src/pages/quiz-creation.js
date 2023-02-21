@@ -17,6 +17,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '../stylesheets/quiz-creation.css'
 
 function QuizCreation() {
+    const [questions, setQuestions] = useState([]);
     const [activeQuestion, setActiveQuestion] = useState(null);
 
     return (
@@ -30,12 +31,13 @@ function QuizCreation() {
 
                     </div>
                     <div className="h-100"> {/* Question card editor */}
-                        <QuestionEditor activeQuestion={activeQuestion} />
+                        <QuestionEditor questions={questions} activeQuestion={activeQuestion} />
                     </div>
                 </div>
                 <div className="row h-25">
                     <div className="container-fluid"> {/* Question card deck */}
-                        <QuestionDeck activeQuestion={activeQuestion} setActiveQuestion={setActiveQuestion}/>
+                        <QuestionDeck questions={questions} setQuestions={setQuestions}
+                                      activeQuestion={activeQuestion} setActiveQuestion={setActiveQuestion}/>
                     </div>
                 </div>
             </div>

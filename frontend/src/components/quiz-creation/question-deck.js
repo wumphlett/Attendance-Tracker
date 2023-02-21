@@ -16,7 +16,6 @@ import '../../stylesheets/quiz-creation.css'
 
 
 function QuestionDeck(props) {
-    const [cards, setCards] = useState([]);
 
     // Markup
     return (
@@ -30,13 +29,13 @@ function QuestionDeck(props) {
                         <div className="container-fluid container-no-padding h-100">
                             <div className="d-flex flex-row flex-nowrap question-deck h-100 pb-3 overflow-auto">
                                 {/* Question Cards */}
-                                {cards.map((card, index) => (
+                                {props.questions.map((question, index) => (
                                     <div key={index} className="h-100">
-                                        <QuestionCard index={index + 1} total={cards.length}
-                                                      active={(card === props.activeQuestion)}
+                                        <QuestionCard index={index + 1} total={props.questions.length}
+                                                      active={(question === props.activeQuestion)}
                                                       activeQuestion={props.activeQuestion}
-                                                      removeQuestion = {() => removeQuestion(card)}
-                                                      onClick={() => selectQuestion(card)} />
+                                                      removeQuestion = {() => removeQuestion(question)}
+                                                      onClick={() => selectQuestion(question)} />
                                     </div>
                                 ))}
                                 {/* Button to add additional question cards*/}
@@ -52,20 +51,20 @@ function QuestionDeck(props) {
 
     // Add a new question to the deck
     function addQuestion() {
-        const newCard = {id: Math.random().toString(36).substring(2) + Date.now().toString(36),
+        const newQuestion = {id: Math.random().toString(36).substring(2) + Date.now().toString(36),
             prompt: "", image: "", potentialAnswers: [], correctAnswers: [], timeLimit: 0};
-        setCards([...cards, newCard]);
+        props.setQuestions([...props.questions, newQuestion]);
     }
 
     // Remove a question from the deck
-    function removeQuestion(cardToRemove) {
-        const updatedCards = cards.filter(card => card.id !== cardToRemove.id);
-        setCards(updatedCards);
+    function removeQuestion(questionToRemove) {
+        const updatedQuestions = props.questions.filter(question => question.id !== questionToRemove.id);
+        props.setQuestions(updatedQuestions);
     }
 
     // Load a question into the editor
-    function selectQuestion(card) {
-        props.setActiveQuestion(card);
+    function selectQuestion(question) {
+        props.setActiveQuestion(question);
     }
 }
 
