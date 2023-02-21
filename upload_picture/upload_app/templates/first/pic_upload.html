@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Image Upload</title>
+<a href = "{% url 'upload_app:MainPage' %}">back to MainPage</a>
+</head>
+<body>
+
+<body style="background-color: 	#FF6103;">
+
+    <h1>Image Upload</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+<a href = "{% url 'upload_app:MainPage' %}">back to MainPage</a>
+</head>
+<body>
+
+<body style="background-color: 	#FF6103;">
+ <li>
+{% for picture in pictures %}
+    <img src="picture">
+  </li>
+{% endfor %}
+
+</html>
