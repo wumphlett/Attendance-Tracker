@@ -7,12 +7,13 @@
  * Question preview and options for a quiz currently loaded in the quiz creator
  */
 // Main
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 // Components
 
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../../stylesheets/quiz-creation.css'
+import '../../stylesheets/quiz-creation/quiz-editor.css'
 
 function QuestionEditor(props) {
     return (
@@ -31,12 +32,20 @@ function QuestionEditor(props) {
 
 function QuestionPreview(props) {
     let questionNumber = "0"
-    console.log(props.questions)
-    console.log(props.activeQuestion)
     if (props.questions !== null && props.activeQuestion !== null) {
         questionNumber = (props.questions.findIndex(question => question.id === props.activeQuestion.id) + 1).toString();
     }
-    console.log(questionNumber)
+    let body = "Enter question here..."
+    if (props.activeQuestion !== null && props.activeQuestion.prompt !== null) {
+        body = props.activeQuestion.prompt;
+    }
+    body = "Enter question here..."
+
+    const [promptText, setPromptText] = useState("");
+    const textareaRef = useRef(null)
+    useEffect(() => {
+        console.log(`${promptText}`);
+    }, [promptText]);
 
     return (
         <div className="container-fluid h-100 p-2">
@@ -49,13 +58,36 @@ function QuestionPreview(props) {
                     </div>
                     <div className="card card-very-dark" style={{ flex: 1 }}> {/* Question Content */}
                         <div className="card-body">
-
+                            <textarea className="question-input" ref={textareaRef} placeholder={body}
+                                      value={promptText}
+                                      onChange={handleTextAreaType} onPaste={handleTextAreaPaste} />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     );
+
+    function handleTextAreaType(event) {
+        setPromptText(event.target.value);
+    }
+
+    // When text is copy-pasted in, onChange won't grab it until that text is changed.
+    function handleTextAreaPaste(event) {
+        event.preventDefault();
+        const pastedText = event.clipboardData.getData('Text');
+        const { selectionStart, selectionEnd } = event.target;
+        const textBeforeSelection = promptText.slice(0, selectionStart);
+        const textAfterSelection = promptText.slice(selectionEnd);
+        const newText = textBeforeSelection + pastedText + textAfterSelection;
+        event.target.value = newText
+        setPromptText(newText);
+
+        // Set cursor position to end of pasted text
+        const cursorPosition = selectionStart + pastedText.length;
+        event.target.selectionStart = cursorPosition;
+        event.target.selectionEnd = cursorPosition;
+    }
 }
 
 function QuestionOptions() {
