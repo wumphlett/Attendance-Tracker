@@ -2,12 +2,12 @@
  * question-deck.js
  *
  * @Author - Ethan Brown - ewb0020@auburn.edu
- * @Version - 20 FEB 23
+ * @Version - 22 FEB 23
  *
  * Deck of question cards for a quiz currently loaded in the quiz creator
  */
 // Main
-import React, {useState} from 'react'
+import React from 'react'
 // Components
 
 // Stylesheets
@@ -32,6 +32,7 @@ function QuestionDeck(props) {
                                 {props.questions.map((question, index) => (
                                     <div key={index} className="h-100">
                                         <QuestionCard index={index + 1} total={props.questions.length}
+                                                      question={question}
                                                       active={(question === props.activeQuestion)}
                                                       activeQuestion={props.activeQuestion}
                                                       removeQuestion = {() => removeQuestion(question)}
@@ -78,9 +79,10 @@ function QuestionCard(props) {
     return (
         <div className={`card question-card card-very-dark p-2 mx-2 ${props.active ? 'question-card-active' : ''}`}
              onClick={props.onClick}>
-            <div className="d-inline-block">
+            <div className="d-inline-block overflow-auto">
                 <span className="badge badge-question-number">{props.index}/{props.total}</span>
                 <span className="btn btn-danger removal-button " onClick={handleRemoveClick}>X</span>
+                <p style={{ marginTop: '20px'}}>{props.question.prompt}</p>
             </div>
         </div>
     )
