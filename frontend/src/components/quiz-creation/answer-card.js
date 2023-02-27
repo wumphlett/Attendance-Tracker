@@ -19,10 +19,9 @@ import '../../stylesheets/quiz-creation/answer-creation.css'
 class AnswerCard extends React.Component {
     constructor(props) {
         super(props)
-        this.questions = props.questions
         this.setQuestions = props.setQuestions
         this.id = props.id
-        this.state = { activeQuestion: props.activeQuestion, activeAnswer: props.activeAnswer}
+        this.state = { questions: props.questions, activeQuestion: props.activeQuestion, activeAnswer: props.activeAnswer}
 
         this.onChange = this.onChange.bind(this)
         this.onPaste = this.onPaste.bind(this)
@@ -42,7 +41,7 @@ class AnswerCard extends React.Component {
         let questionToModify = this.state.activeQuestion
         const index = questionToModify.potentialAnswers.findIndex((answer) => answer.id === this.id);
         questionToModify.potentialAnswers[index].text = event.target.value
-        this.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
+        this.state.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
         event.target.value = this.state.activeAnswer.text
         this.forceUpdate()
     }
@@ -60,7 +59,7 @@ class AnswerCard extends React.Component {
         let questionToModify = this.state.activeQuestion;
         const index = questionToModify.potentialAnswers.findIndex((answer) => answer.id === this.id);
         questionToModify.potentialAnswers[index].text = newText
-        this.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
+        this.state.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
         this.forceUpdate()
 
         // finally, set the cursor position to end of pasted text
