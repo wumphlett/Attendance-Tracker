@@ -56,8 +56,6 @@ class QuestionAnswers extends React.Component {
         }
 
         const addAnswer = () => {
-            console.log(this.state.questions)
-            console.log(this.state.activeQuestion)
             let modifiedQuestion = this.state.activeQuestion;
             let answer = {
                 id: Math.random().toString(36).substring(2) + Date.now().toString(36),
@@ -65,9 +63,7 @@ class QuestionAnswers extends React.Component {
                 isCorrect: true
             }
             modifiedQuestion.potentialAnswers.push(answer);
-            console.log(modifiedQuestion)
             modifyQuestion(this.state.questions, this.setQuestions, modifiedQuestion);
-            console.log(this.state.questions)
         }
 
         const removeAnswer = (answerToRemove) => {

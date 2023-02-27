@@ -51,7 +51,7 @@ function QuestionPreview(props) {
 
     // Display info about the questions (TEMP)
     useEffect(() => {
-
+        console.log(props.questions)
     });
 
 
