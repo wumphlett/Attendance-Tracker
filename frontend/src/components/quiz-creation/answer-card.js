@@ -21,20 +21,29 @@ class AnswerCard extends React.Component {
         super(props)
         this.questions = props.questions
         this.setQuestions = props.setQuestions
-        this.activeQuestion = props.activeQuestion
-        this.activeAnswer = props.activeAnswer
         this.id = props.id
+        this.state = { activeQuestion: props.activeQuestion, activeAnswer: props.activeAnswer}
 
         this.onChange = this.onChange.bind(this)
         this.onPaste = this.onPaste.bind(this)
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.activeQuestion !== this.props.activeQuestion) {
+            this.setState({ activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
+        }
+
+        if(prevProps.activeAnswer !== this.props.activeAnswer) {
+            this.setState({ activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
+        }
+    }
+
     onChange(event) {
-        let questionToModify = this.activeQuestion
-        const index = questionToModify.potentialAnswers.findIndex((answer) => answer.key === this.key);
+        let questionToModify = this.state.activeQuestion
+        const index = questionToModify.potentialAnswers.findIndex((answer) => answer.id === this.id);
         questionToModify.potentialAnswers[index].text = event.target.value
         this.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
-        event.target.value = this.activeAnswer.text
+        event.target.value = this.state.activeAnswer.text
         this.forceUpdate()
     }
 
@@ -43,14 +52,14 @@ class AnswerCard extends React.Component {
         event.preventDefault();
         const pastedText = event.clipboardData.getData('Text');
         const { selectionStart, selectionEnd } = event.target;
-        const textBeforeSelection = this.activeAnswer.slice(0, selectionStart);
-        const textAfterSelection = this.activeAnswer.prompt.slice(selectionEnd);
+        const textBeforeSelection = this.state.activeAnswer.slice(0, selectionStart);
+        const textAfterSelection = this.state.activeAnswer.prompt.slice(selectionEnd);
         const newText = textBeforeSelection + pastedText + textAfterSelection;
 
         // then assign that new prompt to the question object
-        let questionToModify = this.activeQuestion;
-        const index = questionToModify.potentialAnswers.findIndex((answer) => answer.key === this.key);
-        questionToModify.potentialAnswers[index].text = event.target.value
+        let questionToModify = this.state.activeQuestion;
+        const index = questionToModify.potentialAnswers.findIndex((answer) => answer.id === this.id);
+        questionToModify.potentialAnswers[index].text = newText
         this.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
         this.forceUpdate()
 
@@ -67,7 +76,7 @@ class AnswerCard extends React.Component {
                     <Checkbox />
                     <textarea className="answer-input"
                               placeholder={"Enter an answer..."}
-                              value={this.activeAnswer.text}
+                              value={this.state.activeAnswer.text}
                               onChange={this.onChange}
                     />
                 </div>

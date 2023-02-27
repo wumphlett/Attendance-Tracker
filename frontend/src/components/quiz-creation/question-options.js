@@ -23,11 +23,16 @@ class QuestionOptions extends React.Component {
         super(props);
         this.questions = props.questions;
         this.setQuestions = props.setQuestions;
-        this.activeQuestion = props.activeQuestion;
+        this.state = { activeQuestion: props.activeQuestion }
     };
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.activeQuestion !== this.props.activeQuestion) {
+            this.setState({ activeQuestion: this.props.activeQuestion});
+        }
+    }
+
     render() {
-        // Header card
         const HeaderCard = (props) => {
             return (
                 <div className="card card-very-dark mb-2"> {/* Question Number */}
@@ -47,17 +52,18 @@ class QuestionOptions extends React.Component {
                         <QuestionSettings
                             questions={this.questions}
                             setQuestions={this.setQuestions}
-                            activeQuestion={this.activeQuestion}
+                            activeQuestion={this.state.activeQuestion}
                         />
                         <HeaderCard text={"Answers"}/>
                         <QuestionAnswers
                             questions={this.questions}
                             setQuestions={this.setQuestions}
-                            activeQuestion={this.activeQuestion}
+                            activeQuestion={this.state.activeQuestion}
                         />
                     </div>
                 </div>
             </div>
+
         )
     };
 }

@@ -22,11 +22,18 @@ class QuestionAnswers extends React.Component {
         super(props);
         this.questions = props.questions;
         this.setQuestions = props.setQuestions;
-        this.activeQuestion = props.activeQuestion;
+        this.state = { activeQuestion: props.activeQuestion }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.activeQuestion !== this.props.activeQuestion) {
+            this.setState({ activeQuestion: this.props.activeQuestion});
+            console.log(this.state.activeQuestion)
+        }
     }
 
     render () {
-        this.isAddButtonDisabled = (this.activeQuestion.potentialAnswers.length >= 4)
+        this.isAddButtonDisabled = (this.state.activeQuestion.potentialAnswers.length >= 4)
 
         const AddAnswerCard = () => {
             return (
@@ -47,7 +54,7 @@ class QuestionAnswers extends React.Component {
         }
 
         const addAnswer = () => {
-            let modifiedQuestion = this.activeQuestion;
+            let modifiedQuestion = this.state.activeQuestion;
             let answer = {
                 id: Math.random().toString(36).substring(2) + Date.now().toString(36),
                 text: "",
@@ -55,10 +62,11 @@ class QuestionAnswers extends React.Component {
             }
             modifiedQuestion.potentialAnswers.push(answer);
             modifyQuestion(this.questions, this.setQuestions, modifiedQuestion);
+            console.log(this.questions)
         }
 
         const removeAnswer = (answerToRemove) => {
-            let modifiedQuestion = this.activeQuestion;
+            let modifiedQuestion = this.state.activeQuestion;
             modifiedQuestion.potentialAnswers =
                 modifiedQuestion.potentialAnswers.filter(answer => answer !== answerToRemove)
             modifyQuestion(this.questions, this.setQuestions, modifiedQuestion);
@@ -74,11 +82,11 @@ class QuestionAnswers extends React.Component {
         return (
             <div className="card card-very-dark" style={{ flex: 1 }}>
                 <div className="d-inline-block overflow-auto p-2">
-                    {this.activeQuestion.potentialAnswers.map((potentialAnswer, index) => (
+                    {this.state.activeQuestion.potentialAnswers.map((potentialAnswer, index) => (
                         <AnswerCard
                             questions={this.questions}
                             setQuestions={this.setQuestions}
-                            activeQuestion={this.activeQuestion}
+                            activeQuestion={this.state.activeQuestion}
                             activeAnswer={potentialAnswer}
                             key={potentialAnswer.id}
                             id={potentialAnswer.id}
@@ -87,7 +95,7 @@ class QuestionAnswers extends React.Component {
                     { !this.isAddButtonDisabled && <AddAnswerCard
                         questions={this.questions}
                         setQuestions={this.setQuestions}
-                        activeQuestion={this.activeQuestion}
+                        activeQuestion={this.state.activeQuestion}
                     /> }
                 </div>
             </div>
