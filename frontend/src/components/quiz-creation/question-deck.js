@@ -7,7 +7,7 @@
  * Deck of question cards for a quiz currently loaded in the quiz creator
  */
 // Main
-import React from 'react'
+import React, {useEffect} from 'react'
 // Components
 
 // Stylesheets
@@ -16,7 +16,6 @@ import '../../stylesheets/quiz-creation.css'
 
 
 function QuestionDeck(props) {
-
     // Markup
     return (
         // Container holding the question deck
@@ -72,7 +71,13 @@ function QuestionDeck(props) {
 
     // Remove a question from the deck
     function removeQuestion(questionToRemove) {
+        const index = props.questions.findIndex((question) => question.id === questionToRemove.id)
         const updatedQuestions = props.questions.filter(question => question.id !== questionToRemove.id);
+        if (props.questions.length > 1) {
+            props.setActiveQuestion(props.questions[index - 1])
+        } else {
+            props.setActiveQuestion(null)
+        }
         props.setQuestions(updatedQuestions);
     }
 

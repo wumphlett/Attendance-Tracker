@@ -27,6 +27,7 @@ function QuestionEditor(props) {
                             questions={props.questions}
                             setQuestions={props.setQuestions}
                             activeQuestion={props.activeQuestion}
+                            setActiveQuestion={props.setActiveQuestion}
                         />
                     </div>
                     <div className="col-3 container-fluid container-no-padding h-100"> {/* Question options */}
@@ -44,6 +45,11 @@ function QuestionEditor(props) {
 
 // Contains text editor for creating and modifying prompts
 function QuestionPreview(props) {
+
+    if (typeof props.activeQuestion === 'undefined') {
+        return null;
+    }
+
     // Set question number
     let questionNumber;
     if (props.questions !== null && props.activeQuestion !== null) {

@@ -29,7 +29,6 @@ class QuestionAnswers extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.activeQuestion !== this.props.activeQuestion) {
             this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
-            console.log("detected")
         }
         if(prevProps.questions !== this.props.questions) {
             this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});

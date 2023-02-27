@@ -27,9 +27,6 @@ class QuestionOptions extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.activeQuestion.correctAnswers.length !== this.props.activeQuestion.correctAnswers.length) {
-            console.log("wrong length")
-        }
         if(prevProps.activeQuestion !== this.props.activeQuestion) {
             this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
         }
