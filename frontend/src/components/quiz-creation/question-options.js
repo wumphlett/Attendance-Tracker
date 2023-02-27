@@ -21,16 +21,19 @@ import '../../stylesheets/quiz-creation/answer-creation.css'
 class QuestionOptions extends React.Component {
     constructor(props) {
         super(props);
-        this.questions = props.questions;
         this.setQuestions = props.setQuestions;
-        this.state = { activeQuestion: props.activeQuestion }
+        this.state = { activeQuestion: props.activeQuestion, questions: props.questions}
     };
 
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.activeQuestion !== this.props.activeQuestion) {
-            this.setState({ activeQuestion: this.props.activeQuestion});
+            this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
+        }
+        if(prevProps.questions !== this.props.questions) {
+            this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
         }
     }
+
 
     render() {
         const HeaderCard = (props) => {
@@ -50,13 +53,13 @@ class QuestionOptions extends React.Component {
                     <div className="card-body" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                         <HeaderCard text={"Options"}/>
                         <QuestionSettings
-                            questions={this.questions}
+                            questions={this.state.questions}
                             setQuestions={this.setQuestions}
                             activeQuestion={this.state.activeQuestion}
                         />
                         <HeaderCard text={"Answers"}/>
                         <QuestionAnswers
-                            questions={this.questions}
+                            questions={this.state.questions}
                             setQuestions={this.setQuestions}
                             activeQuestion={this.state.activeQuestion}
                         />

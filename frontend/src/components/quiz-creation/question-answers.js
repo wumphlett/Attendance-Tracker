@@ -20,15 +20,17 @@ import AnswerCard from "./answer-card";
 class QuestionAnswers extends React.Component {
     constructor(props) {
         super(props);
-        this.questions = props.questions;
         this.setQuestions = props.setQuestions;
-        this.state = { activeQuestion: props.activeQuestion }
+        this.state = { activeQuestion: props.activeQuestion, questions: props.questions }
+        console.log(this.state.questions)
     }
 
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.activeQuestion !== this.props.activeQuestion) {
-            this.setState({ activeQuestion: this.props.activeQuestion});
-            console.log(this.state.activeQuestion)
+            this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
+        }
+        if(prevProps.questions !== this.props.questions) {
+            this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
         }
     }
 
@@ -54,6 +56,8 @@ class QuestionAnswers extends React.Component {
         }
 
         const addAnswer = () => {
+            console.log(this.state.questions)
+            console.log(this.state.activeQuestion)
             let modifiedQuestion = this.state.activeQuestion;
             let answer = {
                 id: Math.random().toString(36).substring(2) + Date.now().toString(36),
@@ -61,22 +65,23 @@ class QuestionAnswers extends React.Component {
                 isCorrect: true
             }
             modifiedQuestion.potentialAnswers.push(answer);
-            modifyQuestion(this.questions, this.setQuestions, modifiedQuestion);
-            console.log(this.questions)
+            console.log(modifiedQuestion)
+            modifyQuestion(this.state.questions, this.setQuestions, modifiedQuestion);
+            console.log(this.state.questions)
         }
 
         const removeAnswer = (answerToRemove) => {
             let modifiedQuestion = this.state.activeQuestion;
             modifiedQuestion.potentialAnswers =
                 modifiedQuestion.potentialAnswers.filter(answer => answer !== answerToRemove)
-            modifyQuestion(this.questions, this.setQuestions, modifiedQuestion);
+            modifyQuestion(modifiedQuestion);
         }
 
-        const modifyQuestion = (questions, setQuestions, modifiedQuestion) => {
-            let newQuestions = [...questions];
+        const modifyQuestion = (setQuestions, modifiedQuestion) => {
+            let newQuestions = [...this.state.questions];
             const index = newQuestions.findIndex((question) => question.id === modifiedQuestion.id);
             newQuestions[index] = modifiedQuestion;
-            setQuestions(newQuestions);
+            this.setQuestions(newQuestions);
         }
 
         return (
@@ -84,7 +89,7 @@ class QuestionAnswers extends React.Component {
                 <div className="d-inline-block overflow-auto p-2">
                     {this.state.activeQuestion.potentialAnswers.map((potentialAnswer, index) => (
                         <AnswerCard
-                            questions={this.questions}
+                            questions={this.state.questions}
                             setQuestions={this.setQuestions}
                             activeQuestion={this.state.activeQuestion}
                             activeAnswer={potentialAnswer}
@@ -93,7 +98,7 @@ class QuestionAnswers extends React.Component {
                         />
                     ))}
                     { !this.isAddButtonDisabled && <AddAnswerCard
-                        questions={this.questions}
+                        questions={this.state.questions}
                         setQuestions={this.setQuestions}
                         activeQuestion={this.state.activeQuestion}
                     /> }
