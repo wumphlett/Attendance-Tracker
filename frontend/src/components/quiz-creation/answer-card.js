@@ -23,7 +23,7 @@ class AnswerCard extends React.Component {
         this.setQuestions = props.setQuestions
         this.activeQuestion = props.activeQuestion
         this.activeAnswer = props.activeAnswer
-        this.index = props.index
+        this.key = props.key
 
         this.onChange = this.onChange.bind(this)
         this.onPaste = this.onPaste.bind(this)
@@ -31,7 +31,8 @@ class AnswerCard extends React.Component {
 
     onChange(event) {
         let questionToModify = this.activeQuestion
-        questionToModify.potentialAnswers[this.index].text = event.target.value
+        const index = questionToModify.potentialAnswers.findIndex((answer) => answer.key === this.key);
+        questionToModify.potentialAnswers[index].text = event.target.value
         this.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
         event.target.value = this.activeAnswer.text
         this.forceUpdate()
@@ -48,7 +49,8 @@ class AnswerCard extends React.Component {
 
         // then assign that new prompt to the question object
         let questionToModify = this.activeQuestion;
-        questionToModify.potentialAnswers[this.index].text = newText;
+        const index = questionToModify.potentialAnswers.findIndex((answer) => answer.key === this.key);
+        questionToModify.potentialAnswers[index].text = event.target.value
         this.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
         this.forceUpdate()
 
