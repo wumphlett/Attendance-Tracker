@@ -81,6 +81,7 @@ class QuestionAnswers extends React.Component {
                             activeQuestion={this.activeQuestion}
                             activeAnswer={potentialAnswer}
                             key={potentialAnswer.id}
+                            id={potentialAnswer.id}
                         />
                     ))}
                     { !this.isAddButtonDisabled && <AddAnswerCard

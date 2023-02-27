@@ -23,7 +23,7 @@ class AnswerCard extends React.Component {
         this.setQuestions = props.setQuestions
         this.activeQuestion = props.activeQuestion
         this.activeAnswer = props.activeAnswer
-        this.key = props.key
+        this.id = props.id
 
         this.onChange = this.onChange.bind(this)
         this.onPaste = this.onPaste.bind(this)
