@@ -2,7 +2,7 @@
  * answer-card.js
  *
  * @Author - Ethan Brown - ewb0020@auburn.edu
- * @Version - 26 FEB 23
+ * @Version - 27 FEB 23
  *
  * Card containing a possible answer to a question and its correctness
  */
@@ -26,6 +26,7 @@ class AnswerCard extends React.Component {
         this.onChange = this.onChange.bind(this)
         this.onPaste = this.onPaste.bind(this)
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
+        this.modifyQuestion = this.modifyQuestion.bind(this)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -39,7 +40,6 @@ class AnswerCard extends React.Component {
 
         if(prevProps.activeAnswer !== this.props.activeAnswer) {
             this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
-            console.log("Detected")
         }
     }
 
@@ -77,13 +77,23 @@ class AnswerCard extends React.Component {
     handleCheckboxChange(label, state) {
         let questionToModify = this.state.activeQuestion
         if (state === true && !this.state.activeQuestion.correctAnswers.includes(this.state.activeAnswer)) {
+            if (questionToModify.isMultipleSelectionAllowed === false) {
+                questionToModify.correctAnswers = []
+            }
             questionToModify.correctAnswers.push(this.state.activeAnswer)
         }
         else if (state === false && this.state.activeQuestion.correctAnswers.includes(this.state.activeAnswer)) {
             const index = questionToModify.correctAnswers.findIndex((answer) => answer.id === this.state.activeAnswer.id)
             questionToModify.correctAnswers.splice(index, 1)
         }
-        this.state.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
+        this.modifyQuestion(questionToModify)
+    }
+
+    modifyQuestion(modifiedQuestion) {
+        let newQuestions = [...this.state.questions];
+        const index = newQuestions.findIndex((question) => question.id === modifiedQuestion.id);
+        newQuestions[index] = modifiedQuestion;
+        this.setQuestions(newQuestions);
     }
 
     render() {

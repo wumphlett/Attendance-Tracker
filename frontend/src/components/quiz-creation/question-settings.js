@@ -2,7 +2,7 @@
  * question-settings.js
  *
  * @Author - Ethan Brown - ewb0020@auburn.edu
- * @Version - 26 FEB 23
+ * @Version - 27 FEB 23
  *
  * Various options for quiz questions, including time limit and answer options
  */
@@ -48,6 +48,10 @@ class QuestionSettings extends React.Component {
             else if (label === "Allow multiple selection") {
                 let modifiedQuestion = this.state.activeQuestion
                 modifiedQuestion.isMultipleSelectionAllowed = state
+                // If multiple answers already marked as correct and single selection is enforced, unmark all answers
+                if (state === false && this.state.activeQuestion.correctAnswers.length > 1) {
+                    modifiedQuestion.correctAnswers = []
+                }
                 modifyQuestion(this.state.questions, this.setQuestions, modifiedQuestion)
             }
         }

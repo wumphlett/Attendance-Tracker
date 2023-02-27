@@ -34,6 +34,7 @@ function QuestionEditor(props) {
                             questions={props.questions}
                             setQuestions={props.setQuestions}
                             activeQuestion={props.activeQuestion}
+                            setActiveQuestion={props.setActiveQuestion}
                         />
                     </div>
                 </div>}

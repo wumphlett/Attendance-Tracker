@@ -2,7 +2,7 @@
  * question-answers.js
  *
  * @Author - Ethan Brown - ewb0020@auburn.edu
- * @Version - 26 FEB 23
+ * @Version - 27 FEB 23
  *
  * Possible answers for a question and their correctness
  */
@@ -21,6 +21,7 @@ class QuestionAnswers extends React.Component {
     constructor(props) {
         super(props);
         this.setQuestions = props.setQuestions;
+        this.setActiveQuestion = props.setActiveQuestion
         this.state = { activeQuestion: props.activeQuestion, questions: props.questions }
         console.log(this.state.questions)
     }
@@ -28,6 +29,7 @@ class QuestionAnswers extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.activeQuestion !== this.props.activeQuestion) {
             this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
+            console.log("detected")
         }
         if(prevProps.questions !== this.props.questions) {
             this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
@@ -88,6 +90,7 @@ class QuestionAnswers extends React.Component {
                             questions={this.state.questions}
                             setQuestions={this.setQuestions}
                             activeQuestion={this.state.activeQuestion}
+                            setActiveQuestion={this.setActiveQuestion}
                             activeAnswer={potentialAnswer}
                             key={potentialAnswer.id}
                             id={potentialAnswer.id}

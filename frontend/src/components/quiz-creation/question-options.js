@@ -22,10 +22,14 @@ class QuestionOptions extends React.Component {
     constructor(props) {
         super(props);
         this.setQuestions = props.setQuestions;
-        this.state = { activeQuestion: props.activeQuestion, questions: props.questions}
+        this.setActiveQuestion = props.setActiveQuestion;
+        this.state = { activeQuestion: props.activeQuestion, questions: props.questions};
     };
 
     componentDidUpdate(prevProps, prevState) {
+        if (prevProps.activeQuestion.correctAnswers.length !== this.props.activeQuestion.correctAnswers.length) {
+            console.log("wrong length")
+        }
         if(prevProps.activeQuestion !== this.props.activeQuestion) {
             this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
         }
@@ -62,6 +66,7 @@ class QuestionOptions extends React.Component {
                             questions={this.state.questions}
                             setQuestions={this.setQuestions}
                             activeQuestion={this.state.activeQuestion}
+                            setActiveQuestion={this.setActiveQuestion}
                         />
                     </div>
                 </div>
