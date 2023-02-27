@@ -4,7 +4,7 @@
  * @Author - Ethan Brown - ewb0020@auburn.edu
  * @Version - 26 FEB 23
  *
- * Various options for quiz questions, including time limit and answer options
+ * Card containing a possible answer to a question and its correctness
  */
 // Main
 import React, {useEffect} from 'react'
