@@ -26,6 +26,8 @@ class AnswerCard extends React.Component {
         this.onChange = this.onChange.bind(this)
         this.onPaste = this.onPaste.bind(this)
         this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
+        this.handleRemovalClick = this.handleRemovalClick.bind(this)
+        this.removeAnswer = this.removeAnswer.bind(this)
         this.modifyQuestion = this.modifyQuestion.bind(this)
     }
 
@@ -89,6 +91,19 @@ class AnswerCard extends React.Component {
         this.modifyQuestion(questionToModify)
     }
 
+    // Remove answer
+    handleRemovalClick(event) {
+        event.stopPropagation();
+        this.removeAnswer()
+    }
+
+    removeAnswer() {
+        let modifiedQuestion = this.state.activeQuestion;
+        modifiedQuestion.potentialAnswers =
+            modifiedQuestion.potentialAnswers.filter(answer => answer !== this.state.activeAnswer)
+        this.modifyQuestion(modifiedQuestion);
+    }
+
     modifyQuestion(modifiedQuestion) {
         let newQuestions = [...this.state.questions];
         const index = newQuestions.findIndex((question) => question.id === modifiedQuestion.id);
@@ -98,7 +113,7 @@ class AnswerCard extends React.Component {
 
     render() {
         return (
-            <div className="card card-selectable card-very-dark my-2">
+            <div className="card answer-card card-very-dark my-2">
                 <div className="card-body center">
                     <Checkbox
                         isChecked={this.state.activeQuestion.correctAnswers.includes(this.state.activeAnswer)}
@@ -109,8 +124,9 @@ class AnswerCard extends React.Component {
                               value={this.state.activeAnswer.text}
                               onChange={this.onChange}
                     />
+                    <span className="btn btn-danger answer-removal-button" onClick={this.handleRemovalClick}>X</span>
+
                 </div>
-                {/*<span className="btn btn-danger removal-button" onClick={(event) => handleRemoveClick(event, props.answer)}>X</span>*/}
             </div>
         )
     }

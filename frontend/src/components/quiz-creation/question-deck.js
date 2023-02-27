@@ -94,7 +94,7 @@ function QuestionCard(props) {
              onClick={props.onClick}>
             <div className="d-inline-block overflow-auto">
                 <span className="badge badge-question-number">{props.index}/{props.total}</span>
-                <span className="btn btn-danger removal-button " onClick={handleRemoveClick}>X</span>
+                <span className="btn btn-danger removal-button" onClick={handleRemoveClick}>X</span>
                 <p style={{ marginTop: '20px'}}>{props.question.prompt}</p>
             </div>
         </div>

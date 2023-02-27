@@ -68,13 +68,6 @@ class QuestionAnswers extends React.Component {
             modifyQuestion(this.state.questions, this.setQuestions, modifiedQuestion);
         }
 
-        const removeAnswer = (answerToRemove) => {
-            let modifiedQuestion = this.state.activeQuestion;
-            modifiedQuestion.potentialAnswers =
-                modifiedQuestion.potentialAnswers.filter(answer => answer !== answerToRemove)
-            modifyQuestion(modifiedQuestion);
-        }
-
         const modifyQuestion = (setQuestions, modifiedQuestion) => {
             let newQuestions = [...this.state.questions];
             const index = newQuestions.findIndex((question) => question.id === modifiedQuestion.id);

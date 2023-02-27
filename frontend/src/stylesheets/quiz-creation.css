@@ -47,6 +47,7 @@
 
 .question-card:hover .removal-button{
     display: inline-block;
+    background-color: #dc3545;
 }
 
 .removal-button {
@@ -54,7 +55,6 @@
     position: absolute;
     top: 0.50rem;
     right: 0.50rem;
-    background: #dc3545;
     color: floralwhite;
     user-select: none;
     padding: 4px 0.5rem;
@@ -71,6 +71,14 @@
     align-items: center;
     justify-content: center;
 }
+
+.button-card:hover {
+    display: flex;
+    border: 2px solid rgba(255, 250, 240, .4);
+    background: darkorange;
+    justify-content: center;
+}
+
 
 .horizontal-scrollable > .row {
     overflow-x: scroll;
