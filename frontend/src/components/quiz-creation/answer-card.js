@@ -25,6 +25,7 @@ class AnswerCard extends React.Component {
 
         this.onChange = this.onChange.bind(this)
         this.onPaste = this.onPaste.bind(this)
+        this.handleCheckboxChange = this.handleCheckboxChange.bind(this)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -38,6 +39,7 @@ class AnswerCard extends React.Component {
 
         if(prevProps.activeAnswer !== this.props.activeAnswer) {
             this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
+            console.log("Detected")
         }
     }
 
@@ -72,11 +74,26 @@ class AnswerCard extends React.Component {
         event.target.selectionEnd = cursorPosition;
     }
 
+    handleCheckboxChange(label, state) {
+        let questionToModify = this.state.activeQuestion
+        if (state === true && !this.state.activeQuestion.correctAnswers.includes(this.state.activeAnswer)) {
+            questionToModify.correctAnswers.push(this.state.activeAnswer)
+        }
+        else if (state === false && this.state.activeQuestion.correctAnswers.includes(this.state.activeAnswer)) {
+            const index = questionToModify.correctAnswers.findIndex((answer) => answer.id === this.state.activeAnswer.id)
+            questionToModify.correctAnswers.splice(index, 1)
+        }
+        this.state.questions.map((question) => question.id === questionToModify.id ? questionToModify : question);
+    }
+
     render() {
         return (
             <div className="card card-selectable card-very-dark my-2">
                 <div className="card-body center">
-                    <Checkbox />
+                    <Checkbox
+                        isChecked={this.state.activeQuestion.correctAnswers.includes(this.state.activeAnswer)}
+                        handler={this.handleCheckboxChange}
+                    />
                     <textarea className="answer-input"
                               placeholder={"Enter an answer..."}
                               value={this.state.activeAnswer.text}
