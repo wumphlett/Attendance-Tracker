@@ -20,38 +20,57 @@ import '../../stylesheets/quiz-creation/answer-creation.css'
 class QuestionSettings extends React.Component {
     constructor(props) {
         super(props);
-        this.questions = props.questions
         this.setQuestions = props.setQuestions
-        this.activeQuestion = props.activeQuestion
+        this.state = { questions: props.questions, activeQuestion: props.activeQuestion }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.activeQuestion !== this.props.activeQuestion) {
+            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion });
+        }
+        if(prevProps.questions !== this.props.questions) {
+            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion });
+        }
     }
 
     render() {
         const handleCheckboxChange = (label, state) => {
             if (label === "Enforce time limit") {
-                let modifiedQuestion = this.activeQuestion
+                let modifiedQuestion = this.state.activeQuestion
                 modifiedQuestion.isTimeLimited = state
-                modifyQuestion(this.questions, this.setQuestions, modifiedQuestion)
+                modifyQuestion(this.state.questions, this.setQuestions, modifiedQuestion)
             }
             else if (label === "Allow partial credit") {
-                let modifiedQuestion = this.activeQuestion
-                modifiedQuestion.allowPartialCredit = state
-                modifyQuestion(this.questions, this.setQuestions, modifiedQuestion)
+                let modifiedQuestion = this.state.activeQuestion
+                modifiedQuestion.isPartialCreditAllowed = state
+                modifyQuestion(this.state.questions, this.setQuestions, modifiedQuestion)
+            }
+            else if (label === "Allow multiple selection") {
+                let modifiedQuestion = this.state.activeQuestion
+                modifiedQuestion.isMultipleSelectionAllowed = state
+                modifyQuestion(this.state.questions, this.setQuestions, modifiedQuestion)
             }
         }
 
-        const modifyQuestion = (questions, setQuestions, modifiedQuestion) => {
-            let newQuestions = [...questions];
+        const modifyQuestion = (modifiedQuestion) => {
+            let newQuestions = [...this.state.questions];
             const index = newQuestions.findIndex((question) => question.id === modifiedQuestion.id);
             newQuestions[index] = modifiedQuestion;
-            setQuestions(newQuestions);
+            this.setQuestions(newQuestions);
         }
 
         return (
             <div className="card card-very-dark mb-2">
                 <div className="card-body">
-                    <Checkbox label={"Enforce time limit"} default={false} handler={handleCheckboxChange} />
-                    <Checkbox label={"Allow partial credit"} default={false} handler={handleCheckboxChange} />
-                    <Checkbox label={"Allow multiple selection"} default={false} handler={handleCheckboxChange} />
+                    <Checkbox label={"Enforce time limit"}
+                              isChecked={this.state.activeQuestion.isTimeLimited}
+                              handler={handleCheckboxChange} />
+                    <Checkbox label={"Allow partial credit"}
+                              isChecked={this.state.activeQuestion.isPartialCreditAllowed}
+                              handler={handleCheckboxChange} />
+                    <Checkbox label={"Allow multiple selection"}
+                              isChecked={this.state.activeQuestion.isMultipleSelectionAllowed}
+                              handler={handleCheckboxChange} />
                 </div>
             </div>
         )

@@ -17,9 +17,16 @@ import '../../stylesheets/global/interactables.css'
 class Checkbox extends Component {
     constructor(props) {
         super(props);
-        this.state = { isChecked: props.default };
+        this.state = { isChecked: props.isChecked };
         this.toggleCheckbox = this.toggleCheckbox.bind(this);
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.isChecked !== this.props.isChecked) {
+            this.setState({ isChecked: this.props.isChecked });
+        }
+    }
+
 
     toggleCheckbox(event) {
         const { handler , label} = this.props

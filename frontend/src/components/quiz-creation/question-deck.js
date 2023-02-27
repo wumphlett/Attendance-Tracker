@@ -54,7 +54,8 @@ function QuestionDeck(props) {
     function addQuestion() {
         const isTimeLimited = false;
         const timeLimit = 0;
-        const allowPartialCredit = false;
+        const isPartialCreditAllowed = false;
+        const isMultipleSelectionAllowed = false;
         const newQuestion = {
             id: Math.random().toString(36).substring(2) + Date.now().toString(36),
             prompt: "",
@@ -63,7 +64,8 @@ function QuestionDeck(props) {
             correctAnswers: [],
             isTimeLimited: isTimeLimited,
             timeLimit: timeLimit,
-            allowPartialCredit: allowPartialCredit
+            isPartialCreditAllowed: isPartialCreditAllowed,
+            isMultipleSelectionAllowed: isMultipleSelectionAllowed
         };
         props.setQuestions([...props.questions, newQuestion]);
     }
