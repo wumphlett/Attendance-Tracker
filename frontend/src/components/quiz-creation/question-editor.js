@@ -9,7 +9,7 @@
 // Main
 import React, { useEffect } from 'react'
 // Components
-
+import QuestionOptions from './question-options'
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../../stylesheets/quiz-creation.css'
@@ -23,11 +23,18 @@ function QuestionEditor(props) {
                     questions={props.questions} setQuestions={props.setQuestions} setActiveQuestion={props.setActiveQuestion}/> :
                 <div className="row h-100">
                     <div className="col-9 container-fluid container-no-padding h-100"> {/* Question card preview */}
-                        <QuestionPreview questions={props.questions} setQuestions={props.setQuestions}
-                                         activeQuestion={props.activeQuestion}/>
+                        <QuestionPreview
+                            questions={props.questions}
+                            setQuestions={props.setQuestions}
+                            activeQuestion={props.activeQuestion}
+                        />
                     </div>
                     <div className="col-3 container-fluid container-no-padding h-100"> {/* Question options */}
-                        <QuestionOptions />
+                        <QuestionOptions
+                            questions={props.questions}
+                            setQuestions={props.setQuestions}
+                            activeQuestion={props.activeQuestion}
+                        />
                     </div>
                 </div>}
         </div>
@@ -44,7 +51,7 @@ function QuestionPreview(props) {
 
     // Display info about the questions (TEMP)
     useEffect(() => {
-        console.log(props.questions)
+
     });
 
     return (
@@ -106,23 +113,6 @@ function QuestionPreview(props) {
     }
 }
 
-// Contains various options for the associated question
-function QuestionOptions() {
-    return (
-        <div className="container-fluid h-100 p-2">
-            <div className="card card-dark card-format">
-                <div className="card-body">
-                    <div className="card card-very-dark mb-2"> {/* Question Number */}
-                        <div className="card-body">
-                            <h3 className="text-center"><strong>Options</strong></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 // Container in place of the preview containing only a button to create an initial question
 function PlaceholderContainer(props) {
 
@@ -151,8 +141,19 @@ function PlaceholderContainer(props) {
 
     // Add a new question to the deck
     function addQuestion() {
-        const newQuestion = {id: Math.random().toString(36).substring(2) + Date.now().toString(36),
-            prompt: "", image: "", potentialAnswers: [], correctAnswers: [], timeLimit: 0};
+        const isTimeLimited = false;
+        const timeLimit = 0;
+        const allowPartialCredit = false;
+        const newQuestion = {
+            id: Math.random().toString(36).substring(2) + Date.now().toString(36),
+            prompt: "",
+            image: "",
+            potentialAnswers: [],
+            correctAnswers: [],
+            isTimeLimited: isTimeLimited,
+            timeLimit: timeLimit,
+            allowPartialCredit: allowPartialCredit
+        };
         props.setQuestions([...props.questions, newQuestion]);
     }
 }

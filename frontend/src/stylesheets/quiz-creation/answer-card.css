@@ -1,4 +1,4 @@
-.question-input {
+.answer-input {
     border: none;
     height: 100%;
     width: 100%;
@@ -6,13 +6,13 @@
     background-color: transparent;
     font-family: inherit;
     color: floralwhite;
-    font-size: 2em;
+    font-size: 1em;
     text-align: left;
     vertical-align: top;
     font-weight: bold;
 }
 
-.question-input:focus {
+.answer-input:focus {
     outline: none;
 }
 

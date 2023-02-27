@@ -52,8 +52,19 @@ function QuestionDeck(props) {
 
     // Add a new question to the deck
     function addQuestion() {
-        const newQuestion = {id: Math.random().toString(36).substring(2) + Date.now().toString(36),
-            prompt: "", image: "", potentialAnswers: [], correctAnswers: [], timeLimit: 0};
+        const isTimeLimited = false;
+        const timeLimit = 0;
+        const allowPartialCredit = false;
+        const newQuestion = {
+            id: Math.random().toString(36).substring(2) + Date.now().toString(36),
+            prompt: "",
+            image: "",
+            potentialAnswers: [],
+            correctAnswers: [],
+            isTimeLimited: isTimeLimited,
+            timeLimit: timeLimit,
+            allowPartialCredit: allowPartialCredit
+        };
         props.setQuestions([...props.questions, newQuestion]);
     }
 
