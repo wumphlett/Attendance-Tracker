@@ -28,12 +28,16 @@ class AnswerCard extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if(prevProps.questions !== this.props.questions) {
+            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
+        }
+
         if(prevProps.activeQuestion !== this.props.activeQuestion) {
-            this.setState({ activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
+            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
         }
 
         if(prevProps.activeAnswer !== this.props.activeAnswer) {
-            this.setState({ activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
+            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
         }
     }
 
