@@ -9,7 +9,7 @@
 // Main
 import React, {useState} from 'react'
 // Components
-import Navbar from '../components/global/navbar'
+import { Navbar } from '@common'
 import QuestionEditor from '../components/quiz-creation/question-editor'
 import QuestionDeck from '../components/quiz-creation/question-deck'
 // Stylesheets

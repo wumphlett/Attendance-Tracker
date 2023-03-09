@@ -1,0 +1,1 @@
+const Common = require('common')
