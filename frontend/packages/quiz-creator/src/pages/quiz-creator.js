@@ -9,7 +9,7 @@
 // Main
 import React, { useState } from 'react'
 // Components
-import { Navbar } from "@frontend/common/dist";
+import { Navbar } from "@frontend/common/build";
 import QuestionEditor from "../components/question-editor/question-editor";
 // import QuestionDeck from '../components/quiz-creation/question-deck'
 // Stylesheets
