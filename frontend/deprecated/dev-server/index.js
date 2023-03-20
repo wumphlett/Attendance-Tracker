@@ -1,5 +1,5 @@
 /**
- * App.js
+ * index.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com | ewb0020@auburn.edu
  * @Version - 9 MAR 23
@@ -19,8 +19,8 @@ const path = require('path');
 let app = express();
 
 // Get build directories
-const public = path.normalize(path.join(__dirname, './public'));
-const quiz_creation = path.normalize(path.join(__dirname, '../packages/quiz-creator', 'build'));
+const public = path.normalize(path.join(__dirname, '../public'));
+const quiz_creation = path.normalize(path.join(__dirname, '../quiz_creation', 'build'));
 
 // Configure build directories
 app.use(express.static(public));

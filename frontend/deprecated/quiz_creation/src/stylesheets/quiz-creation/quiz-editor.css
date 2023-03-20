@@ -1,0 +1,29 @@
+.question-input {
+    border: none;
+    height: 100%;
+    width: 100%;
+    resize: none;
+    background-color: transparent;
+    font-family: inherit;
+    color: floralwhite;
+    font-size: 2em;
+    text-align: left;
+    vertical-align: top;
+    font-weight: bold;
+}
+
+.question-input:focus {
+    outline: none;
+}
+
+.removal-button {
+    display: none;
+    position: absolute;
+    top: 0.50rem;
+    right: 0.50rem;
+    background: darkorange;
+    color: floralwhite;
+    user-select: none;
+    padding: 4px 0.5rem;
+    font-size: 12px;
+}

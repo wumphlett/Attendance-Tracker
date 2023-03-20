@@ -1,0 +1,9 @@
+.navbar-dark {
+    background-color: #08244c;
+    height: 60px;
+}
+
+.nav a {
+    color: white;
+    text-transform: uppercase;
+}

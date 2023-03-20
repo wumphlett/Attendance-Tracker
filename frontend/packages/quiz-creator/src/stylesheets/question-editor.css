@@ -1,0 +1,22 @@
+.card.card-dark {
+    background-color: #1f1f1f;
+}
+
+.card.card-very-dark {
+    background-color: #131313;
+    color: floralwhite;
+}
+
+.card.button-card {
+    display: flex;
+    border: 2px solid rgba(255, 250, 240, .4);
+    align-items: center;
+    justify-content: center;
+}
+
+.card.button-card:hover {
+    display: flex;
+    border: 2px solid rgba(255, 250, 240, .4);
+    background: darkorange;
+    justify-content: center;
+}

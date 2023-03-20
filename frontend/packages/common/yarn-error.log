@@ -1,0 +1,53 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\ewbro\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add file-loader --dev
+
+PATH: 
+  C:\Users\ewbro\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\ewbro\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\dotnet;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Users\ewbro\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\ewbro\AppData\Local\Programs\Python\Python311;C:\Users\ewbro\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm 2022.3.2\bin;C:\Program Files\JetBrains\WebStorm 2022.3.2\bin;C:\Users\ewbro\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.14.2
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: C:\Users\ewbro\Desktop\Projects\frontend\packages\components\package.json: Unexpected number in JSON at position 301
+      at JSON.parse (<anonymous>)
+      at C:\Users\ewbro\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\ewbro\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\ewbro\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "@frontend/components",
+    "version": "1.0.0",
+    "main": "App.js",
+    "license": "MIT",
+    "scripts": {
+      "build": "webpack"
+    },
+    "devDependencies": {
+      "@babel/core": "^7.21.3",
+      "@babel/preset-env": "^7.20.2",
+      "@babel/preset-react": "^7.18.6",
+      "babel-loader": "^9.1.2",
+   --dev    "css-loader": "^6.7.3",
+      "lodash": "^4.17.21",
+      "style-loader": "^3.3.2",
+      "webpack-cli": "^5.0.1"
+    },
+    "dependencies": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
