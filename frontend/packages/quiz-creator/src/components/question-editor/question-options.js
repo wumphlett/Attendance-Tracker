@@ -8,6 +8,8 @@
  */
 // Main
 import React from "react";
+// Components
+import QuestionSettings from "./question-settings";
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.css'
 import '../../stylesheets/question-editor.css'
@@ -49,6 +51,10 @@ class QuestionOptions extends React.Component {
                 <div className="card card-dark card-format">
                     <div className="card-body" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                         <HeaderCard text={"Options"}/>
+                        <QuestionSettings
+                            state={this.state}
+                            setQuestions={this.setQuestions}
+                        />
                         <HeaderCard text={"Answers"}/>
                     </div>
                 </div>

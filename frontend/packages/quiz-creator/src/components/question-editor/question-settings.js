@@ -4,7 +4,7 @@
  * @Author - Ethan Brown - ewb0020@auburn.edu
  * @Version - 20 MAR 23
  *
- * Various options for quiz questions, including time limit and answer options
+ * Settings for a given question, including time limit and whether partial credit and multiple selection are allowed
  */
 // Main
 import React from "react";
@@ -32,14 +32,45 @@ class QuestionSettings extends React.Component {
             this.setState({ activeQuestion: this.props.state.activeQuestion,
                 questions: this.props.state.questions })
         }
+        console.log(this.state.activeQuestion)
     }
 
     render() {
         return (
-            <div>
-
+            <div className={"card card-very-dark mb-2"}>
+                <div className={"card-body pb-2 pt-2"}>
+                    <div className={"pb-1"}>
+                        <Checkbox label={"Enforce time limit"}
+                                  isChecked={this.state.activeQuestion.isTimeLimited}
+                                  handler={(label, state) => handleCheckboxChange(label, state,
+                                      this.state.activeQuestion,
+                                      this.state.questions,
+                                      this.setQuestions)}
+                        />
+                    </div>
+                    <div className={"pb-1"}>
+                        <Checkbox label={"Allow partial credit"}
+                                  isChecked={this.state.activeQuestion.isPartialCreditAllowed}
+                                  handler={(label, state) => handleCheckboxChange(label, state,
+                                      this.state.activeQuestion,
+                                      this.state.questions,
+                                      this.setQuestions)}
+                        />
+                    </div>
+                    <div>
+                        <Checkbox label={"Allow multiple selection"}
+                                  isChecked={this.state.activeQuestion.isMultipleSelectionAllowed}
+                                  handler={(label, state) => handleCheckboxChange(label, state,
+                                      this.state.activeQuestion,
+                                      this.state.questions,
+                                      this.setQuestions)}
+                        />
+                    </div>
+                </div>
             </div>
         )
     }
 }
+
+export default QuestionSettings;
 
