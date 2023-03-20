@@ -1,8 +1,8 @@
 /**
- * placeholder-container.js
+ * question-placeholder.js
  *
  * @Author - Ethan Brown - ewb0020@auburn.edu
- * @Version - 19 MAR 23
+ * @Version - 20 MAR 23
  *
  * Placeholder screen for when there are no questions yet created in a quiz.
  */
@@ -16,7 +16,7 @@ import '../../stylesheets/quiz-creation.css'
 import '../../stylesheets/question-editor.css'
 
 
-class PlaceholderContainer extends React.Component {
+class QuestionPlaceholder extends React.Component {
     constructor(props) {
         super(props);
         this.state = props.state
@@ -55,4 +55,4 @@ class PlaceholderContainer extends React.Component {
     }
 }
 
-export default PlaceholderContainer
+export default QuestionPlaceholder

@@ -2,16 +2,15 @@
  * question-editor.js
  *
  * @Author - Ethan Brown - ewb0020@auburn.edu
- * @Version - 19 MAR 23
+ * @Version - 20 MAR 23
  *
  * Question preview and options for a quiz currently loaded in the quiz creator
  */
 // Main
 import React from 'react';
 // Components
-import PlaceholderContainer from "./placeholder-container";
+import QuestionPlaceholder from "./question-placeholder";
 import QuestionPreview from "./question-preview";
-// Functions
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.css'
 import '../../stylesheets/quiz-creation.css'
@@ -25,7 +24,7 @@ class QuestionEditor extends React.Component {
         this.state = { questions: props.questions, activeQuestion: props.activeQuestion }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
         if(prevProps.activeQuestion !== this.props.activeQuestion) {
             this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
         }
@@ -38,7 +37,7 @@ class QuestionEditor extends React.Component {
         return (
             <div className="container-fluid h-100 p-2">
                 {this.state.activeQuestion === null ?
-                    <PlaceholderContainer
+                    <QuestionPlaceholder
                         questions={this.state.questions}
                         state={this.state}
                         setQuestions={this.setQuestions}
