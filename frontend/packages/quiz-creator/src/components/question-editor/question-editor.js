@@ -11,6 +11,7 @@ import React from 'react';
 // Components
 import QuestionPlaceholder from "./question-placeholder";
 import QuestionPreview from "./question-preview";
+import QuestionOptions from "./question-options";
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.css'
 import '../../stylesheets/quiz-creation.css'
@@ -46,6 +47,13 @@ class QuestionEditor extends React.Component {
                     <div className="row h-100">
                         <div className="col-9 container-fluid container-no-padding h-100"> {/* Question card preview */}
                             <QuestionPreview
+                                state={this.state}
+                                setQuestions={this.setQuestions}
+                                setActiveQuestion={this.setActiveQuestion}
+                            />
+                        </div>
+                        <div className={"col-3 container-fluid container-no-padding h-100"}> {/* Question options*/}
+                            <QuestionOptions
                                 state={this.state}
                                 setQuestions={this.setQuestions}
                                 setActiveQuestion={this.setActiveQuestion}

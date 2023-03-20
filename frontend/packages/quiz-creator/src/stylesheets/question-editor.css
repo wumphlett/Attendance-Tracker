@@ -42,3 +42,7 @@
 textarea.question-input:focus {
     outline: none;
 }
+
+.container-fluid.container-no-padding {
+    padding: 0;
+}
