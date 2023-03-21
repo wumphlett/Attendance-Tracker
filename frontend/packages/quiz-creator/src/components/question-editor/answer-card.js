@@ -12,6 +12,7 @@ import React from "react";
 import { Checkbox } from "@frontend/common/build"
 // Functions
 import { handleCheckboxChange } from "../../functions/question-editor/question-answers/handleCheckboxChange";
+import { handleTextChange } from "../../functions/question-editor/question-answers/handleTextChange";
 import { removeAnswer } from "../../functions/question-editor/question-answers/removeAnswer";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
@@ -69,6 +70,13 @@ class AnswerCard extends React.Component {
                                   this.active = false
                                   this.forceUpdate();
                               }}
+                              onChange={(event) => handleTextChange(
+                                  event,
+                                  this.state.activeAnswer,
+                                  this.state.activeQuestion,
+                                  this.state.questions,
+                                  this.setQuestions
+                              )}
                     />
                     <span className={"btn btn-danger answer-removal-button"}
                           onClick={(event) => handleRemovalClick(event)}>X</span>
