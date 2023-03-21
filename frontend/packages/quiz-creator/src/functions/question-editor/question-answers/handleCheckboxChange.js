@@ -19,6 +19,9 @@ export function handleCheckboxChange(activeAnswer, checkboxState, activeQuestion
     }
     else {
         if (index === -1) {
+            if (activeQuestion.isMultipleSelectionAllowed === false) {
+                modifiedQuestion.correctAnswers = []
+            }
             modifiedQuestion.correctAnswers.push(activeAnswer)
         }
     }
