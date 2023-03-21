@@ -24,6 +24,7 @@ class AnswerCard extends React.Component {
                     activeQuestion: props.activeQuestion,
                     activeAnswer: props.activeAnswer }
         this.setQuestions = props.setQuestions
+        this.active = false
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -45,7 +46,7 @@ class AnswerCard extends React.Component {
         }
 
         return (
-            <div className={"card answer-card card-very-dark my-2"}>
+            <div className={`card card-very-dark my-2 ${this.active ? 'answer-card-active' : 'answer-card'}`}>
                 <div className={"card-body center"}>
                     <Checkbox
                         isChecked={this.state.activeQuestion.correctAnswers.includes(this.state.activeAnswer)}
@@ -56,6 +57,18 @@ class AnswerCard extends React.Component {
                             this.state.questions,
                             this.setQuestions
                         )}
+                    />
+                    <textarea className="answer-input"
+                              placeholder={"Enter an answer..."}
+                              value={this.state.activeAnswer.text}
+                              onFocus={() => {
+                                  this.active = true;
+                                  this.forceUpdate();
+                              }}
+                              onBlur={() => {
+                                  this.active = false
+                                  this.forceUpdate();
+                              }}
                     />
                     <span className={"btn btn-danger answer-removal-button"}
                           onClick={(event) => handleRemovalClick(event)}>X</span>
