@@ -11,7 +11,7 @@ import React from "react";
 // Components
 import { Checkbox } from "@frontend/common/build"
 // Functions
-import handleCheckboxChange from "../../functions/handleCheckboxChange";
+import handleCheckboxChange from "../../functions/question-editor/question-settings/handleCheckboxChange";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../../stylesheets/question-options.css"

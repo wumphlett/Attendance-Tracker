@@ -7,7 +7,7 @@
  * Insert changed text into question prompt
  */
 // Functions
-import modifyQuestion from './modifyQuestion'
+import modifyQuestion from '../modifyQuestion'
 
 function handleTextChange(event, activeQuestion, questions, setQuestions) {
     let questionToModify = activeQuestion;

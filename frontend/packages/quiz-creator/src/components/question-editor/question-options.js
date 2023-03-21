@@ -10,6 +10,7 @@
 import React from "react";
 // Components
 import QuestionSettings from "./question-settings";
+import QuestionAnswers from "./question-answers";
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.css'
 import '../../stylesheets/question-editor.css'
@@ -56,6 +57,10 @@ class QuestionOptions extends React.Component {
                             setQuestions={this.setQuestions}
                         />
                         <HeaderCard text={"Answers"}/>
+                        <QuestionAnswers
+                            state={this.state}
+                            setQuestions={this.setQuestions}
+                        />
                     </div>
                 </div>
             </div>

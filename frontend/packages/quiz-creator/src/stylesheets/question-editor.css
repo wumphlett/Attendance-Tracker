@@ -46,3 +46,13 @@ textarea.question-input:focus {
 .container-fluid.container-no-padding {
     padding: 0;
 }
+
+.card.answer-card {
+    dispaly: flex;
+    border: 2px solid rgba(255, 250, 240, .4);
+}
+
+.card-body.center {
+    display: flex;
+    align-items: center;
+}

@@ -1,5 +1,5 @@
 /**
- * handleCheckboxChange.js
+ * /question-settings/handleCheckboxChange.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
  * @Version - 20 MAR 23
@@ -7,7 +7,7 @@
  * When a checkbox is toggled in question settings, change the respective property of the active question
  */
 // Functions
-import modifyQuestion from './modifyQuestion'
+import modifyQuestion from '../modifyQuestion'
 
 function handleCheckboxChange(label, checkboxState, activeQuestion, questions, setQuestions) {
     if (label === "Enforce time limit") {

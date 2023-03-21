@@ -7,7 +7,7 @@
  * Insert pasted text into question prompt
  */
 // Functions
-import modifyQuestion from './modifyQuestion'
+import modifyQuestion from '../modifyQuestion'
 
 function handleTextPaste(event, activeQuestion, questions, setQuestions) {
     // So create new prompt from combination of existing prompt and the pasted text

@@ -9,8 +9,8 @@
 // Main
 import React from 'react';
 // Functions
-import handleTextChange from "../../functions/handleTextChange";
-import handleTextPaste from "../../functions/handleTextPaste";
+import handleTextChange from "../../functions/question-editor/question-prompt/handleTextChange";
+import handleTextPaste from "../../functions/question-editor/question-prompt/handleTextPaste";
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.css'
 import '../../stylesheets/question-editor.css'
