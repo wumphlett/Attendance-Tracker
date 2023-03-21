@@ -56,3 +56,19 @@ textarea.question-input:focus {
     display: flex;
     align-items: center;
 }
+
+.btn.answer-removal-button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    color: floralwhite;
+    user-select: none;
+    padding: 4px 0.5rem;
+    font-size: 12px;
+}
+
+.card.answer-card:hover .answer-removal-button{
+    display: inline-block;
+    zIndex: 9999;
+}

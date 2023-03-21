@@ -12,6 +12,7 @@ import React from "react";
 import { Checkbox } from "@frontend/common/build"
 // Functions
 import { handleCheckboxChange } from "../../functions/question-editor/question-answers/handleCheckboxChange";
+import { removeAnswer } from "../../functions/question-editor/question-answers/removeAnswer";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../../stylesheets/question-editor.css"
@@ -38,6 +39,11 @@ class AnswerCard extends React.Component {
     }
 
     render() {
+        const handleRemovalClick = (event) => {
+            event.stopPropagation();
+            removeAnswer(this.state.activeAnswer, this.state.activeQuestion, this.state.questions, this.setQuestions)
+        }
+
         return (
             <div className={"card answer-card card-very-dark my-2"}>
                 <div className={"card-body center"}>
@@ -51,6 +57,8 @@ class AnswerCard extends React.Component {
                             this.setQuestions
                         )}
                     />
+                    <span className={"btn btn-danger answer-removal-button"}
+                          onClick={(event) => handleRemovalClick(event)}>X</span>
                 </div>
             </div>
         )
