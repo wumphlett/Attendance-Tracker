@@ -98,3 +98,8 @@ textarea.answer-input:focus {
     display: inline-block;
     zIndex: 9999;
 }
+
+.card.answer-card-active:hover .answer-removal-button{
+    display: inline-block;
+    zIndex: 9999;
+}
