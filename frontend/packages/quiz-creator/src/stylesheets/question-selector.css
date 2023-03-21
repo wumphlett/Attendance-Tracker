@@ -1,0 +1,14 @@
+.container-fluid.selector {
+    padding-top: 0;
+    padding-left: .25rem;
+    padding-right: .25rem;
+
+}
+
+.card.card-dark {
+    background-color: #1f1f1f;
+}
+
+.card.card-format {
+    height: 100%;
+}
