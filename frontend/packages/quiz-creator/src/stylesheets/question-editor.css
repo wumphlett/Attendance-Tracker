@@ -39,11 +39,11 @@
     font-weight: bold;
 }
 
-textarea.question-input:focus {
+.textarea.question-input:focus {
     outline: none;
 }
 
-textarea.answer-input {
+.textarea.answer-input {
     border: none;
     height: 100%;
     width: 100%;
@@ -57,7 +57,7 @@ textarea.answer-input {
     font-weight: bold;
 }
 
-textarea.answer-input:focus {
+.textarea.answer-input:focus {
     outline: none;
 }
 

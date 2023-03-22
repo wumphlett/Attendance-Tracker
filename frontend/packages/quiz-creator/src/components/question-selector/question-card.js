@@ -50,7 +50,7 @@ class QuestionCard extends React.Component {
         }
 
         return (
-            <div className={`card question-card card-very-dark p-2 mx-2 
+            <div className={`card question-card card-very-dark p-2
                 ${(this.state.question === this.state.activeQuestion) ? 'question-card-active' : ''}`}
                 onClick={() => { this.setActiveQuestion(this.state.question) }}>
                 <div className={"d-inline-block overflow-auto"}>
