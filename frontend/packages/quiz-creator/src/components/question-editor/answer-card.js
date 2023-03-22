@@ -47,7 +47,7 @@ class AnswerCard extends React.Component {
         }
 
         return (
-            <div className={`card card-very-dark my-2 ${this.active ? 'answer-card-active' : 'answer-card'}`}>
+            <div className={`card card-very-dark m-2 ${this.active ? 'answer-card-active' : 'answer-card'}`}>
                 <div className={"card-body center"}>
                     <Checkbox
                         isChecked={this.state.activeQuestion.correctAnswers.includes(this.state.activeAnswer)}
