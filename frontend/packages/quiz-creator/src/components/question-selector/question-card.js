@@ -23,11 +23,9 @@ class QuestionCard extends React.Component {
             activeQuestion: props.activeQuestion,
             index: props.index,         // Position of question in the quiz
             total: props.total,         // Total number of questions in the quiz
-            active: props.active        // Whether the question is selected for editing
         }
         this.setQuestions = props.setQuestions
         this.setActiveQuestion = props.setActiveQuestion
-        this.onClick = props.onClick  // Function triggered when the card is selected
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -52,7 +50,9 @@ class QuestionCard extends React.Component {
         }
 
         return (
-            <div className={`card question-card card-very-dark p-2 mx-2 ${this.active ? 'question-card-active' : ''}`}>
+            <div className={`card question-card card-very-dark p-2 mx-2 
+                ${(this.state.question === this.state.activeQuestion) ? 'question-card-active' : ''}`}
+                onClick={() => { this.setActiveQuestion(this.state.question) }}>
                 <div className={"d-inline-block overflow-auto"}>
                     <span className={"badge badge-question-number"}>{this.state.index}/{this.state.total}</span>
                     <span className={"btn btn-danger removal-button"}

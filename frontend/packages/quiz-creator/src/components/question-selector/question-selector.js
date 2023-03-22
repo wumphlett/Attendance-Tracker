@@ -73,7 +73,6 @@ class QuestionSelector extends React.Component {
                                                           setQuestions={this.setQuestions}
                                                           activeQuestion={this.state.activeQuestion}
                                                           setActiveQuestion={this.setActiveQuestion}
-                                                          active={(question === this.state.activeQuestion)}
                                             />
                                         </div>
                                     ))}
