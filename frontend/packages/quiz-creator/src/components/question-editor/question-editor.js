@@ -47,7 +47,8 @@ class QuestionEditor extends React.Component {
                     <div className="row h-100">
                         <div className="col-9 container-fluid container-no-padding h-100"> {/* Question card preview */}
                             <QuestionPreview
-                                state={this.state}
+                                questions={this.state.questions}
+                                activeQuestion={this.state.activeQuestion}
                                 setQuestions={this.setQuestions}
                                 setActiveQuestion={this.setActiveQuestion}
                             />
