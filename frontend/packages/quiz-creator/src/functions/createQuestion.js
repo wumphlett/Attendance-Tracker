@@ -7,7 +7,7 @@
  * Create a new question within a quiz
  */
 
-export function createQuestion(questions, setQuestions) {
+export function createQuestion(questions, setQuestions, setActiveQuestion) {
     const newQuestion = {
         id: Math.random().toString(36).substring(2) + Date.now().toString(36),
         prompt: "",
@@ -19,6 +19,11 @@ export function createQuestion(questions, setQuestions) {
         isPartialCreditAllowed: false,
         isMultipleSelectionAllowed: false
     };
-    setQuestions([...questions, newQuestion]);
+    const newQuestions = questions
+    newQuestions.push(newQuestion)
+    setQuestions(newQuestions);
+    if (questions.length === 1) {
+        setActiveQuestion(questions[0]);
+    }
 }
 
