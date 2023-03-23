@@ -33,3 +33,10 @@ Senior Design
 - https://blog.logrocket.com/build-chat-application-react-django-channels/
 - https://www.django-rest-framework.org/api-guide/authentication/#setting-the-authentication-scheme
 - https://testdriven.io/blog/custom-permission-classes-drf/
+- https://github.com/changshengyan/djangorestframework-simplejwt-casng
+
+## Misc
+- https://themesberg.com/docs/neumorphism-ui/components/buttons/
+- https://akaspanion.github.io/ui-neumorphism/chip
+- https://medium.com/@ronakchitlangya1997/jwt-authentication-with-react-js-and-django-c034aae1e60d
+- https://github.com/Ronakchitlangya1997/Authentication---React-Js-Django

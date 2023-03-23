@@ -75,8 +75,8 @@ class AnswerDetailSerializer(serializers.HyperlinkedModelSerializer):
 class SessionDetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Session
-        fields = ['url', 'presentation', 'current_question', 'join_code', 'start_time', 'end_time']
-        read_only_fields = ['current_question', 'join_code', 'start_time', 'end_time']
+        fields = ['url', 'presentation', 'current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
+        read_only_fields = ['current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
 
     def create(self, validated_data):
         if session := self.Meta.model.objects.filter(end_time__isnull=True).first():
@@ -89,7 +89,7 @@ class SessionJoinSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Session
-        fields = ['url', 'current_question']
+        fields = ['url', 'current_question', 'is_accepting_responses']
 
 
 class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
