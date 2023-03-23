@@ -32,7 +32,6 @@ class QuestionSettings extends React.Component {
             this.setState({ activeQuestion: this.props.state.activeQuestion,
                 questions: this.props.state.questions })
         }
-        console.log(this.state.activeQuestion)
     }
 
     render() {

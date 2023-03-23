@@ -18,17 +18,17 @@ import '../../stylesheets/question-editor.css'
 class QuestionPreview extends React.Component {
     constructor(props) {
         super(props);
-        this.state = props.state
+        this.state = { questions: props.questions, activeQuestion: props.activeQuestion }
         this.setQuestions = props.setQuestions
         this.setActiveQuestion = props.setActiveQuestion
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.activeQuestion !== this.props.activeQuestion) {
-            this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
-        }
         if(prevProps.questions !== this.props.questions) {
-            this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
+            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion });
+        }
+        if(prevProps.activeQuestion !== this.props.activeQuestion) {
+            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion });
         }
     }
 

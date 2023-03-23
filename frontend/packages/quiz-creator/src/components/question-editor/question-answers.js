@@ -39,7 +39,7 @@ class QuestionAnswers extends React.Component {
 
         const AddAnswerButton = () => {
             return (
-                <div className={"card btn button-card card-very-dark my-2"}
+                <div className={"card btn button-card card-very-dark m-2"}
                     onClick={() => createAnswer(
                         this.state.activeQuestion,
                         this.state.questions,
@@ -51,8 +51,8 @@ class QuestionAnswers extends React.Component {
         }
 
         return (
-            <div className={"card card-very-dark"} style={{ flex: 1}}>
-                <div className={"d-inline-block overflow-auto p-2"}>
+            <div className={"card card-very-dark answer-deck"}>
+                <div className="d-inline-block">
                     {this.state.activeQuestion.potentialAnswers.map((potentialAnswer, index) => (
                         <AnswerCard
                             questions={this.state.questions}

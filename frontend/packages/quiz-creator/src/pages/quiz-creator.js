@@ -11,6 +11,7 @@ import React, { useState } from 'react'
 // Components
 import { Navbar } from "@frontend/common/build";
 import QuestionEditor from "../components/question-editor/question-editor";
+import QuestionSelector from "../components/question-selector/question-selector";
 // import QuestionDeck from '../components/quiz-creation/question-deck'
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -23,11 +24,11 @@ function QuizCreator() {
 
     return (
         <div>
-            <div>
+            <div className={"bg-black"} style={{ height: '60px' }}>
                 <Navbar />
             </div>
-            <div className="container-fluid content-container">
-                <div className="row h-75">
+            <div className="container-fluid content-container page-dark">
+                <div className={"row"} style={{ height: 'calc(0.75 * (100vh - 60px))' }}>
                     <div> {/* Quiz Options */}
 
                     </div>
@@ -40,31 +41,18 @@ function QuizCreator() {
                         />
                     </div>
                 </div>
-                <div className="row h-25"></div>
+                <div className={"row"} style={{ height: 'calc(0.25 * (100vh - 60px))' }}>
+                    <div className={"container-fluid"}> {/* Question Selector*/}
+                        <QuestionSelector
+                            questions={questions}
+                            setQuestions={setQuestions}
+                            activeQuestion={activeQuestion}
+                            setActiveQuestion={setActiveQuestion}
+                        />
+                    </div>
+                </div>
             </div>
         </div>
-        // <div>
-        //     <div>
-        //         <Navbar />
-        //     </div>
-        //     <div className="container-fluid content-container page-dark">
-        //         <div className="row h-75">
-        //             <div> {/* Quiz options */}
-        //
-        //             </div>
-        //             <div className="h-100"> {/* Question card editor */}
-        //                 <QuestionEditor questions={questions} setQuestions={setQuestions}
-        //                                 activeQuestion={activeQuestion} setActiveQuestion={setActiveQuestion}/>
-        //             </div>
-        //         </div>
-        //         <div className="row h-25">
-        //             <div className="container-fluid"> {/* Question card deck */}
-        //                 <QuestionDeck questions={questions} setQuestions={setQuestions}
-        //                               activeQuestion={activeQuestion} setActiveQuestion={setActiveQuestion}/>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
     );
 }
 

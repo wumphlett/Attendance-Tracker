@@ -2,7 +2,7 @@
  * App.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com | ewb0020@auburn.edu
- * @Version - 9 MAR 23
+ * @Version - 22 MAR 23
  *
  * Run AUttendance frontend
  */
@@ -20,14 +20,16 @@ let app = express();
 
 // Get build directories
 const public = path.normalize(path.join(__dirname, './public'));
+const homescreen = path.normalize(path.join(__dirname, '../packages/homescreen', 'build'));
 const quiz_creation = path.normalize(path.join(__dirname, '../packages/quiz-creator', 'build'));
 
 // Configure build directories
-app.use(express.static(public));
+// app.use(express.static(public));
+app.use(express.static(homescreen));
 app.use(express.static(quiz_creation));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(public, 'index.html'));
+    res.sendFile(path.join(homescreen, 'index.html'));
 });
 
 app.get('/create', (req, res) => {

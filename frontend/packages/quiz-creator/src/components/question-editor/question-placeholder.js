@@ -41,7 +41,7 @@ class QuestionPlaceholder extends React.Component {
                     <div className="card card-dark h-100">
                         <div className="card-body justify-content-center" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                             <div className="card btn button-card card-very-dark align-self-center" onClick={
-                                () => createQuestion(this.state.questions, this.setQuestions)
+                                () => createQuestion(this.state.questions, this.setQuestions, this.setActiveQuestion)
                             }>
                                 <div className="card-body">
                                     <h3 className="text-center"><strong>Add a question...</strong></h3>
