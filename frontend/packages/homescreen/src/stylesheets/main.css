@@ -19,3 +19,43 @@
     background-color: #1f1f1f;
 
 }
+
+.card-flex {
+    flex: 1
+}
+
+.list-card {
+    border: 2px solid rgba(255, 250, 240, .4);
+}
+
+.quiz-list {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: auto;
+    padding-right: 3rem;
+}
+
+.button-card {
+    margin: 0 0 0;
+    border: 2px solid rgba(255, 250, 240, .4);
+    align-items: center;
+    justify-content: center;
+}
+
+.button-card:hover {
+    display: flex;
+    border: 2px solid rgba(255, 250, 240, .4);
+    background: darkorange;
+    justify-content: center;
+}
+
+.quiz-card {
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.quiz-card:hover {
+    border: 2px solid rgba(255, 250, 240, .4);
+}

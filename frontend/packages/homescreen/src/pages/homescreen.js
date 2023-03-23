@@ -11,6 +11,7 @@ import React from "react";
 // Components
 import { Navbar } from "@frontend/common/build"
 import WelcomeCard from "../components/welcome-card";
+import QuizList from "../components/quiz-list";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"
@@ -25,19 +26,23 @@ class Homescreen extends React.Component {
                lastname: "Lewis",
                prefix: "Dr.",
                token: "",
-               quizzes: [""]
+               quizzes: []
            }
        }
    }
 
    render() {
        return (
-           <div className={"primary-dark-theme vh-100"}>
+           <div className={"primary-dark-theme"}>
                <Navbar />
-
-               <div className={"content"}>
-                   <div className={"col-md-7 col-12 p-2"}>                      {/* Available Quizzes */}
-                       <WelcomeCard prefix={this.state.user.prefix} lastname={this.state.user.lastname}/>
+               <div className={"content d-flex flex-column"}>
+                   <div className={"col-md-7 col-12 p-2 h-100 d-flex flex-column"} style={{ flex: 1 }}>                      {/* Available Quizzes */}
+                       <div>
+                           <WelcomeCard prefix={this.state.user.prefix} lastname={this.state.user.lastname}/>
+                       </div>
+                       <div className={"d-flex flex-column mt-2 overflow-auto"} style={{ flex: 1 }}>
+                           <QuizList />
+                       </div>
                    </div>
 
                    <div className={"col-md-5 d-none d-md-block"}>           {/* Quiz Analytics */}

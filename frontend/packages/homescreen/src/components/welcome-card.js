@@ -21,7 +21,7 @@ class WelcomeCard extends React.Component {
 
     render() {
         return (
-            <div className={"card secondary-dark-theme"}>
+            <div className={"card card-flex secondary-dark-theme"}>
                 <div className={"card-body text-center"}>
                     <h2 className={"text-dark-theme"}><strong>Welcome, {this.prefix + " " + this.lastname}</strong></h2>
                 </div>
