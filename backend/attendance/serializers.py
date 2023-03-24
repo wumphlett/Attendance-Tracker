@@ -95,7 +95,7 @@ class SessionJoinSerializer(serializers.HyperlinkedModelSerializer):
 class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Response
-        fields = ['session', 'user', 'answer']
+        fields = ['session', 'answer']
 
     def validate(self, data, **kwargs):
         if data['session'].end_time is not None:
@@ -103,6 +103,8 @@ class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
         if data['session'].presentation != data['answer'].question.presentation:
             raise serializers.ValidationError("response answer presentation must match response session presentation")
         if data['session'].current_question != data['answer'].question:
+            raise serializers.ValidationError("response given to a past question")
+        if not data['session'].is_accepting_responses:
             raise serializers.ValidationError("response given to a past question")
         return data
 

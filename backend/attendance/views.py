@@ -137,7 +137,6 @@ class SessionViewSet(viewsets.ModelViewSet):
         return Response({'status': 'ok'})
 
 
-# TODO TEMP
 class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.ResponseDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -146,11 +145,11 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         serializer.save(user=self.request.user)
 
 
+# TODO TEMP
 class LogoutView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
-
         try:
             refresh_token = request.data["refresh_token"]
             token = RefreshToken(refresh_token)

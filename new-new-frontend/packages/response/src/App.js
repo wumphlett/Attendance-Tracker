@@ -6,16 +6,11 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {Card, Divider} from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-
-import axios from 'axios';
+import GlobalStyle from "./common/style/GlobalStyle";
 
 import Login from "./common/components/login";
 import Logout from "./common/components/logout";
 import Navigation from "./common/components/nav";
-
-import GlobalStyle from "./common/style/GlobalStyle";
 
 import Home from "./components/Home";
 
