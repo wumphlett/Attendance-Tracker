@@ -63,7 +63,7 @@ class QuestionHiddenDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Question
-        fields = ['answer_set']
+        fields = ['url', 'index', 'text', 'answer_set']
 
 
 class AnswerDetailSerializer(serializers.HyperlinkedModelSerializer):

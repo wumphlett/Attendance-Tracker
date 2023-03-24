@@ -15,8 +15,8 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "creation": "PORT=3001 yarn workspace creation start",
-    "presentation": "PORT=3002 yarn workspace presentation start",
+    "creation": "PORT=3001 yarn workspace @frontend/creation start",
+    "presentation": "PORT=3002 yarn workspace @frontend/presentation start",
     "response": "PORT=3003 yarn workspace @frontend/response start",
     "start": "concurrently --kill-others-on-fail \"PORT=3001 yarn creation\" \"PORT=3002 yarn presentation\" \"PORT=3003 yarn response\""
   },

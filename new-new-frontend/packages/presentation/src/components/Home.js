@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Button, Card, H4, H5, TextField } from 'ui-neumorphism'
+import { Button, Card, H3, H4, H5, TextField } from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
 
 import axios from 'axios';
@@ -38,45 +38,53 @@ const StyledContent = styled.div`
     margin: 4px 12px 18px 12px;
   }
   
-  .response-form {
-    width: 840px;
+  .presentation-form {
+    width: 1020px;
   }
   
-  .response-form-content {
+  .presentation-form-content {
     display: flex;
+    height: 600px;
   }
   
-  .response-form-title {
+  .presentation-form-title {
     text-align: center;
     margin: 1em;
   }
   
-  .response-buttons {
+  .presentation-wrapper {
     width: 100%;
+  }
+  
+  .presentation-question {
+    height: 300px;
+    text-align: center;
+    margin: 1em;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+  }
+  
+  .presentation-answers {
+    display: flex;
+    width: 100%;
+    height: 270px;
     flex-direction: row;
     flex-wrap: wrap;
     padding: 10px;
+    text-align: center;
+    align-content: center;
   }
   
-  .response-buttons div {
-    height: 200px;
+  .presentation-answers div {
+    display: flex;
     width: 48%;
     margin: 1%;
+    height: 100px;
+    font-size: 2em;
     align-items: center;
     justify-content: center;
-  }
-  
-  .response-buttons div button {
-    font-size: 6em;
-  }
-  
-  .response-waiting {
-    display: flex;
-    height: 420px;
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-    align-content: center;
     flex-direction: column;
   }
 `;
@@ -87,6 +95,8 @@ class Home extends Component {
     sessionConnected: false,
     joinCode: "",
     sessionId: "",
+    question: "",
+    questionIdx: -1,
     answers: [],
     isAcceptingResponses: false,
   };
@@ -105,17 +115,19 @@ class Home extends Component {
     e.preventDefault();
     axios.get('http://127.0.0.1:8000/api/sessions/join/', {params: {token: this.state.joinCode}})
       .then((r) => {
+        console.log(r);
         this.setState(
           {
             sessionConnected: true,
             sessionId: r.data.url,
-            answers: r.data.current_question.answer_set,
+            question: r.data.current_question !== null ? r.data.current_question.text : "",
+            questionIdx: r.data.current_question !== null ? r.data.current_question.index + 1 : 1,
+            answers: r.data.current_question !== null ? r.data.current_question.answer_set : [],
             isAcceptingResponses: r.data.is_accepting_responses
           }
         );
-        console.log(r);
       })
-      .catch(function (r) {console.log("Invalid join code")});
+      .catch(function (e) {console.log(e)});
   };
 
   onResponseClicked = (e) => {
@@ -127,30 +139,30 @@ class Home extends Component {
     <StyledContent>
       {this.state.sessionConnected ? (
         <Card>
-          <form className="response-form" onSubmit={this.onResponseClicked}>
-            <H4 className="response-form-title">Respond</H4>
-            <div className="response-form-content">
+          <form className="presentation-form" onSubmit={this.onResponseClicked}>
+            <div>
+              <H4 className="presentation-form-title">Presentation</H4>
+              <Button>Next</Button>
+            </div>
+            <div className="presentation-form-content">
               {this.state.isAcceptingResponses ? (
-                <div className="response-buttons">
-                  {[...Array(4)].map((x, i) =>
-                    i < this.state.answers.length ? (
-                      <Button bordered onClick={() => {
-                        axios.post('http://127.0.0.1:8000/api/responses/', {
-                          session: this.state.sessionId,
-                          answer: this.state.answers[i].url
-                        }).then((r) => {
-                          console.log(r)
-                        })
-                      }
-                      }>{i+1}</Button>
-                    ) : (
-                      <Button bordered disabled>{i+1}</Button>
-                    )
-                  )}
+                <div className="presentation-wrapper">
+                  <div className="presentation-question">
+                    <H3>{this.state.question}</H3>
+                  </div>
+                  <div className="presentation-answers">
+                    {[...Array(4)].map((x, i) =>
+                      i < this.state.answers.length ? (
+                        <Card>{this.state.answers[i].text}</Card>
+                      ) : (
+                        <Card>-</Card>
+                      )
+                    )}
+                  </div>
                 </div>
               ) : (
-                <div className="response-waiting">
-                  <H5>Wait for next question...</H5>
+                <div className="presentation-answers">
+                  <H3>Question {this.state.questionIdx}</H3>
                 </div>
               )}
             </div>

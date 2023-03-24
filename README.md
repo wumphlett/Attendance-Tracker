@@ -40,3 +40,4 @@ Senior Design
 - https://akaspanion.github.io/ui-neumorphism/chip
 - https://medium.com/@ronakchitlangya1997/jwt-authentication-with-react-js-and-django-c034aae1e60d
 - https://github.com/Ronakchitlangya1997/Authentication---React-Js-Django
+- https://github.com/dannyradden/single-character-input-boxes

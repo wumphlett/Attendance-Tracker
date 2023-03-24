@@ -113,7 +113,6 @@ class Home extends Component {
             isAcceptingResponses: r.data.is_accepting_responses
           }
         );
-        console.log(r);
       })
       .catch(function (r) {console.log("Invalid join code")});
   };
