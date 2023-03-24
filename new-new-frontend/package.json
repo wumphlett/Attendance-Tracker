@@ -18,6 +18,7 @@
     "creation": "PORT=3001 yarn workspace @frontend/creation start",
     "presentation": "PORT=3002 yarn workspace @frontend/presentation start",
     "response": "PORT=3003 yarn workspace @frontend/response start",
+    "demo": "concurrently --kill-others-on-fail \"PORT=3002 yarn presentation\" \"PORT=3003 yarn response\"",
     "start": "concurrently --kill-others-on-fail \"PORT=3001 yarn creation\" \"PORT=3002 yarn presentation\" \"PORT=3003 yarn response\""
   },
   "eslintConfig": {

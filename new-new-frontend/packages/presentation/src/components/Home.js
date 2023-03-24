@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 import { Button, Card, H3, H4, TextField } from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
@@ -113,6 +114,8 @@ class Home extends Component {
     isAcceptingResponses: false,
   };
 
+  client = null;
+
   constructor(props) {
     super(props);
 
@@ -127,6 +130,7 @@ class Home extends Component {
     e.preventDefault();
     axios.get('http://127.0.0.1:8000/api/sessions/join/', {params: {token: this.state.joinCode}})
       .then((r) => {
+        this.client = new W3CWebSocket("ws://127.0.0.1:8000/ws/" + this.state.joinCode + "/");
         this.setState(
           {
             sessionConnected: true,
@@ -155,6 +159,13 @@ class Home extends Component {
                 isAcceptingResponses: r.data.is_accepting_responses,
               }
             );
+            this.client.send(
+              JSON.stringify({
+                sessionConnected: true,
+                answers: r.data.current_question !== null ? r.data.current_question.answer_set : [],
+                isAcceptingResponses: r.data.is_accepting_responses,
+              })
+            );
           })
           .catch((e) => {
             this.setState(
@@ -162,6 +173,13 @@ class Home extends Component {
                 sessionConnected: false,
               }
             )
+            this.client.send(
+              JSON.stringify({
+                sessionConnected: false,
+                answers: [],
+                isAcceptingResponses: false,
+              })
+            );
           });
       })
       .catch(function (e) {console.log(e)});

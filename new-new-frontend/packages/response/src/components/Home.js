@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 import { Button, Card, H4, H5, TextField } from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
@@ -91,6 +92,8 @@ class Home extends Component {
     isAcceptingResponses: false,
   };
 
+  client = null;
+
   constructor(props) {
     super(props);
 
@@ -101,20 +104,40 @@ class Home extends Component {
     }
   }
 
+  addClientHandlers = () => {
+    this.client.onopen = () => {
+      console.log("WebSocket Client Connected");
+    };
+    this.client.onmessage = (message) => {
+      const data = JSON.parse(message.data);
+      if (data) {
+        this.setState(
+          {
+            sessionConnected: data["sessionConnected"],
+            answers: data["answers"],
+            isAcceptingResponses: data["isAcceptingResponses"]
+          }
+        );
+      }
+    };
+  }
+
   onButtonClicked = (e) => {
     e.preventDefault();
     axios.get('http://127.0.0.1:8000/api/sessions/join/', {params: {token: this.state.joinCode}})
       .then((r) => {
+        this.client = new W3CWebSocket("ws://127.0.0.1:8000/ws/" + this.state.joinCode + "/");
+        this.addClientHandlers();
         this.setState(
           {
             sessionConnected: true,
             sessionId: r.data.url,
-            answers: r.data.current_question.answer_set,
+            answers: (r.data.is_accepting_responses ? r.data.current_question.answer_set : []),
             isAcceptingResponses: r.data.is_accepting_responses
           }
         );
       })
-      .catch(function (r) {console.log("Invalid join code")});
+      .catch(function (e) {console.log(e)});
   };
 
   onResponseClicked = (e) => {
@@ -149,7 +172,7 @@ class Home extends Component {
                 </div>
               ) : (
                 <div className="response-waiting">
-                  <H5>Wait for next question...</H5>
+                  <H5>Wait for next question</H5>
                 </div>
               )}
             </div>
