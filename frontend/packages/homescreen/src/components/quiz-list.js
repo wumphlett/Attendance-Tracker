@@ -2,13 +2,14 @@
  * quiz-list.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 22 MAR 23
+ * @Version - 23 MAR 23
  *
  * List all available quizzes
  */
 // Main
 import React from "react";
 // Components
+import QuizCard from "./quiz-card";
 // Functions
 import { createQuiz } from "../functions/createQuiz";
 // Stylesheets
@@ -19,13 +20,15 @@ class QuizList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            quizzes: []
+            quizzes: props.quizzes,
         }
-        this.setState = this.setState.bind(this)
+        this.setUserState = props.setUserState
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps !== prevState) { return nextProps }
+        if (nextProps !== prevState) {
+            return { quizzes: nextProps.quizzes }
+        }
     }
 
     render() {
@@ -36,18 +39,10 @@ class QuizList extends React.Component {
                     onClick={() => {
                         createQuiz(
                             this.state.quizzes,
-                            this.setState
+                            this.setUserState
                         )
                     }}>
                     <h1>+</h1>
-                </div>
-            )
-        }
-
-        const QuizCard = () => {
-            return (
-                <div className={"card card-body quiz-card primary-dark-theme mt-1"}>
-                    <h1>Quiz</h1>
                 </div>
             )
         }
@@ -65,7 +60,11 @@ class QuizList extends React.Component {
                             <div className={"d-inline-block pe-2"}>
                                 {this.state.quizzes.map((quiz, index) => (
                                     <div key={index}>
-                                        <QuizCard />
+                                        <QuizCard
+                                            quiz={quiz}
+                                            quizzes={this.state.quizzes}
+                                            setUserState={this.setUserState}
+                                        />
                                     </div>
                                 ))}
                                 <CreateQuizButton />

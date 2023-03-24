@@ -59,3 +59,25 @@
 .quiz-card:hover {
     border: 2px solid rgba(255, 250, 240, .4);
 }
+
+.quiz-options {
+    display: none
+}
+
+.quiz-card:hover .quiz-options {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    justify-content: center;
+    padding: 0;
+}
+
+.question-count-card {
+    border: 2px solid rgba(255, 250, 240, .4);
+    margin-left: auto;
+    justify-content: center;
+}
+
+.btn {
+    margin-bottom: 0;
+}

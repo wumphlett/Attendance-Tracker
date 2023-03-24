@@ -2,7 +2,7 @@
  * homescreen.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Verison - 22 MAR 23
+ * @Version - 23 MAR 23
  *
  * AUttendance home screen for professors
  */
@@ -29,6 +29,7 @@ class Homescreen extends React.Component {
                quizzes: []
            }
        }
+       this.setState = this.setState.bind(this)
    }
 
    render() {
@@ -41,7 +42,10 @@ class Homescreen extends React.Component {
                            <WelcomeCard prefix={this.state.user.prefix} lastname={this.state.user.lastname}/>
                        </div>
                        <div className={"d-flex flex-column mt-2 overflow-auto"} style={{ flex: 1 }}>
-                           <QuizList />
+                           <QuizList
+                               quizzes={this.state.user.quizzes}
+                               setUserState={this.setState}
+                           />
                        </div>
                    </div>
 
