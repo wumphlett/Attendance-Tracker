@@ -113,27 +113,26 @@ class SessionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def next(self, request, pk=None):
         session = self.get_object()
-        serializer = serializers.SessionDetailSerializer(data=request.data)
-        if not serializer.is_valid() or session.end_time is not None:
+        if session.end_time is not None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
         questions = list(session.presentation.question_set.all().order_by('index'))  # type: list
         if len(questions) == 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+        question_idx = questions.index(session.current_question) if session.current_question is not None else -1
         if not session.is_accepting_responses:
-            question_idx = questions.index(session.current_question) if session.current_question is not None else -1
+            session.current_question = questions[question_idx+1]
+            session.is_accepting_responses = True
+        else:
             if question_idx == len(questions) - 1:
                 session.join_code = None
                 session.current_question = None
                 session.end_time = datetime.now()
-            else:
-                session.current_question = questions[question_idx+1]
-            session.is_accepting_responses = True
-        else:
             session.is_accepting_responses = False
 
         session.save()
+        print(session.is_accepting_responses, session.current_question)
         return Response({'status': 'ok'})
 
 
