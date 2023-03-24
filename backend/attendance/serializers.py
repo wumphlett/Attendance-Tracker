@@ -63,7 +63,7 @@ class QuestionHiddenDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Question
-        fields = ['answer_set']
+        fields = ['url', 'index', 'text', 'answer_set']
 
 
 class AnswerDetailSerializer(serializers.HyperlinkedModelSerializer):
@@ -75,8 +75,8 @@ class AnswerDetailSerializer(serializers.HyperlinkedModelSerializer):
 class SessionDetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Session
-        fields = ['url', 'presentation', 'current_question', 'join_code', 'start_time', 'end_time']
-        read_only_fields = ['current_question', 'join_code', 'start_time', 'end_time']
+        fields = ['url', 'presentation', 'current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
+        read_only_fields = ['current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
 
     def create(self, validated_data):
         if session := self.Meta.model.objects.filter(end_time__isnull=True).first():
@@ -89,13 +89,13 @@ class SessionJoinSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Session
-        fields = ['url', 'current_question']
+        fields = ['url', 'current_question', 'is_accepting_responses']
 
 
 class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Response
-        fields = ['session', 'user', 'answer']
+        fields = ['session', 'answer']
 
     def validate(self, data, **kwargs):
         if data['session'].end_time is not None:
@@ -103,6 +103,8 @@ class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
         if data['session'].presentation != data['answer'].question.presentation:
             raise serializers.ValidationError("response answer presentation must match response session presentation")
         if data['session'].current_question != data['answer'].question:
+            raise serializers.ValidationError("response given to a past question")
+        if not data['session'].is_accepting_responses:
             raise serializers.ValidationError("response given to a past question")
         return data
 

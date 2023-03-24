@@ -9,6 +9,11 @@ from . import models
 from . import serializers
 from .permissions import PresentersViewAndEditOnly, SessionPresentersCreateAndRespondersViewOnly
 
+# TODO TEMP
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+# TODO TEMP
+
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
@@ -116,13 +121,17 @@ class SessionViewSet(viewsets.ModelViewSet):
         if len(questions) == 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        question_idx = questions.index(session.current_question) if session.current_question is not None else -1
-        if question_idx == len(questions) - 1:
-            session.join_code = None
-            session.current_question = None
-            session.end_time = datetime.now()
+        if not session.is_accepting_responses:
+            question_idx = questions.index(session.current_question) if session.current_question is not None else -1
+            if question_idx == len(questions) - 1:
+                session.join_code = None
+                session.current_question = None
+                session.end_time = datetime.now()
+            else:
+                session.current_question = questions[question_idx+1]
+            session.is_accepting_responses = True
         else:
-            session.current_question = questions[question_idx+1]
+            session.is_accepting_responses = False
 
         session.save()
         return Response({'status': 'ok'})
@@ -134,3 +143,17 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+# TODO TEMP
+class LogoutView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
