@@ -17,6 +17,9 @@ class User(AbstractUser):
 
     objects = UserManager()
 
+    class Meta:
+        ordering = ("-date_joined",)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -39,11 +42,12 @@ class Presentation(models.Model):
 
 class Question(models.Model):
     presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
-    index = models.PositiveSmallIntegerField()
+    index = models.PositiveSmallIntegerField()  # 0-indexed MUST BE CORRECT
     text = models.TextField()
 
     class Meta:
         verbose_name = "Question"
+        ordering = ("index",)
 
     def __str__(self):
         return f"{self.index} : {self.text}"
@@ -51,13 +55,14 @@ class Question(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    index = models.PositiveSmallIntegerField()
+    index = models.PositiveSmallIntegerField()  # 0-indexed
     symbol = models.CharField(max_length=4)
     text = models.CharField(max_length=100)
     is_correct = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Answer"
+        ordering = ("index",)
 
     def __str__(self):
         return f"{self.symbol} : {self.text}"

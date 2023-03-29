@@ -105,13 +105,11 @@ const StyledContent = styled.div`
 // TODO RE-INIT JOIN ON ERROR
 class Home extends Component {
   state = {
-    sessionConnected: false,
     joinCode: "",
-    sessionId: "",
-    question: "",
-    questionIdx: -1,
-    answers: [],
+    sessionId: null,
+    question: null,
     isAcceptingResponses: false,
+    endTime: null
   };
 
   client = null;
@@ -119,70 +117,49 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-
     if(localStorage.getItem('access_token') === null){
       window.location.href = '/login'
     }
+
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
   }
 
-  onButtonClicked = (e) => {
+  updateSlide = (data) => {
+    this.setState(
+      {
+        sessionId: data.url,
+        question: data.current_question,
+        isAcceptingResponses: data.is_accepting_responses,
+        endTime: data.end_time,
+      }
+    );
+  };
+
+  onJoinClicked = (e) => {
     e.preventDefault();
     axios.get('http://127.0.0.1:8000/api/sessions/join/', {params: {token: this.state.joinCode}})
       .then((r) => {
+        let sessionId = r.data.url;
         this.client = new W3CWebSocket("ws://127.0.0.1:8000/ws/" + this.state.joinCode + "/");
-        this.setState(
-          {
-            sessionConnected: true,
-            sessionId: r.data.url,
-            question: r.data.current_question !== null ? r.data.current_question.text : "",
-            questionIdx: r.data.current_question !== null ? r.data.current_question.index + 1 + (r.data.is_accepting_responses ? 0 : 1) : 1,
-            answers: r.data.current_question !== null ? r.data.current_question.answer_set : [],
-            isAcceptingResponses: r.data.is_accepting_responses
-          }
-        );
-      })
-      .catch((e) => {console.log(e)});
+        axios.get(sessionId)
+          .then((r) => {
+            this.updateSlide(r.data);
+          });
+      });
   };
 
   onNextClicked = (e) => {
     e.preventDefault();
     axios.post(`${this.state.sessionId}next/`)
       .then((r) => {
-        axios.get('http://127.0.0.1:8000/api/sessions/join/', {params: {token: this.state.joinCode}})
+        this.updateSlide(r.data);
+        axios.get(`${this.state.sessionId}respond/`)
           .then((r) => {
-            this.setState(
-              {
-                question: r.data.current_question !== null ? r.data.current_question.text : "",
-                questionIdx: r.data.current_question !== null ? r.data.current_question.index + 1 + (r.data.is_accepting_responses ? 0 : 1) : 1,
-                answers: r.data.current_question !== null ? r.data.current_question.answer_set : [],
-                isAcceptingResponses: r.data.is_accepting_responses,
-              }
-            );
             this.client.send(
-              JSON.stringify({
-                sessionConnected: true,
-                answers: r.data.current_question !== null ? r.data.current_question.answer_set : [],
-                isAcceptingResponses: r.data.is_accepting_responses,
-              })
-            );
-          })
-          .catch((e) => {
-            this.setState(
-              {
-                sessionConnected: false,
-              }
-            )
-            this.client.send(
-              JSON.stringify({
-                sessionConnected: false,
-                answers: [],
-                isAcceptingResponses: false,
-              })
+              JSON.stringify(r.data)
             );
           });
       })
-      .catch(function (e) {console.log(e)});
   };
 
   onResponseClicked = (e) => {
@@ -192,23 +169,31 @@ class Home extends Component {
   render() {
     return (
     <StyledContent>
-      {this.state.sessionConnected ? (
+      {this.state.sessionId ? (
         <Card>
           <form className="presentation-form" onSubmit={this.onResponseClicked}>
             <div className="presentation-header">
-              <H4 className="presentation-form-title">Question {this.state.questionIdx}</H4>
-              <Button className="presentation-next-button" onClick={this.onNextClicked}>Next</Button>
+              <H4 className="presentation-form-title">{this.state.question ? (`Question ${this.state.question.index + 1}`) : null}</H4>
+              {this.state.endTime === null ? (<Button className="presentation-next-button" onClick={this.onNextClicked}>Next</Button>) : null}
             </div>
             <div className="presentation-form-content">
-              {this.state.isAcceptingResponses ? (
+              {this.state.question === null ? (
+                <div className="presentation-question">
+                  {this.state.endTime === null ? (
+                    <H3>Get Ready</H3>
+                  ) : (
+                    <H3>Finished</H3>
+                  )}
+                </div>
+              ) : this.state.isAcceptingResponses ? (
                 <div className="presentation-wrapper">
                   <div className="presentation-question">
-                    <H3>{this.state.question}</H3>
+                    <H3>{this.state.question.text}</H3>
                   </div>
                   <div className="presentation-answers">
                     {[...Array(4)].map((x, i) =>
-                      i < this.state.answers.length ? (
-                        <Card>{this.state.answers[i].text}</Card>
+                      i < this.state.question.answer_set.length ? (
+                        <Card>{this.state.question.answer_set[i].text}</Card>
                       ) : (
                         <Card>-</Card>
                       )
@@ -217,7 +202,7 @@ class Home extends Component {
                 </div>
               ) : (
                 <div className="presentation-question">
-                  <H3>Question {this.state.questionIdx}</H3>
+                  <H3>Question {this.state.question.index + 1}</H3>
                 </div>
               )}
             </div>
@@ -225,7 +210,7 @@ class Home extends Component {
         </Card>
       ) : (
         <Card>
-          <form className="join-form" onSubmit={this.onButtonClicked}>
+          <form className="join-form" onSubmit={this.onJoinClicked}>
             <div className="join-form-content">
               <H4 className="join-form-title">Join Session</H4>
               <TextField
@@ -239,7 +224,6 @@ class Home extends Component {
                 inputStyles={{ width: "100%" }}
               />
               <Button
-                submit
                 className="join-form-submit"
                 autoFocus
                 block

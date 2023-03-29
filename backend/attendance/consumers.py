@@ -7,6 +7,8 @@ from channels.generic.websocket import WebsocketConsumer
 class CoordinationConsumer(WebsocketConsumer):
     def connect(self):
         # TODO AUTH CHECK & ACTIVE SESSION CHECK
+        # TODO presenter and responder channel group
+        # TODO responder create check increment counter
         self.room_name = self.scope["url_route"]["kwargs"]["join_code"]
         self.room_group_name = f"session_{self.room_name}"
 

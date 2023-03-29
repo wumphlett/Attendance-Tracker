@@ -94,6 +94,7 @@ TEMPLATES = [
 
 ASGI_APPLICATION = "backend.asgi.application"
 
+# TODO use redis channel layer
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': "channels.layers.InMemoryChannelLayer"

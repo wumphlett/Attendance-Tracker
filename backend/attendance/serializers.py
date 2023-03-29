@@ -30,12 +30,6 @@ class AnswerListSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'symbol', 'text', 'is_correct']
 
 
-class AnswerHiddenListSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = models.Answer
-        fields = ['url', 'index', 'symbol', 'text']
-
-
 class SessionListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Session
@@ -58,14 +52,6 @@ class QuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'presentation', 'index', 'text', 'answer_set']
 
 
-class QuestionHiddenDetailSerializer(serializers.HyperlinkedModelSerializer):
-    answer_set = AnswerHiddenListSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = models.Question
-        fields = ['url', 'index', 'text', 'answer_set']
-
-
 class AnswerDetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Answer
@@ -73,23 +59,24 @@ class AnswerDetailSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SessionDetailSerializer(serializers.HyperlinkedModelSerializer):
+    current_question = QuestionDetailSerializer(read_only=True)
+
     class Meta:
         model = models.Session
         fields = ['url', 'presentation', 'current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
         read_only_fields = ['current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
 
+    def validate(self, data, **kwargs):
+        if data['presentation'].owner != self.context['request'].user:
+            raise serializers.ValidationError("you cannot create a session for a presentation you do not own")
+        if len(data['presentation'].question_set.all()) == 0:
+            raise serializers.ValidationError("presentation must have at least one question")
+        return data
+
     def create(self, validated_data):
-        if session := self.Meta.model.objects.filter(end_time__isnull=True).first():
+        if session := self.Meta.model.objects.filter(presentation=validated_data['presentation'], end_time__isnull=True).first():
             return session
         return self.Meta.model.objects.create(join_code=get_random_string(5, string.ascii_uppercase), **validated_data)
-
-
-class SessionJoinSerializer(serializers.HyperlinkedModelSerializer):
-    current_question = QuestionHiddenDetailSerializer(read_only=True)
-
-    class Meta:
-        model = models.Session
-        fields = ['url', 'current_question', 'is_accepting_responses']
 
 
 class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
@@ -105,7 +92,7 @@ class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
         if data['session'].current_question != data['answer'].question:
             raise serializers.ValidationError("response given to a past question")
         if not data['session'].is_accepting_responses:
-            raise serializers.ValidationError("response given to a past question")
+            raise serializers.ValidationError("response given to a closed question")
         return data
 
     def create(self, validated_data):
@@ -135,3 +122,31 @@ class AnswerUpdateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Answer
         fields = ['index', 'symbol', 'text', 'is_correct']
+
+
+class SessionJoinSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = models.Session
+        fields = ['url']
+
+
+class ResponderAnswerListSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = models.Answer
+        fields = ['url', 'index', 'symbol']
+
+
+class ResponderQuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
+    answer_set = ResponderAnswerListSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.Question
+        fields = ['url', 'index', 'answer_set']
+
+
+class ResponderSessionSerializer(serializers.HyperlinkedModelSerializer):
+    current_question = ResponderQuestionDetailSerializer(read_only=True)
+
+    class Meta:
+        model = models.Session
+        fields = ['url', 'current_question', 'is_accepting_responses', 'start_time', 'end_time']

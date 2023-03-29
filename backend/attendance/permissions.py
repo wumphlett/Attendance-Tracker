@@ -26,7 +26,7 @@ class SessionPresentersCreateAndRespondersViewOnly(permissions.BasePermission):
         if request.user.is_presenter:
             return True
 
-        if view.action == "join":
+        if view.action in ("join", "respond"):
             return True
 
         return False

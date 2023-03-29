@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
-import { Button, Card, H4, H5, TextField } from 'ui-neumorphism'
+import {Button, Card, H3, H4, H5, TextField} from 'ui-neumorphism'
 import 'ui-neumorphism/dist/index.css'
 
 import axios from 'axios';
@@ -85,11 +85,11 @@ const StyledContent = styled.div`
 // TODO RE-INIT JOIN ON ERROR
 class Home extends Component {
   state = {
-    sessionConnected: false,
     joinCode: "",
-    sessionId: "",
-    answers: [],
+    sessionId: null,
+    question: null,
     isAcceptingResponses: false,
+    endTime: null
   };
 
   client = null;
@@ -97,47 +97,45 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-
     if(localStorage.getItem('access_token') === null){
       window.location.href = '/login'
     }
+
+    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
   }
 
   addClientHandlers = () => {
-    this.client.onopen = () => {
-      console.log("WebSocket Client Connected");
-    };
     this.client.onmessage = (message) => {
       const data = JSON.parse(message.data);
       if (data) {
-        this.setState(
-          {
-            sessionConnected: data["sessionConnected"],
-            answers: data["answers"],
-            isAcceptingResponses: data["isAcceptingResponses"]
-          }
-        );
+        this.updateSlide(data);
       }
     };
   }
 
-  onButtonClicked = (e) => {
+  updateSlide = (data) => {
+    this.setState(
+      {
+        sessionId: data.url,
+        question: data.current_question,
+        isAcceptingResponses: data.is_accepting_responses,
+        endTime: data.end_time,
+      }
+    );
+  };
+
+  onJoinClicked = (e) => {
     e.preventDefault();
     axios.get('http://127.0.0.1:8000/api/sessions/join/', {params: {token: this.state.joinCode}})
       .then((r) => {
+        let sessionId = r.data.url;
         this.client = new W3CWebSocket("ws://127.0.0.1:8000/ws/" + this.state.joinCode + "/");
         this.addClientHandlers();
-        this.setState(
-          {
-            sessionConnected: true,
-            sessionId: r.data.url,
-            answers: (r.data.is_accepting_responses ? r.data.current_question.answer_set : []),
-            isAcceptingResponses: r.data.is_accepting_responses
-          }
-        );
+        axios.get(`${sessionId}respond/`)
+          .then((r) => {
+            this.updateSlide(r.data);
+          });
       })
-      .catch(function (e) {console.log(e)});
   };
 
   onResponseClicked = (e) => {
@@ -147,21 +145,29 @@ class Home extends Component {
   render() {
     return (
     <StyledContent>
-      {this.state.sessionConnected ? (
+      {this.state.sessionId ? (
         <Card>
           <form className="response-form" onSubmit={this.onResponseClicked}>
             <H4 className="response-form-title">Respond</H4>
             <div className="response-form-content">
-              {this.state.isAcceptingResponses ? (
+              {this.state.question === null ? (
+                <div className="response-waiting">
+                  {this.state.endTime === null ? (
+                    <H3>Get Ready</H3>
+                  ) : (
+                    <H3>Finished</H3>
+                  )}
+                </div>
+              ) : this.state.isAcceptingResponses ? (
                 <div className="response-buttons">
                   {[...Array(4)].map((x, i) =>
-                    i < this.state.answers.length ? (
+                    i < this.state.question.answer_set.length ? (
                       <Button bordered onClick={() => {
                         axios.post('http://127.0.0.1:8000/api/responses/', {
                           session: this.state.sessionId,
-                          answer: this.state.answers[i].url
+                          answer: this.state.question.answer_set[i].url
                         }).then((r) => {
-                          console.log(r)
+                          console.log(r) // TODO check if created, send counter msg to websocket
                         })
                       }
                       }>{i+1}</Button>
@@ -172,7 +178,7 @@ class Home extends Component {
                 </div>
               ) : (
                 <div className="response-waiting">
-                  <H5>Wait for next question</H5>
+                  <H5>Question {this.state.question.index + 1}</H5>
                 </div>
               )}
             </div>
@@ -180,7 +186,7 @@ class Home extends Component {
         </Card>
       ) : (
         <Card>
-          <form className="join-form" onSubmit={this.onButtonClicked}>
+          <form className="join-form" onSubmit={this.onJoinClicked}>
             <div className="join-form-content">
               <H4 className="join-form-title">Join Session</H4>
               <TextField
@@ -194,7 +200,6 @@ class Home extends Component {
                 inputStyles={{ width: "100%" }}
               />
               <Button
-                submit
                 className="join-form-submit"
                 autoFocus
                 block

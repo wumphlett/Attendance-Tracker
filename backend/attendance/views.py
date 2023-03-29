@@ -20,7 +20,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAdminUser]
 
     def get_queryset(self):
-        return models.User.objects.all().order_by('-date_joined')
+        return models.User.objects.all()
 
 
 class PresentationViewSet(viewsets.ModelViewSet):
@@ -50,7 +50,7 @@ class QuestionViewSet(
     permission_classes = [PresentersViewAndEditOnly]
 
     def get_queryset(self):
-        return models.Question.objects.filter(presentation__owner=self.request.user).order_by('index')
+        return models.Question.objects.filter(presentation__owner=self.request.user)
 
     def get_serializer_class(self):
         if self.action == 'list':
@@ -58,12 +58,6 @@ class QuestionViewSet(
         elif self.action in ('update', 'partial_update'):
             return serializers.QuestionUpdateSerializer
         return serializers.QuestionDetailSerializer
-
-    @action(detail=True, methods=['get'])
-    def view(self, request, pk=None):
-        question = self.get_object()
-        serializer = serializers.QuestionDetailSerializer(question, context={'request': request})
-        return Response(serializer.data)
 
 
 class AnswerViewSet(
@@ -76,7 +70,7 @@ class AnswerViewSet(
     permission_classes = [PresentersViewAndEditOnly]
 
     def get_queryset(self):
-        return models.Answer.objects.filter(question__presentation__owner=self.request.user).order_by('index')
+        return models.Answer.objects.filter(question__presentation__owner=self.request.user)
 
     def get_serializer_class(self):
         if self.action == 'list':
@@ -99,7 +93,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         return serializers.SessionDetailSerializer
 
     @action(detail=False, methods=['get'])
-    def join(self, request):
+    def join(self, request, pk=None):
         if request.query_params.get('token') is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -110,30 +104,39 @@ class SessionViewSet(viewsets.ModelViewSet):
         serializer = serializers.SessionJoinSerializer(session, context={'request': request})
         return Response(serializer.data)
 
+    @action(detail=True, methods=['get'])
+    def respond(self, request, pk=None):
+        session = self.get_object()
+        serializer = serializers.ResponderSessionSerializer(session, context={'request': request})
+        return Response(serializer.data)
+
     @action(detail=True, methods=['post'])
     def next(self, request, pk=None):
         session = self.get_object()
         if session.end_time is not None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        questions = list(session.presentation.question_set.all().order_by('index'))  # type: list
-        if len(questions) == 0:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        question_idx = questions.index(session.current_question) if session.current_question is not None else -1
-        if not session.is_accepting_responses:
-            session.current_question = questions[question_idx+1]
+        if session.current_question is None:
+            if session.end_time is None:
+                session.current_question = session.presentation.question_set.first()
+        elif not session.is_accepting_responses:
             session.is_accepting_responses = True
         else:
+            questions = list(session.presentation.question_set.all())  # type: list
+            question_idx = questions.index(session.current_question)
+
             if question_idx == len(questions) - 1:
                 session.join_code = None
                 session.current_question = None
                 session.end_time = datetime.now()
+            else:
+                session.current_question = questions[question_idx+1]
+
             session.is_accepting_responses = False
 
         session.save()
-        print(session.is_accepting_responses, session.current_question)
-        return Response({'status': 'ok'})
+        serializer = serializers.SessionDetailSerializer(session, context={'request': request})
+        return Response(serializer.data)
 
 
 class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
