@@ -31,7 +31,7 @@ class QuizCard extends React.Component {
 
         return (
             <div className={"card card-body quiz-card primary-dark-theme mt-1 d-flex flex-row justify-content-center"}>
-                <h3>{this.state.quiz.title}</h3>
+                <h3 className={"text-dark-theme"}>{this.state.quiz.title}</h3>
 
                 <div className={"quiz-options pb-0"}>
                     <button className={"btn btn-success mb-0 mx-1"}>Launch</button>
@@ -41,7 +41,7 @@ class QuizCard extends React.Component {
                     }>Delete</button>
                 </div>
                 <div className={"card primary-dark-theme question-count-card px-2"}>
-                    <p className={"m-0 p-0"}>{this.state.quiz.questions.length} Questions</p>
+                    <p className={"m-0 p-0 text-dark-theme"}>{this.state.quiz.questions.length} Questions</p>
                 </div>
             </div>
         )
