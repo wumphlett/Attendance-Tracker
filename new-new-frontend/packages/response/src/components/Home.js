@@ -167,7 +167,11 @@ class Home extends Component {
                           session: this.state.sessionId,
                           answer: this.state.question.answer_set[i].url
                         }).then((r) => {
-                          console.log(r) // TODO check if created, send counter msg to websocket
+                          if (r.data["created"]) {
+                            this.client.send(
+                              JSON.stringify(r.data)
+                            );
+                          }
                         })
                       }
                       }>{i+1}</Button>

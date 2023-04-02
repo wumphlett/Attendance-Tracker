@@ -143,8 +143,19 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = serializers.ResponseDetailSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        response, created = serializer.Meta.model.objects.update_or_create(
+            user=self.request.user,
+            session=serializer.validated_data['session'],
+            answer__question=serializer.validated_data['answer'].question,
+            defaults={"user": self.request.user, **serializer.validated_data}
+        )
+
+        headers = self.get_success_headers(serializer.data)
+        return Response({"created": created}, status=status.HTTP_201_CREATED, headers=headers)
 
 
 # TODO TEMP

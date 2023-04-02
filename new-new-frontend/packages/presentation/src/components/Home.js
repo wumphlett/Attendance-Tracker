@@ -78,6 +78,10 @@ const StyledContent = styled.div`
     flex-direction: column;
   }
   
+  .presentation-counter {
+    text-align: center;
+  }
+  
   .presentation-answers {
     display: flex;
     width: 100%;
@@ -109,7 +113,8 @@ class Home extends Component {
     sessionId: null,
     question: null,
     isAcceptingResponses: false,
-    endTime: null
+    endTime: null,
+    responseCount: 0,
   };
 
   client = null;
@@ -124,6 +129,19 @@ class Home extends Component {
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
   }
 
+  addClientHandlers = () => {
+    this.client.onmessage = (message) => {
+      const data = JSON.parse(message.data);
+      if (data && data["created"]) {
+        this.setState(
+          {
+            responseCount: this.state.responseCount + 1,
+          }
+        )
+      }
+    };
+  }
+
   updateSlide = (data) => {
     this.setState(
       {
@@ -131,6 +149,7 @@ class Home extends Component {
         question: data.current_question,
         isAcceptingResponses: data.is_accepting_responses,
         endTime: data.end_time,
+        responseCount: 0,
       }
     );
   };
@@ -140,7 +159,8 @@ class Home extends Component {
     axios.get('http://127.0.0.1:8000/api/sessions/join/', {params: {token: this.state.joinCode}})
       .then((r) => {
         let sessionId = r.data.url;
-        this.client = new W3CWebSocket("ws://127.0.0.1:8000/ws/" + this.state.joinCode + "/");
+        this.client = new W3CWebSocket("ws://127.0.0.1:8000/ws/" + this.state.joinCode + "/?presenter");
+        this.addClientHandlers();
         axios.get(sessionId)
           .then((r) => {
             this.updateSlide(r.data);
@@ -190,6 +210,7 @@ class Home extends Component {
                   <div className="presentation-question">
                     <H3>{this.state.question.text}</H3>
                   </div>
+                  <div className="presentation-counter"><H4>Responses: {this.state.responseCount}</H4></div>
                   <div className="presentation-answers">
                     {[...Array(4)].map((x, i) =>
                       i < this.state.question.answer_set.length ? (

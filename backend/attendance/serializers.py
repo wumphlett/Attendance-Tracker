@@ -95,16 +95,6 @@ class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
             raise serializers.ValidationError("response given to a closed question")
         return data
 
-    def create(self, validated_data):
-        if response := self.Meta.model.objects.filter(
-                session=validated_data['session'], answer__question=validated_data['answer'].question
-        ).first():
-            response.answer = validated_data['answer']
-            response.save()
-        else:
-            response = self.Meta.model.objects.create(**validated_data)
-        return response
-
 
 class PresentationUpdateSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
