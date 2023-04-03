@@ -52,9 +52,9 @@ class Navigation extends Component {
             <ul>
               <li>
                 {this.state.isAuthenticated ? (
-                  <Button onClick={() => window.location.href='/logout'}>Logout</Button>
+                  <Button onClick={() => window.location.href='/authentication/logout'}>Logout</Button>
                 ) : (
-                  <Button onClick={() => window.location.href='/login'}>Login</Button>
+                  <Button onClick={() => window.location.href='/authentication/login'}>Login</Button>
                 )}
               </li>
             </ul>

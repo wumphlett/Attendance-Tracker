@@ -123,7 +123,7 @@ class Home extends Component {
     super(props);
 
     if(localStorage.getItem('access_token') === null){
-      window.location.href = '/login'
+      window.location.href = '/authentication/login'
     }
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;

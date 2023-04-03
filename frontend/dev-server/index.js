@@ -39,7 +39,7 @@ app.get('/create', (req, res) => {
     res.sendFile(path.join(quiz_creation, 'index.html'));
 });
 
-app.get('/authentication', (req, res) => {
+app.get('/authentication/*', (req, res) => {
     res.sendFile(path.join(authentication, 'index.html'));
 });
 
