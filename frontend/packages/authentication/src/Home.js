@@ -122,7 +122,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    if(localStorage.getItem('access_token') === null){
+    if (localStorage.getItem('access_token') === null){
       window.location.href = '/authentication/login'
     }
 
