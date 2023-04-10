@@ -8,10 +8,7 @@ def cas_user_authenticated_callback(sender, **kwargs):
     created = kwargs["created"]
     attributes = kwargs["attributes"]
 
-    print(kwargs["username"])
     if created:
-        print("Created")
-        user.email = attributes["email"]
         user.first_name = attributes["firstName"]
         user.last_name = attributes["lastName"]
 
@@ -19,7 +16,6 @@ def cas_user_authenticated_callback(sender, **kwargs):
             user.is_presenter = True
 
         if any(dev == kwargs["username"] for dev in ("wah0028",)):
-            print("Superuser")
             user.is_superuser = True
             user.is_staff = True
 

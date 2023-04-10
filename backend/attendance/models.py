@@ -6,8 +6,6 @@ from .managers import UserManager
 
 
 class User(AbstractUser):
-    username = None
-    email = models.EmailField(_("email address"), max_length=150, unique=True)
     first_name = models.CharField(max_length=150, blank=False)
     last_name = models.CharField(max_length=150, blank=False)
     is_presenter = models.BooleanField(default=False)
