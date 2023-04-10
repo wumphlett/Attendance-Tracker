@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-8by2b_ql9f%(l)v+1&t%5$sa@z(^-0jzyls&hg_$fo$92t&==9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "api.auttend.com"]
 
 
 # Application definition
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'django_cas_ng',
     'rest_framework_simplejwt.token_blacklist',
     'attendance'
 ]
@@ -71,8 +72,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_cas_ng.middleware.CASMiddleware'
     'corsheaders.middleware.CorsMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'django_cas_ng.backends.CASBackend',
+)
+
+CAS_SERVER_URL = 'https://authenticate.auburn.edu/cas/'
+CAS_VERSION = '3'
 
 ROOT_URLCONF = 'backend.urls'
 
