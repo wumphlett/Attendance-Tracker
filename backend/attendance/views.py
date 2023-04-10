@@ -7,6 +7,7 @@ from rest_framework.response import Response
 
 from . import models
 from . import serializers
+from . import signals
 from .permissions import PresentersViewAndEditOnly, SessionPresentersCreateAndRespondersViewOnly
 
 # TODO TEMP
