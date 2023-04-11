@@ -49,7 +49,7 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     }
-    console.log("POST")
+
     axios.post('http://localhost:8000/token/', user)
       .then(r => {
         console.log(r);
@@ -57,7 +57,7 @@ class Login extends Component {
         localStorage.setItem('access_token', r.data.access);
         localStorage.setItem('refresh_token', r.data.refresh);
 
-        window.location.href = '/'
+        window.location.href = '/presentation/'
       });
   };
 

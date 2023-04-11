@@ -8,6 +8,7 @@
  */
 // Main
 import React from "react";
+import axios from "axios";
 // Components
 import { Navbar } from "@frontend/common/build"
 import WelcomeCard from "../components/welcome-card";
@@ -19,13 +20,16 @@ import "../stylesheets/main.css"
 class Homescreen extends React.Component {
    constructor(props) {
        super(props);
+
+       if (localStorage.getItem('access_token') === null){
+           window.location.href = '/authentication/login'
+       }
+
        this.state = {
            user: {
-               email: "ewl0140@auburn.edu",
-               firstname: "Edward",
-               lastname: "Lewis",
-               prefix: "Dr.",
-               token: "",
+               email: "",
+               firstname: "",
+               lastname: "",
                quizzes: []
            }
        }
