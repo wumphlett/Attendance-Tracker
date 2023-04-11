@@ -170,6 +170,7 @@ class CASTokenObtainPairView(TokenViewBase):
 
 class APILoginView(cas_views.LoginView):
     def successful_login(self, request, next_page):
+        print(request.user)
         ticket = request.GET.get("ticket", "")
         print(next_page + f"?ticket={ticket}" if ticket else "")
         return HttpResponseRedirect(next_page + f"?ticket={ticket}" if ticket else "")

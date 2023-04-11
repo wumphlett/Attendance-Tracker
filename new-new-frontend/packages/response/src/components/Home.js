@@ -97,32 +97,33 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    if(localStorage.getItem('access_token') === null){
-      console.log("Executing...");
-      axios.get('/accounts/login/').then(r => {
-        console.log("Success");
-        console.log(r);
-      }).catch(r => {
-        console.log("Error");
-        console.log(r);
-      })
-
+    if(localStorage.getItem('access_token') === null) {
+      // TODO access token is expired but not null
       const queryParams = new URLSearchParams(window.location.search);
 
-      console.log(window.location);
+      if (queryParams.get("ticket") === null) {
+        // TODO properly do login ig
+        axios.get('/accounts/login/').then(r => {
+          console.log("Success");
+          console.log(r);
+        }).catch(r => {
+          console.log("Error");
+          console.log(r);
+        })
+      } else {
+        const user = {
+          ticket: queryParams.get("ticket"),
+          service: "https://api.auttend.com/accounts/login/?next=http%3A%2F%2Frespond.auttend.com%2F"
+        }
 
-      const user = {
-        ticket: queryParams.get("ticket"),
-        service: ""
+        axios.post('/token/', user)
+        .then(r => {
+          console.log(r);
+          localStorage.clear();
+          localStorage.setItem('access_token', r.data.access);
+          localStorage.setItem('refresh_token', r.data.refresh);
+        });
       }
-
-      axios.post('/token/', user)
-      .then(r => {
-        console.log(r);
-        localStorage.clear();
-        localStorage.setItem('access_token', r.data.access);
-        localStorage.setItem('refresh_token', r.data.refresh);
-      });
     }
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
