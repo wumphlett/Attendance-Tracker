@@ -50,15 +50,24 @@ class Login extends Component {
       password: this.state.password
     }
 
-    axios.post('http://localhost:8000/token/', user)
-      .then(r => {
-        console.log(r);
-        localStorage.clear();
-        localStorage.setItem('access_token', r.data.access);
-        localStorage.setItem('refresh_token', r.data.refresh);
+    console.log("Executing...");
+    axios.get('/accounts/login/').then(r => {
+      console.log("Success");
+      console.log(r);
+    }).catch(r => {
+      console.log("Error");
+      console.log(r);
+    })
 
-        window.location.href = '/'
-      });
+    // axios.post('http://localhost:8000/token/', user)
+    //   .then(r => {
+    //     console.log(r);
+    //     localStorage.clear();
+    //     localStorage.setItem('access_token', r.data.access);
+    //     localStorage.setItem('refresh_token', r.data.refresh);
+    //
+    //     window.location.href = '/'
+    //   });
   };
 
   render() {

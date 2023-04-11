@@ -463,6 +463,24 @@ python-jose = ["python-jose (==3.3.0)"]
 test = ["cryptography", "pytest", "pytest-cov", "pytest-django", "pytest-xdist", "tox"]
 
 [[package]]
+name = "djangorestframework-simplejwt-casng"
+version = "0.0.2"
+description = "A JSON Web Token authentication plugin for the Django REST Framework, integrated with CAS Authentication."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "djangorestframework_simplejwt_casng-0.0.2-py3-none-any.whl", hash = "sha256:e0cce00ce698f189f96435f45d0938dd34f724f1d74caec298ba3a7ce9210d48"},
+    {file = "djangorestframework_simplejwt_casng-0.0.2.tar.gz", hash = "sha256:dfb46508b80f180f29eb15fbd7956325fdfced28d47665b51b08703bc7efb1d3"},
+]
+
+[package.dependencies]
+django = ">=3.0"
+django-cas-ng = "*"
+djangorestframework = "*"
+djangorestframework-simplejwt = "*"
+
+[[package]]
 name = "hyperlink"
 version = "21.0.0"
 description = "A featureful, immutable, and correct URL for Python."
@@ -964,4 +982,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "321a3b21d79c794d6e33b0d8b9923a09c4f99bec4c8986d17b2171d7c4d2ee2b"
+content-hash = "407d14a25555e7b4ae936dc73937df6bba4d4eb8727d1547567283cf450102a7"
