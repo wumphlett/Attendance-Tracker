@@ -98,7 +98,31 @@ class Home extends Component {
     super(props);
 
     if(localStorage.getItem('access_token') === null){
-      window.location.href = '/login'
+      console.log("Executing...");
+      axios.get('/accounts/login/').then(r => {
+        console.log("Success");
+        console.log(r);
+      }).catch(r => {
+        console.log("Error");
+        console.log(r);
+      })
+
+      const queryParams = new URLSearchParams(window.location.search);
+
+      console.log(window.location.search);
+
+      const user = {
+        ticket: queryParams.get("ticket"),
+        service: ""
+      }
+
+      axios.post('http://localhost:8000/token/', user)
+      .then(r => {
+        console.log(r);
+        localStorage.clear();
+        localStorage.setItem('access_token', r.data.access);
+        localStorage.setItem('refresh_token', r.data.refresh);
+      });
     }
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;

@@ -44,8 +44,6 @@ class App extends Component {
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/logout" element={<Logout/>}/>
               </Routes>
             </BrowserRouter>
         </Card>
