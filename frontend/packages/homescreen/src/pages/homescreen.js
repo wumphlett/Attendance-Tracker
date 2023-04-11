@@ -2,13 +2,12 @@
  * homescreen.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 23 MAR 23
+ * @Version - 12 APR 23
  *
  * AUttendance home screen for professors
  */
 // Main
 import React from "react";
-import axios from "axios";
 // Components
 import { Navbar } from "@frontend/common/build"
 import WelcomeCard from "../components/welcome-card";
@@ -20,10 +19,6 @@ import "../stylesheets/main.css"
 class Homescreen extends React.Component {
    constructor(props) {
        super(props);
-
-       if (localStorage.getItem('access_token') === null){
-           window.location.href = '/authentication/login'
-       }
 
        this.state = {
            user: {
