@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from django.http import HttpResponseRedirect
+
 from rest_framework import mixins, status, viewsets
 from rest_framework import permissions
 from rest_framework.decorators import action
@@ -168,5 +170,6 @@ class CASTokenObtainPairView(TokenViewBase):
 
 class APILoginView(cas_views.LoginView):
     def successful_login(self, request, next_page):
-        print(request, next_page)
-        super().successful_login(request, next_page)
+        ticket = request.GET.get("ticket", "")
+        print(next_page + f"?ticket={ticket}" if ticket else "")
+        return HttpResponseRedirect(next_page + f"?ticket={ticket}" if ticket else "")
