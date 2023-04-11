@@ -162,8 +162,4 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 class APILoginView(cas_views.LoginView):
     def successful_login(self, request, next_page):
         refresh = RefreshToken.for_user(request.user)
-        response = HttpResponseRedirect(next_page)
-        response.set_cookie("refresh_token", refresh, samesite="Lax")
-        response.set_cookie("access_token", refresh.access_token, samesite="Lax")
-
-        return response
+        return HttpResponseRedirect(next_page + f"?refresh={refresh}&access={refresh.access_token}")
