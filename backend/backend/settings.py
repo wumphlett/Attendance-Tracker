@@ -32,11 +32,11 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", "api.auttend.com"]
 
 # Application definition
 
-CORS_ORIGIN_WHITELIST = [
+CORS_ALLOWED_ORIGINS = [
     'http://response.auttend.com'
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 
 INSTALLED_APPS = [

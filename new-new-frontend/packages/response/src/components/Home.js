@@ -116,7 +116,7 @@ class Home extends Component {
         service: ""
       }
 
-      axios.post('http://localhost:8000/token/', user)
+      axios.post('/token/', user)
       .then(r => {
         console.log(r);
         localStorage.clear();
