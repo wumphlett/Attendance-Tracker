@@ -6,6 +6,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from rest_framework_simplejwt.views import TokenViewBase
+from django_cas_ng import views as cas_views
 
 from . import models
 from . import serializers
@@ -163,3 +164,9 @@ class CASTokenObtainPairView(TokenViewBase):
     token pair to prove the authentication of those credentials.
     """
     serializer_class = CASTokenObtainPairSerializer
+
+
+class APILoginView(cas_views.LoginView):
+    def successful_login(self, request, next_page):
+        print(request, next_page)
+        super().successful_login(request, next_page)

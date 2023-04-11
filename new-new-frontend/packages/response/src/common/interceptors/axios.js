@@ -1,7 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = 'https://api.auttend.com/';
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 
 let refresh = false;

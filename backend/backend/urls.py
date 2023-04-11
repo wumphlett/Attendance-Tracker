@@ -4,13 +4,13 @@ from django.urls import include, path
 import django_cas_ng.views
 from rest_framework_simplejwt import views as jwt_views
 
-from attendance.views import CASTokenObtainPairView
+from attendance.views import CASTokenObtainPairView, APILoginView
 
 
 urlpatterns = [
     path('api/', include('attendance.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/login/', django_cas_ng.views.LoginView.as_view(), name='cas_ng_login'),
+    path('accounts/login/', APILoginView.as_view(), name='cas_ng_login'),
     path('accounts/logout/', django_cas_ng.views.LogoutView.as_view(), name='cas_ng_logout'),
     path('token/', CASTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
