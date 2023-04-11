@@ -4,7 +4,7 @@ from django.urls import include, path
 import django_cas_ng.views
 from rest_framework_simplejwt import views as jwt_views
 
-from ..attendance.views import CASTokenObtainPairView
+from backend.attendance import CASTokenObtainPairView
 
 
 urlpatterns = [
