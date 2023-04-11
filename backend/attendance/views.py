@@ -7,14 +7,13 @@ from rest_framework import permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from rest_framework_simplejwt.views import TokenViewBase
+from rest_framework_simplejwt.tokens import RefreshToken
 from django_cas_ng import views as cas_views
 
 from . import models
 from . import serializers
 from . import signals
 from .permissions import PresentersViewAndEditOnly, SessionPresentersCreateAndRespondersViewOnly
-from .serializers import CASTokenObtainPairSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -160,17 +159,11 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         return Response({"created": created}, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class CASTokenObtainPairView(TokenViewBase):
-    """
-    Takes a set of user credentials and returns an access and refresh JSON web
-    token pair to prove the authentication of those credentials.
-    """
-    serializer_class = CASTokenObtainPairSerializer
-
-
 class APILoginView(cas_views.LoginView):
     def successful_login(self, request, next_page):
-        print(request.user)
-        ticket = request.GET.get("ticket", "")
-        print(next_page + f"?ticket={ticket}" if ticket else "")
-        return HttpResponseRedirect(next_page + f"?ticket={ticket}" if ticket else "")
+        refresh = RefreshToken.for_user(request.user)
+        response = HttpResponseRedirect(next_page)
+        response.set_cookie("refresh_token", refresh, samesite="Lax")
+        response.set_cookie("access_token", refresh.access_token, samesite="Lax")
+
+        return response

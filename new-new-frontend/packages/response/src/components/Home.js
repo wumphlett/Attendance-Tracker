@@ -100,6 +100,7 @@ class Home extends Component {
     if(localStorage.getItem('access_token') === null) {
       // TODO access token is expired but not null
       const queryParams = new URLSearchParams(window.location.search);
+      console.log(document.cookie);
 
       if (queryParams.get("ticket") === null) {
         // TODO properly do login ig
