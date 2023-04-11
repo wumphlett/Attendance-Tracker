@@ -158,7 +158,7 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response({"created": created}, status=status.HTTP_201_CREATED, headers=headers)
 
-
+# TODO https://www.linkedin.com/pulse/integrate-django-cas-sso-ui-json-web-token-jwt-razaqa-dhafin-haffiyan/
 # TODO TEMP
 class LogoutView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
