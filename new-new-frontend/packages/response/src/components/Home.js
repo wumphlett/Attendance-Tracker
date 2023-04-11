@@ -109,7 +109,7 @@ class Home extends Component {
 
       const queryParams = new URLSearchParams(window.location.search);
 
-      console.log(window.location.search);
+      console.log(window.location);
 
       const user = {
         ticket: queryParams.get("ticket"),
