@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_cas_ng',
     'rest_framework_simplejwt.token_blacklist',
+    'djangorestframework_simplejwt_casng',
     'attendance',
     'sslserver',
 ]
