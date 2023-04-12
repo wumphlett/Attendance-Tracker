@@ -1,0 +1,15 @@
+.primary-dark-theme {
+    background-color: #131313;
+}
+
+.secondary-dark-theme {
+    background-color: #1f1f1f;
+}
+
+.card.primary-dark-theme {
+    background-color: #131313;
+}
+
+.card.secondary-dark-theme {
+    background-color: #1f1f1f;
+}
