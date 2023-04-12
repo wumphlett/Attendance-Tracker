@@ -172,7 +172,7 @@ class Home extends Component {
                   {[...Array(4)].map((x, i) =>
                     i < this.state.question.answer_set.length ? (
                       <Button bordered onClick={() => {
-                        axios.post('http://127.0.0.1:8000/api/responses/', {
+                        axios.post('https://api.auttend.com/api/responses/', {
                           session: this.state.sessionId,
                           answer: this.state.question.answer_set[i].id
                         }).then((r) => {

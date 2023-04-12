@@ -7,7 +7,7 @@ function App() {
         const queryParams = new URLSearchParams(window.location.search);
 
         if (queryParams.get("access") === null) {
-            window.location.href = 'https://api.auttend.com/accounts/login';
+            window.location.href = `https://api.auttend.com/accounts/login?next=${window.location.href}`;
         } else {
             localStorage.setItem('access_token', queryParams.get("access"));
             localStorage.setItem('refresh_token', queryParams.get("refresh"));

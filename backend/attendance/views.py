@@ -162,4 +162,5 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 class APILoginView(cas_views.LoginView):
     def successful_login(self, request, next_page):
         refresh = RefreshToken.for_user(request.user)
+        # TODO only add jwt token info if pres, resp, create
         return HttpResponseRedirect(next_page + f"?refresh={refresh}&access={refresh.access_token}")
