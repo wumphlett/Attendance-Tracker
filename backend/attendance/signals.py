@@ -6,6 +6,9 @@ from .models import User
 
 @receiver(cas_user_authenticated)
 def cas_user_authenticated_callback(sender, **kwargs):
+    attributes = kwargs["attributes"]
+    print(attributes)
+
     if not User.objects.filter(username=kwargs["username"]).first():
         user = kwargs["user"]
         # created = kwargs["created"]
