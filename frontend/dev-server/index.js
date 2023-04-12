@@ -11,6 +11,9 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+// Functions
+const { checkAuth, verifyAuth } = require('./authenticate');
+const {verify} = require("jsonwebtoken");
 
 // Configuration
 // const config = require('./config');
@@ -24,19 +27,12 @@ const homescreen = path.normalize(path.join(__dirname, '../packages/homescreen',
 const quiz_creation = path.normalize(path.join(__dirname, '../packages/quiz-creator', 'build'));
 
 // Configure build directories
-// app.use(express.static(public));
-app.use(express.static(homescreen));
-app.use(express.static(quiz_creation));
+// // app.use(express.static(public));
+// app.use(express.static(homescreen));
+// app.use(express.static(quiz_creation));
 
 
 app.get('/', (req, res) => {
-    // Send API request to see if user is logged in
-
-
-    // If not, redirect
-
-
-    // If logged in, send React
     res.sendFile(path.join(homescreen, 'index.html'));
 });
 
