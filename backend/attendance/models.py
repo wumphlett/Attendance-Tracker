@@ -10,7 +10,6 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=150, blank=False)
     is_presenter = models.BooleanField(default=False)
 
-    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
     objects = UserManager()

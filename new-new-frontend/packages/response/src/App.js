@@ -8,8 +8,6 @@ import 'ui-neumorphism/dist/index.css'
 
 import GlobalStyle from "./common/style/GlobalStyle";
 
-import Login from "./common/components/login";
-import Logout from "./common/components/logout";
 import Navigation from "./common/components/nav";
 
 import Home from "./components/Home";
@@ -44,8 +42,6 @@ class App extends Component {
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/logout" element={<Logout/>}/>
               </Routes>
             </BrowserRouter>
         </Card>

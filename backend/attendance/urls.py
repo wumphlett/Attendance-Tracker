@@ -13,6 +13,5 @@ router.register('responses', views.ResponseViewSet, basename="response")
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('logout', views.LogoutView.as_view(), name='logout'),
     path('auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

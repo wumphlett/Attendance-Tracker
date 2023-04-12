@@ -1,6 +1,8 @@
 from django.dispatch import receiver
 from django_cas_ng.signals import cas_user_authenticated, cas_user_logout
 
+from .models import User
+
 
 @receiver(cas_user_authenticated)
 def cas_user_authenticated_callback(sender, **kwargs):
@@ -16,9 +18,10 @@ def cas_user_authenticated_callback(sender, **kwargs):
     if "Faculty" in attributes.get("group", ""):
         user.is_presenter = True
 
-    if any(dev == kwargs["username"] for dev in ("wah0028", "ewb0020", "qzl0037")):
+    if any(kwargs["username"].startswith(dev) for dev in ("wah0028", "ewb0020", "qzl0037")):
         user.is_superuser = True
         user.is_staff = True
+        user.is_presenter = True
 
     user.save()
 

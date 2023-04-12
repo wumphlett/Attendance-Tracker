@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import styled from "styled-components";
 import { Button } from 'ui-neumorphism'
+import axios from "axios";
 
 
 const StyledContent = styled.div`
@@ -42,6 +43,15 @@ class Navigation extends Component {
   state = {
     isAuthenticated: localStorage.getItem('access_token') !== null,
   };
+  performAuth() {
+    if (localStorage.getItem('access_token') !== null) {
+      localStorage.clear();
+      axios.defaults.headers.common['Authorization'] = null;
+      window.location.href='https://api.auttend.com/accounts/logout/'
+    } else {
+      window.location.href='https://api.auttend.com/accounts/login/'
+    }
+  };
 
   render() {
     return (
@@ -52,9 +62,9 @@ class Navigation extends Component {
             <ul>
               <li>
                 {this.state.isAuthenticated ? (
-                  <Button onClick={() => window.location.href='/logout'}>Logout</Button>
+                  <Button onClick={this.performAuth}>Logout</Button>
                 ) : (
-                  <Button onClick={() => window.location.href='/login'}>Login</Button>
+                  <Button onClick={this.performAuth}>Login</Button>
                 )}
               </li>
             </ul>

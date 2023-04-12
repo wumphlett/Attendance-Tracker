@@ -32,11 +32,12 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", "api.auttend.com"]
 
 # Application definition
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000'
+CORS_ALLOWED_ORIGINS = [
+    'http://response.auttend.com'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = DEBUG
 
 INSTALLED_APPS = [
     'daphne',
@@ -84,6 +85,10 @@ AUTHENTICATION_BACKENDS = (
 
 CAS_SERVER_URL = 'https://authenticate.auburn.edu/cas/'
 CAS_VERSION = '3'
+
+CAS_USERNAME_ATTRIBUTE = "email"
+CAS_CHECK_NEXT = False
+CAS_RENEW = True
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -174,3 +179,4 @@ SIMPLE_JWT = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+SECURE_SSL_REDIRECT = False

@@ -1,7 +1,10 @@
 import string
 
+from django.contrib.auth import authenticate
 from django.utils.crypto import get_random_string
-from rest_framework import serializers
+from rest_framework import exceptions, serializers
+
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import models
 
@@ -9,31 +12,31 @@ from . import models
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.User
-        fields = ['url', 'first_name', 'last_name', 'email']
+        fields = ['id', 'first_name', 'last_name', 'email']
 
 
 class PresentationListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Presentation
-        fields = ['url', 'name', 'description']
+        fields = ['id', 'name', 'description']
 
 
 class QuestionListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Question
-        fields = ['url', 'text']
+        fields = ['id', 'text']
 
 
 class AnswerListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Answer
-        fields = ['url', 'symbol', 'text', 'is_correct']
+        fields = ['id', 'symbol', 'text', 'is_correct']
 
 
 class SessionListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Session
-        fields = ['url', 'join_code', 'start_time', 'end_time']
+        fields = ['id', 'join_code', 'start_time', 'end_time']
 
 
 class PresentationDetailSerializer(serializers.HyperlinkedModelSerializer):
@@ -41,7 +44,7 @@ class PresentationDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Presentation
-        fields = ['url', 'name', 'description', 'question_set']
+        fields = ['id', 'name', 'description', 'question_set']
 
 
 class QuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
@@ -49,13 +52,13 @@ class QuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Question
-        fields = ['url', 'presentation', 'index', 'text', 'answer_set']
+        fields = ['id', 'presentation', 'index', 'text', 'answer_set']
 
 
 class AnswerDetailSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Answer
-        fields = ['url', 'question', 'index', 'symbol', 'text', 'is_correct']
+        fields = ['id', 'question', 'index', 'symbol', 'text', 'is_correct']
 
 
 class SessionDetailSerializer(serializers.HyperlinkedModelSerializer):
@@ -63,7 +66,7 @@ class SessionDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Session
-        fields = ['url', 'presentation', 'current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
+        fields = ['id', 'presentation', 'current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
         read_only_fields = ['current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
 
     def validate(self, data, **kwargs):
@@ -117,13 +120,13 @@ class AnswerUpdateSerializer(serializers.HyperlinkedModelSerializer):
 class SessionJoinSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Session
-        fields = ['url']
+        fields = ['id']
 
 
 class ResponderAnswerListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Answer
-        fields = ['url', 'index', 'symbol']
+        fields = ['id', 'index', 'symbol']
 
 
 class ResponderQuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
@@ -131,7 +134,7 @@ class ResponderQuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Question
-        fields = ['url', 'index', 'answer_set']
+        fields = ['id', 'index', 'answer_set']
 
 
 class ResponderSessionSerializer(serializers.HyperlinkedModelSerializer):
@@ -139,4 +142,4 @@ class ResponderSessionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Session
-        fields = ['url', 'current_question', 'is_accepting_responses', 'start_time', 'end_time']
+        fields = ['id', 'current_question', 'is_accepting_responses', 'start_time', 'end_time']

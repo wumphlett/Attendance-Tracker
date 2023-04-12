@@ -97,8 +97,17 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    if(localStorage.getItem('access_token') === null){
-      window.location.href = '/login'
+    if(localStorage.getItem('access_token') === null) {
+      // TODO access token is expired but not null
+      const queryParams = new URLSearchParams(window.location.search);
+
+      if (queryParams.get("access") === null) {
+        window.location.href = 'https://api.auttend.com/accounts/login/';
+      } else {
+        localStorage.setItem('access_token', queryParams.get("access"));
+        localStorage.setItem('refresh_token', queryParams.get("refresh"));
+        window.location.href = '/';
+      }
     }
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
@@ -116,7 +125,7 @@ class Home extends Component {
   updateSlide = (data) => {
     this.setState(
       {
-        sessionId: data.url,
+        sessionId: data.id,
         question: data.current_question,
         isAcceptingResponses: data.is_accepting_responses,
         endTime: data.end_time,
@@ -126,12 +135,12 @@ class Home extends Component {
 
   onJoinClicked = (e) => {
     e.preventDefault();
-    axios.get('http://127.0.0.1:8000/api/sessions/join/', {params: {token: this.state.joinCode}})
+    axios.get('https://api.auttend.com/api/sessions/join/', {params: {token: this.state.joinCode}})
       .then((r) => {
-        let sessionId = r.data.url;
-        this.client = new W3CWebSocket("ws://127.0.0.1:8000/ws/" + this.state.joinCode + "/");
+        let sessionId = r.data.id;
+        this.client = new W3CWebSocket("wss://api.auttend.com/ws/" + this.state.joinCode + "/");
         this.addClientHandlers();
-        axios.get(`${sessionId}respond/`)
+        axios.get(`https://api.auttend.com/api/sessions/${sessionId}/respond/`)
           .then((r) => {
             this.updateSlide(r.data);
           });
@@ -165,7 +174,7 @@ class Home extends Component {
                       <Button bordered onClick={() => {
                         axios.post('http://127.0.0.1:8000/api/responses/', {
                           session: this.state.sessionId,
-                          answer: this.state.question.answer_set[i].url
+                          answer: this.state.question.answer_set[i].id
                         }).then((r) => {
                           if (r.data["created"]) {
                             this.client.send(

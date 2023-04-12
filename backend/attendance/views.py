@@ -1,19 +1,19 @@
 from datetime import datetime
 
+from django.http import HttpResponseRedirect
+
 from rest_framework import mixins, status, viewsets
 from rest_framework import permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from rest_framework_simplejwt.tokens import RefreshToken
+from django_cas_ng import views as cas_views
+
 from . import models
 from . import serializers
 from . import signals
 from .permissions import PresentersViewAndEditOnly, SessionPresentersCreateAndRespondersViewOnly
-
-# TODO TEMP
-from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken
-# TODO TEMP
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -158,16 +158,8 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response({"created": created}, status=status.HTTP_201_CREATED, headers=headers)
 
-# TODO https://www.linkedin.com/pulse/integrate-django-cas-sso-ui-json-web-token-jwt-razaqa-dhafin-haffiyan/
-# TODO TEMP
-class LogoutView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
 
-    def post(self, request):
-        try:
-            refresh_token = request.data["refresh_token"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+class APILoginView(cas_views.LoginView):
+    def successful_login(self, request, next_page):
+        refresh = RefreshToken.for_user(request.user)
+        return HttpResponseRedirect(next_page + f"?refresh={refresh}&access={refresh.access_token}")
