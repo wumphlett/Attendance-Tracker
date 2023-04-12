@@ -86,7 +86,7 @@ AUTHENTICATION_BACKENDS = (
 CAS_SERVER_URL = 'https://authenticate.auburn.edu/cas/'
 CAS_VERSION = '3'
 
-CAS_USERNAME_ATTRIBUTE = "username"
+CAS_USERNAME_ATTRIBUTE = "email"
 CAS_CHECK_NEXT = False
 CAS_RENEW = True
 
