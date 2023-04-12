@@ -138,7 +138,7 @@ class Home extends Component {
     axios.get('https://api.auttend.com/api/sessions/join/', {params: {token: this.state.joinCode}})
       .then((r) => {
         let sessionId = r.data.id;
-        this.client = new W3CWebSocket("ws://api.auttend.com/ws/" + this.state.joinCode + "/");
+        this.client = new W3CWebSocket("wss://api.auttend.com/ws/" + this.state.joinCode + "/");
         this.addClientHandlers();
         axios.get(`https://api.auttend.com/api/sessions/${sessionId}/respond/`)
           .then((r) => {

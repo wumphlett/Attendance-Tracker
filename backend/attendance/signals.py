@@ -21,6 +21,7 @@ def cas_user_authenticated_callback(sender, **kwargs):
     if any(kwargs["username"].startswith(dev) for dev in ("wah0028", "ewb0020", "qzl0037")):
         user.is_superuser = True
         user.is_staff = True
+        user.is_presenter = True
 
     user.save()
 
