@@ -8,7 +8,6 @@
  */
 // Main
 import React from "react";
-import axios from "axios";
 // Components
 import { Navbar } from "@frontend/common/build"
 import WelcomeCard from "../components/welcome-card";

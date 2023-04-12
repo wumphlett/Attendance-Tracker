@@ -30,8 +30,16 @@ app.use(express.static(quiz_creation));
 
 
 app.get('/', (req, res) => {
+    // Send API request to see if user is logged in
+
+
+    // If not, redirect
+
+
+    // If logged in, send React
     res.sendFile(path.join(homescreen, 'index.html'));
 });
+
 
 app.get('/create', (req, res) => {
     res.sendFile(path.join(quiz_creation, 'index.html'));
