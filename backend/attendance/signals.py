@@ -10,6 +10,7 @@ def cas_user_authenticated_callback(sender, **kwargs):
         user = kwargs["user"]
         # created = kwargs["created"]
         attributes = kwargs["attributes"]
+        print(attributes)
 
         user.username = kwargs["username"]
         user.email = attributes["email"]
