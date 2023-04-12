@@ -8,7 +8,6 @@ import 'ui-neumorphism/dist/index.css'
 
 import GlobalStyle from "./common/style/GlobalStyle";
 
-import Login from "./common/components/login";
 import Logout from "./common/components/logout";
 import Navigation from "./common/components/nav";
 
@@ -33,11 +32,6 @@ class App extends Component {
     joinCode: "",
   };
 
-  constructor() {
-    super();
-    console.log(window.location);
-  }
-
   render() {
     return (
     <div id="main">
@@ -46,7 +40,12 @@ class App extends Component {
         <Card className="main-card">
             <Navigation></Navigation>
             <Divider dense className='mt-1 mb-3' />
-            <Home/>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/logout" element={<Logout/>}/>
+              </Routes>
+            </BrowserRouter>
         </Card>
       </StyledContent>
     </div>

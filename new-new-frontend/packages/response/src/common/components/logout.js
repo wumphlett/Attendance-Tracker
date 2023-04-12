@@ -9,10 +9,10 @@ class Logout extends Component {
     super(props);
 
     try {
-      const data = axios.post('http://localhost:8000/api/logout/', {refresh_token: localStorage.getItem('refresh_token')});
+      const data = axios.post('https://api.auttend.com/api/logout/', {refresh_token: localStorage.getItem('refresh_token')});
       localStorage.clear();
       axios.defaults.headers.common['Authorization'] = null;
-      window.location.href = '/login'
+      window.location.href = '/'
     } catch (e) {
 
     }

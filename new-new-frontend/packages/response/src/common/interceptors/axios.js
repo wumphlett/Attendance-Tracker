@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = 'https://api.auttend.com/';
+// axios.defaults.baseURL = 'https://api.auttend.com/api/';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 
@@ -11,7 +11,7 @@ axios.interceptors.response.use(resp => resp, async error => {
   if (error.response.status === 403 && !refresh) {
       refresh = true;
 
-    const response = await axios.post('http://localhost:8000/token/refresh/', {
+    const response = await axios.post('https://api.auttend.com/token/refresh/', {
       refresh:localStorage.getItem('refresh_token')
     });
 

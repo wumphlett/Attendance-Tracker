@@ -54,7 +54,7 @@ class Navigation extends Component {
                 {this.state.isAuthenticated ? (
                   <Button onClick={() => window.location.href='/logout'}>Logout</Button>
                 ) : (
-                  <Button onClick={() => window.location.href='/login'}>Login</Button>
+                  <Button onClick={() => window.location.href='https://api.auttend.com/accounts/login/'}>Login</Button>
                 )}
               </li>
             </ul>
