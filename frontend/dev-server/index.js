@@ -45,7 +45,7 @@ app.get('/create', (req, res) => {
     res.sendFile(path.join(quiz_creation, 'index.html'));
 });
 
-app.listen(3000, () => {
-    console.log("Listening on port 3000");
+app.listen(80, () => {
+    console.log("Listening on port 80");
 })
 
