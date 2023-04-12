@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn install && cd packages/common && yarn run build && cd ../homescreen && yarn build && cd ../quiz-creator && yarn build && cd ../authentication && yarn build && cd ../presentation && yarn build",
+    "build": "yarn install && cd packages/common && yarn run build && cd ../homescreen && yarn build && cd ../quiz-creator && yarn build",
     "dev-server": "yarn run build && cd ./dev-server && npm start"
   },
   "dependencies": {
