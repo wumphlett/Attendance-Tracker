@@ -12,9 +12,6 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 // Functions
-const { checkAuth, verifyAuth } = require('./authenticate');
-const {verify} = require("jsonwebtoken");
-
 // Configuration
 // const config = require('./config');
 
