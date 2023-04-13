@@ -28,8 +28,8 @@ const quiz_creation = path.normalize(path.join(__dirname, '../packages/quiz-crea
 
 // Configure build directories
 // // app.use(express.static(public));
-// app.use(express.static(homescreen));
-// app.use(express.static(quiz_creation));
+app.use(express.static(homescreen));
+app.use(express.static(quiz_creation));
 
 
 app.get('/', (req, res) => {
