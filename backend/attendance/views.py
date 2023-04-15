@@ -16,6 +16,14 @@ from . import signals
 from .permissions import PresentersViewAndEditOnly, SessionPresentersCreateAndRespondersViewOnly
 
 
+from django.views.decorators.csrf import csrf_exempt
+import os
+import time
+from django.shortcuts import render
+from django.http import HttpResponseBadRequest, HttpResponse
+from django.views import View
+
+
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.UserSerializer
     permission_classes = [permissions.IsAdminUser]
@@ -163,3 +171,44 @@ class APILoginView(cas_views.LoginView):
     def successful_login(self, request, next_page):
         refresh = RefreshToken.for_user(request.user)
         return HttpResponseRedirect(next_page + f"?refresh={refresh}&access={refresh.access_token}")
+
+
+
+class Upload_picture(View):
+
+    @csrf_exempt
+    def pic_upload(request):
+        if request.method == 'POST' and request.FILES.get('image'):
+            image_file = request.FILES['image']
+            if not image_file.name.lower().endswith(('.png', '.jpg', '.jpeg')):
+                return HttpResponseBadRequest('Unsupported file type')
+
+            file_name = save_uploaded_file(image_file)
+
+            image = models.UploadedPicture.objects.create(
+                original_name=image_file.name,
+                renamed_name=file_name,
+                size=image_file.size
+            )
+            return HttpResponse(image.renamed_name)
+        else:
+            return render(request, 'first/pic_upload.html')
+
+
+
+def save_uploaded_file(file):
+    directory = 'uploads'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    new_name = generate_unique_name(file.name)
+    file_path = os.path.join(directory, new_name)
+    with open(file_path, 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+    return new_name
+
+
+def generate_unique_name(original_name):
+    timestamp = str(int(time.time()))
+    return f'{timestamp}_{original_name}'

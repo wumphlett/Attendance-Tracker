@@ -4,7 +4,7 @@ from django.urls import include, path
 import django_cas_ng.views
 from rest_framework_simplejwt import views as jwt_views
 
-from attendance.views import APILoginView
+from attendance.views import APILoginView, Upload_picture
 
 
 urlpatterns = [
@@ -15,4 +15,5 @@ urlpatterns = [
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_verify'),
+    path('pic_upload/', Upload_picture.pic_upload, name='Pic_upload'),
 ]

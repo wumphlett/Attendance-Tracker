@@ -84,3 +84,13 @@ class Response(models.Model):
 
     class Meta:
         verbose_name = "Response"
+
+
+class UploadedPicture(models.Model):
+    username = models.CharField(max_length=30, unique=True, default='')
+    original_name = models.CharField(max_length=255)
+    renamed_name = models.CharField(max_length=255, unique=True)
+    size = models.IntegerField()
+
+    def __str__(self):
+        return self.original_name
