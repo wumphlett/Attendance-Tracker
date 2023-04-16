@@ -17,31 +17,32 @@ import "../stylesheets/main.css"
 class QuizCard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { quiz: props.quiz, quizzes: props.quizzes }
+        this.state = { presentation: props.presentation, presentations: props.presentations }
         this.setUserState = props.setUserState
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
-            return { quiz: nextProps.quiz, quizzes: nextProps.quizzes }
+            return { presentation: nextProps.presentation, presentations: nextProps.presentations }
         }
     }
 
     render() {
-
+        console.log(this.state);
         return (
             <div className={"card card-body quiz-card primary-dark-theme mt-1 d-flex flex-row justify-content-center"}>
-                <h3 className={"text-dark-theme"}>{this.state.quiz.title}</h3>
+                <h3 className={"text-dark-theme"}>{this.state.presentation.name}</h3>
 
                 <div className={"quiz-options pb-0"}>
                     <button className={"btn btn-success mb-0 mx-1"}>Launch</button>
                     <button className={"btn btn-primary mb-0 mx-1"}>Edit</button>
                     <button className={"btn btn-danger mb-0 mx-1"} onClick={
-                        () => deleteQuiz(this.state.quiz, this.state.quizzes, this.setUserState)
+                        () => deleteQuiz(this.state.presentation, this.state.presentations, this.setUserState)
                     }>Delete</button>
                 </div>
                 <div className={"card primary-dark-theme question-count-card px-2"}>
-                    <p className={"m-0 p-0 text-dark-theme"}>{this.state.quiz.questions.length} Questions</p>
+                    {/*<p className={"m-0 p-0 text-dark-theme"}>{this.state.quiz.questions.length} Questions</p>*/}
+                    <p className={"m-0 p-0 text-dark-theme"}>0 Questions</p>
                 </div>
             </div>
         )

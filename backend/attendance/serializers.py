@@ -15,10 +15,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['first_name', 'last_name', 'email']
 
 
-class PresentationListSerializer(serializers.HyperlinkedModelSerializer):
+class AnswerListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = models.Presentation
-        fields = ['id', 'name', 'description']
+        model = models.Answer
+        fields = ['id', 'symbol', 'text', 'is_correct']
 
 
 class QuestionListSerializer(serializers.HyperlinkedModelSerializer):
@@ -27,10 +27,12 @@ class QuestionListSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'text']
 
 
-class AnswerListSerializer(serializers.HyperlinkedModelSerializer):
+class PresentationListSerializer(serializers.HyperlinkedModelSerializer):
+    question_set = QuestionListSerializer(many=True, read_only=True)
+
     class Meta:
-        model = models.Answer
-        fields = ['id', 'symbol', 'text', 'is_correct']
+        model = models.Presentation
+        fields = ['id', 'name', 'description', 'question_set.__len__']
 
 
 class SessionListSerializer(serializers.HyperlinkedModelSerializer):

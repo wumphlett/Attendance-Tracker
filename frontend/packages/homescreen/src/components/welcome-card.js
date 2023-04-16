@@ -15,15 +15,23 @@ import "../stylesheets/main.css"
 class WelcomeCard extends React.Component {
     constructor(props) {
         super(props);
-        this.prefix = props.prefix;
-        this.lastname = props.lastname;
+
+        this.state = {
+            user: this.props.user
+        }
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            return { user: nextProps.user }
+        }
     }
 
     render() {
         return (
             <div className={"card card-flex secondary-dark-theme"}>
                 <div className={"card-body text-center"}>
-                    <h2 className={"text-dark-theme"}><strong>Welcome, {this.prefix + " " + this.lastname}</strong></h2>
+                    <h2 className={"text-dark-theme"}><strong>Welcome, {this.state.user.first_name + " " + this.state.user.last_name}</strong></h2>
                 </div>
             </div>
         )

@@ -20,14 +20,14 @@ class QuizList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            quizzes: props.quizzes,
+            presentations: props.presentations,
         }
         this.setUserState = props.setUserState
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
-            return { quizzes: nextProps.quizzes }
+            return { presentations: nextProps.presentations }
 
         }
     }
@@ -39,7 +39,7 @@ class QuizList extends React.Component {
                 <div className={"card card-body primary-dark-theme button-card btn"}
                     onClick={() => {
                         createQuiz(
-                            this.state.quizzes,
+                            this.state.presentations,
                             this.setUserState
                         )
                     }}>
@@ -52,25 +52,24 @@ class QuizList extends React.Component {
             <div className={"card secondary-dark-theme p-2 d-flex flex-column overflow-auto"} style={{ flex: 1 }}>
                 <div className={"d-flex justify-content-center align-self-center"}>
                     <div className={"card primary-dark-theme pt-1 pb-0 px-3 text-center d-inline-block"}>
-                        <h3 className={"text-dark-theme"}><strong>Quizzes</strong></h3>
+                        <h3 className={"text-dark-theme"}><strong>Presentations</strong></h3>
                     </div>
                 </div>
                 <div className={"d-flex flex-column overflow-auto"} style={{ flex: 1 }}>
                     <div className={"card secondary-dark-theme list-card d-flex flex-column mt-2 overflow-auto"} style={{ flex: 1 }}>
                         <div className={"container-fluid quiz-list overflow-auto p-2"}>
                             <div className={"d-inline-block pe-2"}>
-                                {this.state.quizzes.map((quiz, index) => (
+                                {this.state.presentations.map((presentation, index) => (
                                     <div key={index}>
                                         <QuizCard
-                                            quiz={quiz}
-                                            quizzes={this.state.quizzes}
+                                            presentation={presentation}
+                                            presentations={this.state.presentations}
                                             setUserState={this.setUserState}
                                         />
                                     </div>
                                 ))}
                                 <CreateQuizButton />
                             </div>
-
                         </div>
                     </div>
                 </div>

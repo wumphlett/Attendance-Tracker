@@ -66,8 +66,8 @@ class Answer(models.Model):
 
 
 class Session(models.Model):
-    presentation = models.ForeignKey(Presentation, on_delete=models.PROTECT)
-    current_question = models.ForeignKey(Question, on_delete=models.PROTECT, null=True, blank=True)
+    presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
+    current_question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, blank=True)
     is_accepting_responses = models.BooleanField(default=False)
     join_code = models.CharField(max_length=5, unique=True, null=True, blank=True)
     start_time = models.DateTimeField(auto_now_add=True, editable=False)
@@ -78,9 +78,9 @@ class Session(models.Model):
 
 
 class Response(models.Model):
-    session = models.ForeignKey(Session, on_delete=models.PROTECT)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
-    answer = models.ForeignKey(Answer, on_delete=models.PROTECT)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Response"
