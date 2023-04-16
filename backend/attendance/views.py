@@ -41,7 +41,7 @@ class PresentationViewSet(viewsets.ModelViewSet):
         serializer.save(owner=self.request.user)
 
     def list(self, request, *args, **kwargs):
-        serializer = self.serializer_class(self.queryset)
+        serializer = self.get_serializer_class()(self.queryset, context={'request': request})
         return Response({"presentations": serializer.data})
 
 
