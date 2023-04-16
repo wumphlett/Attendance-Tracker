@@ -40,6 +40,10 @@ class PresentationViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    def list(self, request, *args, **kwargs):
+        serializer = self.get_serializer_class()(self.get_queryset(), context={'request': request}, many=True)
+        return Response({"presentations": serializer.data})
+
 
 class QuestionViewSet(
     mixins.CreateModelMixin,
