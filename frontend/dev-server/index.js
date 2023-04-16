@@ -22,11 +22,15 @@ let app = express();
 const public = path.normalize(path.join(__dirname, './public'));
 const homescreen = path.normalize(path.join(__dirname, '../packages/homescreen', 'build'));
 const quiz_creation = path.normalize(path.join(__dirname, '../packages/quiz-creator', 'build'));
+const presentation = path.normalize(path.join(__dirname, '../packages/presentation', 'build'));
+const response = path.normalize(path.join(__dirname, '../packages/response', 'build'));
 
 // Configure build directories
 // // app.use(express.static(public));
 app.use(express.static(homescreen));
 app.use(express.static(quiz_creation));
+app.use(express.static(presentation));
+app.use(express.static(response));
 
 
 app.get('/', (req, res) => {
@@ -36,6 +40,14 @@ app.get('/', (req, res) => {
 
 app.get('/create', (req, res) => {
     res.sendFile(path.join(quiz_creation, 'index.html'));
+});
+
+app.get('/presentation', (req, res) => {
+    res.sendFile(path.join(presentation, 'index.html'));
+});
+
+app.get('/response', (req, res) => {
+    res.sendFile(path.join(response, 'index.html'));
 });
 
 app.listen(80, () => {
