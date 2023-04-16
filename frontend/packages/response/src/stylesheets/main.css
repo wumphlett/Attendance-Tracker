@@ -1,0 +1,32 @@
+.primary-dark-theme {
+    background-color: #131313;
+}
+
+.secondary-dark-theme {
+    background-color: #1f1f1f;
+}
+
+.card.primary-dark-theme {
+    background-color: #131313;
+}
+
+.card.secondary-dark-theme {
+    background-color: #1f1f1f;
+}
+
+.content {
+    height: calc(100vh - 60px);
+    margin-top: 60px;
+    flex-direction: column;
+}
+
+.card.question-card {
+    /*max-width: 50vw;*/
+    margin-left: auto;
+    margin-right: auto;
+    flex: 1;
+}
+
+.text-dark-theme {
+    color: floralwhite;
+}

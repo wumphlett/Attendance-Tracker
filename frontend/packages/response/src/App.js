@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React from "react";
+import Response from "./pages/response";
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     } else {
       localStorage.setItem('access_token', queryParams.get("access"));
       localStorage.setItem('refresh_token', queryParams.get("refresh"));
-      window.location.href = '/'
+      window.location.href = '/response/'
     }
   }
   return (
@@ -22,7 +23,9 @@ function App() {
               <h3>Redirecting to AUthenticate...</h3>
             </div>
         ) : (
-            <div></div>
+            <div>
+              <Response />
+            </div>
         )}
       </div>
   )
