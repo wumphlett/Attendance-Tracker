@@ -42,7 +42,7 @@ class PresentationViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         serializer = self.get_serializer_class()(self.get_queryset(), context={'request': request}, many=True)
-        return Response({"presentations": serializer.data, "user": serializers.UserSerializer(request.user, context={'request': request})})
+        return Response({"presentations": serializer.data, "user": serializers.UserSerializer(request.user, context={'request': request}).data})
 
 
 class QuestionViewSet(
