@@ -16,7 +16,13 @@ function App() {
     }
     return (
         <div>
-            <Homescreen />
+            {localStorage.getItem('access_token') === null ? (
+                <div>
+                    <h3>Redirecting to AUthenticate...</h3>
+                </div>
+            ) : (
+                <Homescreen />
+            )}
         </div>
     )
 }
