@@ -11,11 +11,13 @@
 import React from "react";
 import axios from "axios";
 // Components
+import { Navbar } from "@frontend/common/build"
+import JoinForm from "./join";
 // Functions
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"
-import { Navbar } from "@frontend/common/build"
+import Join from "./join";
 
 class Response extends React.Component {
     constructor(props) {
@@ -27,7 +29,11 @@ class Response extends React.Component {
             <div className={"primary-dark-theme"}>
                 <Navbar />
                 <div className={"content"}>
-                    <div className={"p-2 h-100"}></div>
+                    <div className={"p-2 h-100"}>
+                        {/* Join Code */}
+                        <JoinForm />
+                        {/* Response Form */}
+                    </div>
                 </div>
             </div>
         )
