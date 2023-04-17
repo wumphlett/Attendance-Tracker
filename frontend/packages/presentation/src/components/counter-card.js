@@ -17,12 +17,22 @@ import "../stylesheets/presentation.css"
 class CounterCard extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            currentlyJoined: props.currentlyJoined,
+            classSize: 0
+        }
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            return { currentlyJoined: nextProps.currentlyJoined }
+        }
     }
 
     render() {
         return (
-            <div className={"card label-card primary-dark-theme col-12 pt-1 pb-0 px-3 text-center d-inline-block"}>
-                <h3 className={"text-dark-theme"}><strong>Join this Quiz</strong></h3>
+            <div className={"card label-card secondary-dark-theme pt-1 pb-0 px-3 text-center d-inline-block"}>
+                <h3 className={"text-dark-theme"}><strong>Currently Joined: {this.state.currentlyJoined}</strong></h3>
             </div>
         )
     }

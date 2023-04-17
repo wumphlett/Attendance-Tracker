@@ -11,6 +11,7 @@ import React from "react";
 // Components
 import { Navbar } from "@frontend/common/build"
 import CodeDisplay from "./join";
+import CounterCard from "../components/counter-card";
 // Functions
 // Stylesheets
 import "../stylesheets/presentation.css"
@@ -37,10 +38,13 @@ class Presentation extends React.Component {
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
                         {/* Join Code */}
-                        <div className={"h-100 d-flex align-self-center justify-content-center"}>
+                        <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
                             <CodeDisplay />
+                            {/* Active Users*/}
+                            <CounterCard
+                                currentlyJoined={0}
+                            />
                         </div>
-                        {/* Active Users*/}
                     </div>
                 </div>
             </div>

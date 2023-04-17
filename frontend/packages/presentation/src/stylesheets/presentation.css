@@ -54,6 +54,7 @@
     border: 2px solid rgba(255, 250, 240, .4);
     background: darkorange;
     justify-content: center;
+    color: floralwhite;
 }
 
 .card.join-button {
@@ -77,6 +78,6 @@
     outline: none;
 }
 
-.text-dark-theme {
+.card.text-dark-theme {
     color: floralwhite;
 }
