@@ -10,7 +10,7 @@
 import axios from "axios";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
-export function joinAsPresenter(joinCode, client, addClientHandlers, updateSlide) {
+export function joinAsPresenter(joinCode, setSessionId) {
     axios.get('sessions/join/', {params: {token: joinCode}})
         .then((r) => {
             let sessionId = r.data.id;
@@ -19,7 +19,7 @@ export function joinAsPresenter(joinCode, client, addClientHandlers, updateSlide
             // addClientHandlers();
             axios.get(`sessions/${sessionId}/`)
                 .then((r) => {
-                    updateSlide(r.data);
+                    setSessionId(r.data.id);
                 });
         });
 }
