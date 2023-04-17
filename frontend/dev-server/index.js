@@ -38,11 +38,11 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/create', (req, res) => {
+app.get('/create/*', (req, res) => {
     res.sendFile(path.join(quiz_creation, 'index.html'));
 });
 
-app.get('/presentation', (req, res) => {
+app.get('/presentation/*', (req, res) => {
     res.sendFile(path.join(presentation, 'index.html'));
 });
 
