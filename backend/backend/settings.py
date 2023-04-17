@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = ["api.auttend.com", "52.54.81.80"]
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 

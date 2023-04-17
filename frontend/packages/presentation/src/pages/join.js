@@ -21,7 +21,7 @@ class CodeDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            joinCode: "SZXWS",
+            joinCode: "JNPEH",
             responseCount: 0
         }
         this.setSessionId = props.setSessionId;
