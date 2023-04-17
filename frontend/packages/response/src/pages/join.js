@@ -1,7 +1,7 @@
 /**
  * join.js
  *
- * @Author - Will Humphlett - wah0028@auburn.edu
+ * @Author - Will Humphlett - will@humphlett.net
  * @Author - Ethan Brown - ewbrowntech@gmail.com
  * @Version - 16 APR 23
  *
@@ -14,6 +14,7 @@ import React from "react";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"
+import {createQuestion} from "quiz-creator/src/functions/createQuestion";
 
 class JoinForm extends React.Component {
     constructor(props) {
@@ -35,13 +36,13 @@ class JoinForm extends React.Component {
 
     render() {
         return (
-            <div className={"card join-form-card secondary-dark-theme col-12 col-md-6 h-100 p-2"}>
+            <div className={"card d-inline-block join-form-card secondary-dark-theme p-4"}>
                 <form>
                     <div className={"d-flex justify-content-center flex-column align-self-center"}>
                         <div className={"card label-card primary-dark-theme pt-1 pb-0 px-3 text-center d-inline-block"}>
                             <h3 className={"text-dark-theme"}><strong>Join a Quiz</strong></h3>
                         </div>
-                        <div className={"col-6 card code-entry-card mt-2 pt- pb-0 px-3 text-center d-inline-block"}>
+                        <div className={"col-8 card code-entry-card mt-3 pb-0 px-3 text-center d-inline-block"}>
                             <input
                                 className={"code-entry-input"}
                                 type={"text"}
@@ -53,6 +54,7 @@ class JoinForm extends React.Component {
                                 onChange={this.handleInputChange}
                             />
                         </div>
+                        <div className="card btn button-card join-button primary-dark-theme text-dark-theme mt-3 align-self-center">Join</div>
                     </div>
                 </form>
             </div>

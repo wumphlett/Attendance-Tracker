@@ -1,7 +1,7 @@
 /**
  * response.js
  *
- * @Author - Will Humphlett - wah0028@auburn.edu
+ * @Author - Will Humphlett - will@humphlett.net
  * @Author - Ethan Brown - ewbrowntech@gmail.com
  * @Version - 16 APR 23
  *
@@ -31,7 +31,9 @@ class Response extends React.Component {
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
                         {/* Join Code */}
-                        <JoinForm />
+                        <div className={"h-100 d-flex align-self-center justify-content-center"}>
+                            <JoinForm />
+                        </div>
                         {/* Response Form */}
                     </div>
                 </div>
