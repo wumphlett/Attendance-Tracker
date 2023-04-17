@@ -6,16 +6,22 @@
  *
  * Create a new answer for a given question
  */
+
+import axios from 'axios';
+
 // Functions
 import modifyQuestion from "../modifyQuestion";
 
-export function createAnswer(activeQuestion, questions, setQuestions) {
-    let modifiedQuestion = activeQuestion;
-    let answer = {
-        id: Math.random().toString(36).substring(2) + Date.now().toString(36),
-        text: "",
-        isCorrect: true
-    }
-    modifiedQuestion.potentialAnswers.push(answer);
-    modifyQuestion(modifiedQuestion, questions, setQuestions);
+export function createAnswer(activeQuestion, questions, setCreatorState) {
+    axios.post("answers/", {
+        question: activeQuestion.id,
+        index: activeQuestion.answer_set.length,
+        symbol: activeQuestion.answer_set.length.toString(),
+        text: "A Blank Answer",
+        is_correct: false,
+    }).then((r) => {
+        const modifiedQuestion = activeQuestion;
+        modifiedQuestion.answer_set.push(r.data);
+        modifyQuestion(modifiedQuestion, {questions: questions}, setCreatorState);
+    })
 }

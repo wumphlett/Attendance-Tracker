@@ -50,11 +50,11 @@ class QuestionOptions extends React.Component {
                             state={this.state}
                             setCreatorState={this.setCreatorState}
                         />
-                        {/*<HeaderCard text={"Answers"}/>*/}
-                        {/*<QuestionAnswers*/}
-                        {/*    state={this.state}*/}
-                        {/*    setCreatorState={this.setCreatorState}*/}
-                        {/*/>*/}
+                        <HeaderCard text={"Answers"}/>
+                        <QuestionAnswers
+                            state={this.state}
+                            setCreatorState={this.setCreatorState}
+                        />
                     </div>
                 </div>
             </div>

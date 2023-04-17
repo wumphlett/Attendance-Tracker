@@ -26,8 +26,10 @@ function handleCheckboxChange(label, checkboxState, state, setCreatorState) {
         let modifiedQuestion = state.activeQuestion
         modifiedQuestion.isMultipleSelectionAllowed = checkboxState
         // If single selection is enforced and multiple answers are already marked as correct, unmark all answers
-        if (checkboxState === false && state.activeQuestion.correctAnswers.length > 1) {
-            modifiedQuestion.correctAnswers = []
+        if (checkboxState === false && state.activeQuestion.answer_set.filter((answer) => answer.is_correct).length > 1) {
+            state.activeQuestion.answer_set.map((answer) => {
+                answer.is_correct = false;
+            })
         }
         modifyQuestion(modifiedQuestion, state, setCreatorState)
     }

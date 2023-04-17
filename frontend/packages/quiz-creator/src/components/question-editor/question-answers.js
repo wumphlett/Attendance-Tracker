@@ -20,22 +20,17 @@ class QuestionAnswers extends React.Component {
     constructor(props) {
         super(props);
         this.state = props.state;
-        this.setQuestions = props.setQuestions;
+        this.setCreatorState = props.setCreatorState;
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.state.activeQuestion !== this.props.state.activeQuestion) {
-            this.setState({ activeQuestion: this.props.state.activeQuestion,
-                questions: this.props.state.questions })
-        }
-        if (prevProps.state.questions !== this.props.state.questions) {
-            this.setState({ activeQuestion: this.props.state.activeQuestion,
-                questions: this.props.state.questions })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            return nextProps.state
         }
     }
 
     render() {
-        this.isAddButtonDisabled = (this.state.activeQuestion.potentialAnswers.length >= 4)
+        this.isAddButtonDisabled = (this.state.activeQuestion.answer_set.length >= 4)
 
         const AddAnswerButton = () => {
             return (
@@ -43,7 +38,7 @@ class QuestionAnswers extends React.Component {
                     onClick={() => createAnswer(
                         this.state.activeQuestion,
                         this.state.questions,
-                        this.setQuestions
+                        this.setCreatorState
                     )}>
                     <h3>+</h3>
                 </div>
@@ -53,17 +48,17 @@ class QuestionAnswers extends React.Component {
         return (
             <div className={"card card-very-dark answer-deck"}>
                 <div className="d-inline-block">
-                    {this.state.activeQuestion.potentialAnswers.map((potentialAnswer, index) => (
+                    {this.state.activeQuestion.answer_set.map((answer) => (
                         <AnswerCard
                             questions={this.state.questions}
-                            setQuestions={this.setQuestions}
                             activeQuestion={this.state.activeQuestion}
-                            activeAnswer={potentialAnswer}
+                            setCreatorState={this.setCreatorState}
+                            activeAnswer={answer}
                         />
                     ))}
                     { !this.isAddButtonDisabled && <AddAnswerButton
                         questions={this.state.questions}
-                        setQuestiosn = {this.setQuestions}
+                        setCreatorState = {this.setCreatorState}
                     />}
                 </div>
             </div>

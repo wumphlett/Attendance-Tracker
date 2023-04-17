@@ -6,18 +6,18 @@
  *
  * Remove a given answer from a given question
  */
+
+import axios from 'axios';
+
 // Functions
 import modifyQuestion from "../modifyQuestion";
 
-export function removeAnswer(activeAnswer, activeQuestion, questions, setQuestions) {
-    let modifiedQuestion = activeQuestion;
-    // Remove from potential answers
-    let index = modifiedQuestion.potentialAnswers.findIndex((answer) => answer.id === activeAnswer.id)
-    modifiedQuestion.potentialAnswers.splice(index, 1)
-    // Remove from correct answers
-    index = modifiedQuestion.correctAnswers.findIndex((answer) => answer.id === activeAnswer.id)
-    if (index > -1) {
-        modifiedQuestion.correctAnswers.splice(index, 1)
-    }
-    modifyQuestion(modifiedQuestion, questions, setQuestions);
+export function removeAnswer(activeAnswer, activeQuestion, questions, setCreatorState) {
+    axios.delete(`answers/${activeAnswer.id}/`).then((r) => {
+        let modifiedQuestion = activeQuestion;
+        // Remove from potential answers
+        let index = modifiedQuestion.answer_set.findIndex((answer) => answer.id === activeAnswer.id)
+        modifiedQuestion.answer_set.splice(index, 1)
+        modifyQuestion(modifiedQuestion, {questions: questions}, setCreatorState);
+    });
 }

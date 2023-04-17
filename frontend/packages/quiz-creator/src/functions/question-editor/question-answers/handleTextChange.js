@@ -6,14 +6,22 @@
  *
  * Insert changed text into answer textarea
  */
+
+import axios from 'axios';
+
 // Functions
 import modifyQuestion from '../modifyQuestion'
 
-export function handleTextChange(event, activeAnswer, activeQuestion, questions, setQuestions) {
+export function handleTextChange(event, activeAnswer, activeQuestion, questions, setCreatorState) {
     let modifiedQuestion = activeQuestion;
     let modifiedAnswer = activeAnswer;
-    let index = modifiedQuestion.potentialAnswers.findIndex((answer) => answer.id === modifiedAnswer.id)
-    modifiedAnswer.text = event.target.value;
-    modifiedQuestion.potentialAnswers[index] = modifiedAnswer
-    modifyQuestion(modifiedQuestion, questions, setQuestions);
+    let text = event.target.value;
+    axios.patch(`answers/${activeAnswer.id}/`, {
+        text: text
+    }).then((r) => {
+        let index = modifiedQuestion.answer_set.findIndex((answer) => answer.id === modifiedAnswer.id)
+        modifiedAnswer.text = text;
+        modifiedQuestion.answer_set[index] = modifiedAnswer;
+        modifyQuestion(modifiedQuestion, {questions: questions}, setCreatorState);
+    });
 }

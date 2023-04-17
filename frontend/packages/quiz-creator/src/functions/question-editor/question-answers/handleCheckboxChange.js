@@ -6,24 +6,29 @@
  *
  * When a checkbox is toggled in an answer card, toggle where the respective answer is correct.
  */
+
+import axios from 'axios';
+
 // Functions
 import modifyQuestion from '../modifyQuestion'
 
-export function handleCheckboxChange(activeAnswer, checkboxState, activeQuestion, questions, setQuestions) {
+export function handleCheckboxChange(activeAnswer, checkboxState, activeQuestion, questions, setCreatorState) {
     let modifiedQuestion = activeQuestion
-    let index = modifiedQuestion.correctAnswers.findIndex((answer) => answer.id === activeAnswer.id)
-    if (checkboxState === false) {
-        if (index > -1) {
-            modifiedQuestion.correctAnswers.splice(index, 1)
+    if (checkboxState) {
+        if (activeQuestion.isMultipleSelectionAllowed === undefined || activeQuestion.isMultipleSelectionAllowed === false) {
+            modifiedQuestion.answer_set.map((answer) => {
+                axios.patch(`answers/${answer.id}/`, {
+                    is_correct: false
+                }).then((r) => {
+                    answer.is_correct = false;
+                });
+            })
         }
     }
-    else {
-        if (index === -1) {
-            if (activeQuestion.isMultipleSelectionAllowed === false) {
-                modifiedQuestion.correctAnswers = []
-            }
-            modifiedQuestion.correctAnswers.push(activeAnswer)
-        }
-    }
-    modifyQuestion(modifiedQuestion, questions, setQuestions)
+    axios.patch(`answers/${activeAnswer.id}/`, {
+        is_correct: checkboxState
+    }).then((r) => {
+        activeAnswer.is_correct = checkboxState;
+        modifyQuestion(modifiedQuestion, {questions: questions}, setCreatorState)
+    });
 }

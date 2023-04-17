@@ -21,42 +21,38 @@ import "../../stylesheets/question-editor.css"
 class AnswerCard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { questions: props.questions,
-                    activeQuestion: props.activeQuestion,
-                    activeAnswer: props.activeAnswer }
-        this.setQuestions = props.setQuestions
+        this.state = {
+          questions: props.questions,
+          activeQuestion: props.activeQuestion,
+          activeAnswer: props.activeAnswer
+        }
+        this.setCreatorState = props.setCreatorState
         this.active = false
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.questions !== this.props.questions) {
-            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
-        }
-        if(prevProps.activeQuestion !== this.props.activeQuestion) {
-            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
-        }
-        if(prevProps.activeAnswer !== this.props.activeAnswer) {
-            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion, activeAnswer: this.props.activeAnswer });
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            return nextProps
         }
     }
 
     render() {
         const handleRemovalClick = (event) => {
             event.stopPropagation();
-            removeAnswer(this.state.activeAnswer, this.state.activeQuestion, this.state.questions, this.setQuestions)
+            removeAnswer(this.state.activeAnswer, this.state.activeQuestion, this.state.questions, this.setCreatorState)
         }
 
         return (
             <div className={`card card-very-dark m-2 ${this.active ? 'answer-card-active' : 'answer-card'}`}>
                 <div className={"card-body center"}>
                     <Checkbox
-                        isChecked={this.state.activeQuestion.correctAnswers.includes(this.state.activeAnswer)}
+                        isChecked={this.state.activeAnswer.is_correct}
                         handler={(label, state) => handleCheckboxChange(
                             this.state.activeAnswer,
                             state,
                             this.state.activeQuestion,
                             this.state.questions,
-                            this.setQuestions
+                            this.setCreatorState
                         )}
                     />
                     <textarea className="answer-input"
@@ -75,11 +71,11 @@ class AnswerCard extends React.Component {
                                   this.state.activeAnswer,
                                   this.state.activeQuestion,
                                   this.state.questions,
-                                  this.setQuestions
+                                  this.setCreatorState
                               )}
                     />
                     <span className={"btn btn-danger answer-removal-button"}
-                          onClick={(event) => handleRemovalClick(event)}>X</span>
+                          onClick={(event) => handleRemovalClick(event)}>Delete</span>
                 </div>
             </div>
         )
