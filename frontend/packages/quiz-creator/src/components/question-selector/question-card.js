@@ -44,7 +44,7 @@ class QuestionCard extends React.Component {
                 ${(this.state.question === this.state.activeQuestion) ? 'question-card-active' : ''}`}
                 onClick={() => { this.setCreatorState({activeQuestion: this.state.question}) }}>
                 <div className={"d-inline-block overflow-auto"}>
-                    <span className={"badge badge-question-number"}>{this.state.question.id}/{this.state.total}</span>
+                    <span className={"badge badge-question-number"}>{this.state.question.index+1}/{this.state.total}</span>
                     <span className={"btn btn-danger removal-button"}
                           onClick={(event) => handleRemoveClick(event)}>Delete</span>
                     <p style={{ marginTop: '20px' }}>{this.state.question.text}</p>

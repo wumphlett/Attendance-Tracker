@@ -93,6 +93,7 @@ CAS_VERSION = '3'
 CAS_USERNAME_ATTRIBUTE = "email"
 CAS_CHECK_NEXT = False
 CAS_RENEW = True
+CAS_FORCE_SSL_SERVICE_URL = True
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -172,7 +173,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/ubuntu/backend/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -187,4 +189,3 @@ SIMPLE_JWT = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
-SECURE_SSL_REDIRECT = False
