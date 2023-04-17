@@ -22,9 +22,11 @@ class AnswerListSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class QuestionListSerializer(serializers.HyperlinkedModelSerializer):
+    answer_set = AnswerListSerializer(many=True, read_only=True)
+
     class Meta:
         model = models.Question
-        fields = ['id', 'text']
+        fields = ['id', 'text', 'index', 'is_partial_allowed', 'answer_set']
 
 
 class PresentationListSerializer(serializers.HyperlinkedModelSerializer):
@@ -54,7 +56,7 @@ class QuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Question
-        fields = ['id', 'presentation', 'index', 'text', 'answer_set']
+        fields = ['id', 'presentation', 'index', 'text', 'is_partial_allowed', 'answer_set']
 
 
 class AnswerDetailSerializer(serializers.HyperlinkedModelSerializer):

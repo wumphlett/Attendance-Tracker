@@ -41,6 +41,7 @@ class Question(models.Model):
     presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
     index = models.PositiveSmallIntegerField()  # 0-indexed MUST BE CORRECT
     text = models.TextField()
+    is_partial_allowed = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Question"

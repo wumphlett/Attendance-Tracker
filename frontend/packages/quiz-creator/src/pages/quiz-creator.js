@@ -12,7 +12,6 @@ import React, { useState } from 'react'
 import { Navbar } from "@frontend/common/build";
 import QuestionEditor from "../components/question-editor/question-editor";
 import QuestionSelector from "../components/question-selector/question-selector";
-// import QuestionDeck from '../components/quiz-creation/question-deck'
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../stylesheets/quiz-creation.css'
