@@ -9,19 +9,19 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from . import models
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = ['first_name', 'last_name', 'email']
 
 
-class AnswerListSerializer(serializers.HyperlinkedModelSerializer):
+class AnswerListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Answer
         fields = ['id', 'symbol', 'text', 'is_correct']
 
 
-class QuestionListSerializer(serializers.HyperlinkedModelSerializer):
+class QuestionListSerializer(serializers.ModelSerializer):
     answer_set = AnswerListSerializer(many=True, read_only=True)
 
     class Meta:
@@ -29,21 +29,7 @@ class QuestionListSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'text', 'index', 'is_partial_allowed', 'answer_set']
 
 
-class PresentationListSerializer(serializers.HyperlinkedModelSerializer):
-    question_set = QuestionListSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = models.Presentation
-        fields = ['id', 'name', 'description', 'question_set']  # TODO figure out how to just serialize question_set len
-
-
-class SessionListSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = models.Session
-        fields = ['id', 'join_code', 'start_time', 'end_time']
-
-
-class PresentationDetailSerializer(serializers.HyperlinkedModelSerializer):
+class PresentationListSerializer(serializers.ModelSerializer):
     question_set = QuestionListSerializer(many=True, read_only=True)
 
     class Meta:
@@ -51,7 +37,21 @@ class PresentationDetailSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'name', 'description', 'question_set']
 
 
-class QuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
+class SessionListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Session
+        fields = ['id', 'join_code', 'start_time', 'end_time']
+
+
+class PresentationDetailSerializer(serializers.ModelSerializer):
+    question_set = QuestionListSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.Presentation
+        fields = ['id', 'name', 'description', 'question_set']
+
+
+class QuestionDetailSerializer(serializers.ModelSerializer):
     answer_set = AnswerListSerializer(many=True, read_only=True)
 
     class Meta:
@@ -59,13 +59,13 @@ class QuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'presentation', 'index', 'text', 'is_partial_allowed', 'answer_set']
 
 
-class AnswerDetailSerializer(serializers.HyperlinkedModelSerializer):
+class AnswerDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Answer
         fields = ['id', 'question', 'index', 'symbol', 'text', 'is_correct']
 
 
-class SessionDetailSerializer(serializers.HyperlinkedModelSerializer):
+class SessionDetailSerializer(serializers.ModelSerializer):
     current_question = QuestionDetailSerializer(read_only=True)
 
     class Meta:
@@ -86,7 +86,7 @@ class SessionDetailSerializer(serializers.HyperlinkedModelSerializer):
         return self.Meta.model.objects.create(join_code=get_random_string(5, string.ascii_uppercase), **validated_data)
 
 
-class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
+class ResponseDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Response
         fields = ['session', 'answer']
@@ -103,37 +103,37 @@ class ResponseDetailSerializer(serializers.HyperlinkedModelSerializer):
         return data
 
 
-class PresentationUpdateSerializer(serializers.HyperlinkedModelSerializer):
+class PresentationUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Presentation
         fields = ['name', 'description']
 
 
-class QuestionUpdateSerializer(serializers.HyperlinkedModelSerializer):
+class QuestionUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Question
         fields = ['index', 'text']
 
 
-class AnswerUpdateSerializer(serializers.HyperlinkedModelSerializer):
+class AnswerUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Answer
         fields = ['index', 'symbol', 'text', 'is_correct']
 
 
-class SessionJoinSerializer(serializers.HyperlinkedModelSerializer):
+class SessionJoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Session
         fields = ['id']
 
 
-class ResponderAnswerListSerializer(serializers.HyperlinkedModelSerializer):
+class ResponderAnswerListSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Answer
         fields = ['id', 'index', 'symbol']
 
 
-class ResponderQuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
+class ResponderQuestionDetailSerializer(serializers.ModelSerializer):
     answer_set = ResponderAnswerListSerializer(many=True, read_only=True)
 
     class Meta:
@@ -141,7 +141,7 @@ class ResponderQuestionDetailSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'index', 'answer_set']
 
 
-class ResponderSessionSerializer(serializers.HyperlinkedModelSerializer):
+class ResponderSessionSerializer(serializers.ModelSerializer):
     current_question = ResponderQuestionDetailSerializer(read_only=True)
 
     class Meta:
