@@ -2,7 +2,7 @@
  * presentation.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 16 APR 23
+ * @Version - 17 APR 23
  *
  * Present a quiz
  */
@@ -12,6 +12,7 @@ import React from "react";
 import { Navbar } from "@frontend/common/build"
 import CodeDisplay from "./join";
 import CounterCard from "../components/counter-card";
+import QuestionDisplay from "../components/question-display";
 // Functions
 // Stylesheets
 import "../stylesheets/presentation.css"
@@ -21,14 +22,6 @@ class Presentation extends React.Component {
         super(props);
         this.state = {
             sessionId: null,
-            index: 1,
-            prompt: "What is the airspeed of an unladen swallow?",
-            answers: [
-                "Is this some kind of joke?",
-                "If it is, I don't find it very funny.",
-                "Give me a break.",
-                "Fine. 15mph?"
-            ]
         }
         this.setSessionId = this.setSessionId.bind(this);
     }
@@ -56,7 +49,11 @@ class Presentation extends React.Component {
                                     />
                                 </div>
                             ) : (
-                                <div></div>
+                                <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
+                                    <QuestionDisplay
+                                        sessionId={this.state.sessionId}
+                                    />
+                                </div>
                             )}
                     </div>
                 </div>
