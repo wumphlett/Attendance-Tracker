@@ -6,8 +6,11 @@
  *
  * Delete a quiz
  */
+import axios from "axios";
 
-export function deleteQuiz(quizToRemove, quizzes, setState) {
-    let modifiedQuizzes = quizzes.filter((quiz) => quiz.id !== quizToRemove.id)
-    setState({ user: { quizzes: modifiedQuizzes }})
+export function deleteQuiz(presentationToDelete, presentations, setState) {
+    axios.delete(`presentations/${presentationToDelete.id}/`).then((r) => {
+        let modifiedPresentations = presentations.filter((presentation) => presentation.id !== presentationToDelete.id)
+        setState({ presentations: modifiedPresentations})
+    })
 }

@@ -32,7 +32,7 @@ class PresentationListSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.Presentation
-        fields = ['id', 'name', 'description', 'question_set']
+        fields = ['id', 'name', 'description', 'question_set']  # TODO figure out how to just serialize question_set len
 
 
 class SessionListSerializer(serializers.HyperlinkedModelSerializer):

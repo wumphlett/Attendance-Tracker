@@ -6,14 +6,12 @@
  *
  * Create a new quiz
  */
+import axios from 'axios';
 
-export function createQuiz(quizzes, setState) {
-    let modifiedQuizzes = quizzes
-    let newQuiz = {
-        id: Math.random().toString(36).substring(2) + Date.now().toString(36),
-        title: "Test Title",
-        questions: []
-    }
-    modifiedQuizzes.push(newQuiz)
-    setState({ user: { quizzes: modifiedQuizzes }})
+export function createQuiz(presentations, setState) {
+    axios.post("presentations/", {name: "A Blank Presentation", description: "A blank description"}).then((r) => {
+        let modifiedPresentations = presentations
+        modifiedPresentations.push(r.data);
+        setState({ presentations: modifiedPresentations})
+    })
 }
