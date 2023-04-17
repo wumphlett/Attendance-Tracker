@@ -14,7 +14,7 @@ import React from "react";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"
-import {createQuestion} from "quiz-creator/src/functions/createQuestion";
+import { createQuestion } from "quiz-creator/src/functions/createQuestion";
 
 class JoinForm extends React.Component {
     constructor(props) {
