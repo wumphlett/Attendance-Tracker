@@ -41,3 +41,6 @@ Senior Design
 - https://medium.com/@ronakchitlangya1997/jwt-authentication-with-react-js-and-django-c034aae1e60d
 - https://github.com/Ronakchitlangya1997/Authentication---React-Js-Django
 - https://github.com/dannyradden/single-character-input-boxes
+
+## Deploy
+- https://www.digitalocean.com/community/tutorials/how-to-set-up-an-asgi-django-app-with-postgres-nginx-and-uvicorn-on-ubuntu-20-04

@@ -4,5 +4,9 @@
 
 # frontend
 
+# deployment
+/backend/.env
+
 # personal
 .idea/
+
