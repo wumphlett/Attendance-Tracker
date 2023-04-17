@@ -30,12 +30,16 @@
 .card.label-card {
     margin-left: auto;
     margin-right: auto;
+    user-select: none;
 }
 
-.card.code-entry-card {
+.card.code-display-card {
     margin-left: auto;
     margin-right: auto;
     background-color: white;
+    font-size: 5rem;
+    font-weight: bold;
+    user-select: none;
 }
 
 .card.button-card {

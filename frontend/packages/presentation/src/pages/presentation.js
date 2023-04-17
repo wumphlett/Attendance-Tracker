@@ -2,7 +2,7 @@
  * presentation.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 13 APR 23
+ * @Version - 16 APR 23
  *
  * Present a quiz
  */
@@ -10,6 +10,7 @@
 import React from "react";
 // Components
 import { Navbar } from "@frontend/common/build"
+import CodeDisplay from "./join";
 // Functions
 // Stylesheets
 import "../stylesheets/presentation.css"
@@ -35,13 +36,11 @@ class Presentation extends React.Component {
                 <Navbar />
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
-                        <div className={"card question-card secondary-dark-theme col-12 col-md-6 h-100 p-2"}>
-                            <div className={"d-flex justify-content-center align-self-center"}>
-                                <div className={"card primary-dark-theme pt-1 pb-0 px-3 text-center d-inline-block"}>
-                                    <h3 className={"text-dark-theme"}><strong>Question {this.state.index}</strong></h3>
-                                </div>
-                            </div>
+                        {/* Join Code */}
+                        <div className={"h-100 d-flex align-self-center justify-content-center"}>
+                            <CodeDisplay />
                         </div>
+                        {/* Active Users*/}
                     </div>
                 </div>
             </div>
