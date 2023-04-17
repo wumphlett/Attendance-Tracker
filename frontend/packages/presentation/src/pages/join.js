@@ -21,23 +21,37 @@ class CodeDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            joinCode: "RZTLK",
+            joinCode: "SZXWS",
+            responseCount: 0
         }
         this.setSessionId = props.setSessionId;
     }
-    // client = null;
+    client = null;
+
+    addClientHandlers = (client) => {
+        client.onmessage = (message) => {
+            const data = JSON.parse(message.data);
+            if (data && data["created"]) {
+                this.setState(
+                    {
+                        responseCount: this.state.responseCount + 1,
+                    }
+                )
+            }
+        };
+    }
 
     handleJoinClick = (event) => {
         event.stopPropagation();
-        joinAsPresenter(this.state.joinCode, this.setSessionId);
+        joinAsPresenter(this.state.joinCode, this.client, this.setSessionId);
     }
 
     render() {
         return (
             <div className={"card d-inline-block join-form-card secondary-dark-theme p-4"}>
                 <div className={"d-flex justify-content-center flex-column align-self-center"}>
-                    <div className={"card label-card primary-dark-theme col-12 pt-1 pb-0 px-3 text-center d-inline-block"}>
-                        <h3 className={"text-dark-theme"}><strong>Quiz Code:</strong></h3>
+                    <div className={"card label-card primary-dark-theme text-dark-theme col-12 pt-1 pb-0 px-3 text-center d-inline-block"}>
+                        <h3><strong>Quiz Code:</strong></h3>
                     </div>
                     <div className={"card code-display-card col-12 mt-3 pb-0 px-3 text-center d-inline-block"}>
                         {this.state.joinCode}

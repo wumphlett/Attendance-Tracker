@@ -31,8 +31,8 @@ class CounterCard extends React.Component {
 
     render() {
         return (
-            <div className={"card label-card secondary-dark-theme pt-1 pb-0 px-3 text-center d-inline-block"}>
-                <h3 className={"text-dark-theme"}><strong>Currently Joined: {this.state.currentlyJoined}</strong></h3>
+            <div className={"card label-card secondary-dark-theme text-dark-theme pt-1 pb-0 px-3 text-center d-inline-block"}>
+                <h3><strong>Currently Joined: {this.state.currentlyJoined}</strong></h3>
             </div>
         )
     }

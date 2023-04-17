@@ -11,6 +11,7 @@ import React from 'react';
 // Functions
 import handleTextChange from "../../functions/question-editor/question-prompt/handleTextChange";
 import handleTextPaste from "../../functions/question-editor/question-prompt/handleTextPaste";
+import handleTextBlur from "../../functions/question-editor/question-prompt/handleTextBlur";
 // Stylesheets
 import 'bootstrap/dist/css/bootstrap.css'
 import '../../stylesheets/question-editor.css'
@@ -47,6 +48,7 @@ class QuestionPreview extends React.Component {
                                           value={this.state.activeQuestion.text}
                                           onChange={(event) => handleTextChange(event, this.state, this.setCreatorState)}
                                           onPaste={(event) => handleTextPaste(event, this.state, this.setCreatorState)}
+                                          onBlur={(event) => handleTextBlur(event, this.state)}
                                 />
                             </div>
                         </div>
