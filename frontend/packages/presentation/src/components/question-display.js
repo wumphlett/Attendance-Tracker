@@ -28,8 +28,46 @@ class QuestionDisplay extends React.Component {
                 <div className={"card question-number-card secondary-dark-theme text-dark-theme p-2 px-3 w-100"}>
                     <h1 className="text-center pb-0 pt-0"><strong>Question 1</strong></h1>
                 </div>
-                <div className={"card display-card secondary-dark-theme w-100 mt-2"}>
-                    <h1>Hello, world!</h1>
+                <div className={"card display-card d-flex flex-column secondary-dark-theme w-100 mt-2 p-2"}>
+                    <div className={"card primary-dark-theme text-dark-theme p-2"} style={{ flex: 0.50}}>
+                        <h1><strong>This is a prompt...</strong></h1>
+                    </div>
+                    <div className={"d-flex bg-black flex-column mt-2"} style={{ flex: 0.40 }}> {/* Answers */}
+                        {/*<div className={"pb-1"} style={{ flex: 0.50 }}>*/}
+                        {/*    <div className={"d-flex h-100"}>*/}
+                        {/*        <div className={"pe-1 h-100"} style={{ flex: 0.50 }}>*/}
+                        {/*            <div className={"bg-white h-100"}></div>*/}
+                        {/*        </div>*/}
+                        {/*        <div className={"ps-1 h-100"} style={{ flex: 0.50 }}>*/}
+                        {/*            <div className={"bg-danger h-100"}></div>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        {/*<div className={"pt-1"} style={{ flex: 0.50 }}>*/}
+                        {/*    <div className={"d-flex h-100"}>*/}
+                        {/*        <div className={"pe-1 h-100"} style={{ flex: 0.50 }}>*/}
+                        {/*            <div className={"bg-danger h-100"}></div>*/}
+                        {/*        </div>*/}
+                        {/*        <div className={"ps-1 h-100"} style={{ flex: 0.50 }}>*/}
+                        {/*            <div className={"bg-white h-100"}></div>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                    </div>
+                    <div className={"d-flex bg-black mt-2"} style={{ flex: 0.10 }}>
+                        <div className={"col-6 pe-1"}>
+                            <div className="card btn button-card stop join-button primary-dark-theme text-dark-theme col-12 mt-3 align-self-center">
+                                Stop
+                            </div>
+                        </div>
+                        <div className={"col-6 ps-1"}>
+                            <div className="card btn button-card next join-button primary-dark-theme text-dark-theme col-12 mt-3 align-self-center">
+                                Next
+                            </div>
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
         )

@@ -57,6 +57,22 @@
     color: floralwhite;
 }
 
+.card.button-card.stop:hover {
+    display: flex;
+    border: 2px solid rgba(255, 250, 240, .4);
+    background: orangered;
+    justify-content: center;
+    color: floralwhite;
+}
+
+.card.button-card.stop:hover {
+    display: flex;
+    border: 2px solid rgba(255, 250, 240, .4);
+    background: forestgreen;
+    justify-content: center;
+    color: floralwhite;
+}
+
 .card.join-button {
     font-weight: bold;
     font-size: 1.5rem;
