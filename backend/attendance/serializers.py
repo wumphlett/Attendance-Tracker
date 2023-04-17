@@ -112,7 +112,7 @@ class PresentationUpdateSerializer(serializers.ModelSerializer):
 class QuestionUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Question
-        fields = ['index', 'text']
+        fields = ['index', 'text', 'is_partial_allowed']
 
 
 class AnswerUpdateSerializer(serializers.ModelSerializer):
