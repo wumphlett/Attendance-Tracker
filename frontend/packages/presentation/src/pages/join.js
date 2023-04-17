@@ -17,47 +17,19 @@ import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/presentation.css"
 
 class CodeDisplay extends React.Component {
-    state = {
-        joinCode: "RZTLK",
-        sessionId: null,
-        question: null,
-        isAcceptingResponses: false,
-        endTime: null,
-        responseCount: 0,
-    }
+
     constructor(props) {
         super(props);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
+        this.state = {
+            joinCode: "RZTLK",
+        }
+        this.setSessionId = props.setSessionId;
     }
-    client = null;
-
-    addClientHandlers = () => {
-        this.client.onmessage = (message) => {
-            const data = JSON.parse(message.data);
-            if (data && data["created"]) {
-                this.setState({
-                        responseCount: this.state.responseCount + 1
-                    }
-                )
-            }
-        };
-    }
-
-    updateSlide = (data) => {
-        this.setState(
-            {
-                sessionId: data.url,
-                question: data.current_question,
-                isAcceptingResponses: data.is_accepting_responses,
-                endTime: data.end_time,
-                responseCount: 0,
-            }
-        );
-    };
+    // client = null;
 
     handleJoinClick = (event) => {
         event.stopPropagation();
-        joinAsPresenter(this.state.joinCode, this.client, this.addClientHandlers, this.updateSlide);
+        joinAsPresenter(this.state.joinCode, this.setSessionId);
     }
 
     render() {
