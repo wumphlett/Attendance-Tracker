@@ -20,18 +20,12 @@ class QuestionOptions extends React.Component {
     constructor(props) {
         super(props);
         this.state = props.state;
-        this.setQuestions = props.setQuestions;
-        this.setActiveQuestion = props.setActiveQuestion;
+        this.setCreatorState = props.setCreatorState;
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.state.activeQuestion !== this.props.state.activeQuestion) {
-            this.setState({ activeQuestion: this.props.state.activeQuestion,
-                                questions: this.props.state.questions })
-        }
-        if (prevProps.state.questions !== this.props.state.questions) {
-            this.setState({ activeQuestion: this.props.state.activeQuestion,
-                                questions: this.props.state.questions })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            return nextProps.state
         }
     }
 
@@ -54,13 +48,13 @@ class QuestionOptions extends React.Component {
                         <HeaderCard text={"Options"}/>
                         <QuestionSettings
                             state={this.state}
-                            setQuestions={this.setQuestions}
+                            setCreatorState={this.setCreatorState}
                         />
-                        <HeaderCard text={"Answers"}/>
-                        <QuestionAnswers
-                            state={this.state}
-                            setQuestions={this.setQuestions}
-                        />
+                        {/*<HeaderCard text={"Answers"}/>*/}
+                        {/*<QuestionAnswers*/}
+                        {/*    state={this.state}*/}
+                        {/*    setCreatorState={this.setCreatorState}*/}
+                        {/*/>*/}
                     </div>
                 </div>
             </div>

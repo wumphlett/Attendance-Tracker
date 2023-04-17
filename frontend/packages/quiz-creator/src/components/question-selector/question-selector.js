@@ -19,19 +19,13 @@ import "../../stylesheets/question-selector.css"
 class QuestionSelector extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { questions: props.questions, activeQuestion: props.activeQuestion }
-        this.setQuestions = props.setQuestions;
-        this.setActiveQuestion = props.setActiveQuestion;
+        this.state = props.state
+        this.setCreatorState = props.setCreatorState;
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.activeQuestion !== this.props.activeQuestion) {
-            this.setState({ activeQuestion: this.props.activeQuestion,
-                questions: this.props.questions })
-        }
-        if (prevProps.questions !== this.props.questions) {
-            this.setState({ activeQuestion: this.props.activeQuestion,
-                questions: this.props.questions })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            return nextProps.state
         }
     }
 
@@ -42,9 +36,8 @@ class QuestionSelector extends React.Component {
                 <div className="card card-body add-question-card card-very-dark button-card btn btn-danger mr-0"
                      onClick={() => {
                          createQuestion(
-                             this.state.questions,
-                             this.setQuestions,
-                             this.setActiveQuestion
+                             this.state,
+                             this.setCreatorState
                          );
                          this.forceUpdate();
                      }}>
@@ -70,9 +63,8 @@ class QuestionSelector extends React.Component {
                                 <QuestionCard index={index + 1} total={this.state.questions.length}
                                               question={question}
                                               questions={this.state.questions}
-                                              setQuestions={this.setQuestions}
                                               activeQuestion={this.state.activeQuestion}
-                                              setActiveQuestion={this.setActiveQuestion}
+                                              setCreatorState={this.setCreatorState}
                                 />
                             </div>
                         ))}
@@ -80,19 +72,6 @@ class QuestionSelector extends React.Component {
                         <CreateQuestionButton />
 
                     </div>
-                    {/*<div className={"card-body mb-0"} style={{ display: 'flex', flexDirection: 'column', height: '' }}>*/}
-                    {/*    <div style={{ flex: 1 }}>*/}
-
-                    {/*        /!* Question Deck*!/*/}
-                    {/*        <div className="container-fluid container-no-padding h-100">*/}
-                    {/*            <div className="container-fluid question-deck h-100 pb-3*/}
-                    {/*                d-flex flex-row flex-nowrap overflow-auto">*/}
-
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-
-                    {/*    </div>*/}
-                    {/*</div>*/}
                 </div>
             </div>
         )

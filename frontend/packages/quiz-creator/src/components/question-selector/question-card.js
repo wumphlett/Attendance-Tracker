@@ -18,27 +18,17 @@ class QuestionCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: props.question,   // Respective question
             questions: props.questions,
             activeQuestion: props.activeQuestion,
+            question: props.question,   // Respective question
             index: props.index,         // Position of question in the quiz
             total: props.total,         // Total number of questions in the quiz
         }
-        this.setQuestions = props.setQuestions
-        this.setActiveQuestion = props.setActiveQuestion
+        this.setCreatorState = props.setCreatorState
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.total !== prevState.total) {
-            return nextProps
-        }
-        if (nextProps.questions !== prevState.questions) {
-            return nextProps
-        }
-        if (nextProps.activeQuestion !== prevState.activeQuestion) {
-            return nextProps
-        }
-        if (nextProps.index !== prevState.index) {
+        if (nextProps !== prevState) {
             return nextProps
         }
     }
@@ -46,18 +36,18 @@ class QuestionCard extends React.Component {
     render() {
         const handleRemoveClick = (event) => {
             event.stopPropagation();
-            removeQuestion(this.state.question, this.state.activeQuestion, this.setActiveQuestion, this.state.questions, this.setQuestions)
+            removeQuestion(this.state.question, this.state, this.setCreatorState)
         }
 
         return (
             <div className={`card question-card card-very-dark p-2
                 ${(this.state.question === this.state.activeQuestion) ? 'question-card-active' : ''}`}
-                onClick={() => { this.setActiveQuestion(this.state.question) }}>
+                onClick={() => { this.setCreatorState({activeQuestion: this.state.question}) }}>
                 <div className={"d-inline-block overflow-auto"}>
-                    <span className={"badge badge-question-number"}>{this.state.index}/{this.state.total}</span>
+                    <span className={"badge badge-question-number"}>{this.state.question.id}/{this.state.total}</span>
                     <span className={"btn btn-danger removal-button"}
-                          onClick={(event) => handleRemoveClick(event)}>X</span>
-                    <p style={{ marginTop: '20px' }}>{this.state.question.prompt}</p>
+                          onClick={(event) => handleRemoveClick(event)}>Delete</span>
+                    <p style={{ marginTop: '20px' }}>{this.state.question.text}</p>
                 </div>
             </div>
         )

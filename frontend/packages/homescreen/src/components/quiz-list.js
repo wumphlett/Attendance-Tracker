@@ -28,7 +28,6 @@ class QuizList extends React.Component {
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
             return { presentations: nextProps.presentations }
-
         }
     }
 

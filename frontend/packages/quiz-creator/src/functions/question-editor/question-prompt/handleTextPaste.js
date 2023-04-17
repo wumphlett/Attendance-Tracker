@@ -9,22 +9,22 @@
 // Functions
 import modifyQuestion from '../modifyQuestion'
 
-function handleTextPaste(event, activeQuestion, questions, setQuestions) {
+function handleTextPaste(event, state, setCreatorState) {
     // So create new prompt from combination of existing prompt and the pasted text
     event.preventDefault();
     const pastedText = event.clipboardData.getData('Text');
     const { selectionStart, selectionEnd } = event.target;
-    const textBeforeSelection = activeQuestion.prompt.slice(0, selectionStart);
-    const textAfterSelection = activeQuestion.prompt.slice(selectionEnd);
+    const textBeforeSelection = state.activeQuestion.text.slice(0, selectionStart);
+    const textAfterSelection = state.activeQuestion.text.slice(selectionEnd);
     const newText = textBeforeSelection + pastedText + textAfterSelection;
 
     // then assign that new prompt to the question object
-    let questionToModify = activeQuestion;
-    questionToModify.prompt = newText;
-    modifyQuestion(questionToModify, questions, setQuestions);
+    let questionToModify = state.activeQuestion;
+    questionToModify.text = newText;
+    modifyQuestion(questionToModify, state, setCreatorState);
 
     // finally, set the cursor position to end of pasted text
-    event.target.value = activeQuestion.prompt
+    event.target.value = state.activeQuestion.text
     const cursorPosition = selectionStart + pastedText.length;
     event.target.selectionStart = cursorPosition;
     event.target.selectionEnd = cursorPosition;

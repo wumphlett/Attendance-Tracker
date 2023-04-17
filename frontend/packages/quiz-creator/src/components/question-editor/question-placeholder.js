@@ -20,18 +20,17 @@ class QuestionPlaceholder extends React.Component {
     constructor(props) {
         super(props);
         this.state = props.state
-        this.setQuestions = props.setQuestions
-        this.setActiveQuestion = props.setActiveQuestion
+        this.setCreatorState = props.setCreatorState
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.questions !== this.props.questions) {
-            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            if (nextProps.state.questions.length > 0) {
+                return {questions: nextProps.state.questions, activeQuestion: nextProps.state.questions[0]}
+            } else {
+                return nextProps.state
+            }
         }
-        if (this.state.questions.length > 0) {
-            this.setActiveQuestion(this.state.questions[0])
-        }
-
     }
 
     render() {
@@ -41,7 +40,7 @@ class QuestionPlaceholder extends React.Component {
                     <div className="card card-dark h-100">
                         <div className="card-body justify-content-center" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                             <div className="card btn button-card card-very-dark align-self-center" onClick={
-                                () => createQuestion(this.state.questions, this.setQuestions, this.setActiveQuestion)
+                                () => createQuestion(this.state, this.setCreatorState)
                             }>
                                 <div className="card-body">
                                     <h3 className="text-center"><strong>Add a question...</strong></h3>

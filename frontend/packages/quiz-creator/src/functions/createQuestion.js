@@ -7,23 +7,22 @@
  * Create a new question within a quiz
  */
 
-export function createQuestion(questions, setQuestions, setActiveQuestion) {
-    const newQuestion = {
-        id: Math.random().toString(36).substring(2) + Date.now().toString(36),
-        prompt: "",
-        image: "",
-        potentialAnswers: [],
-        correctAnswers: [],
-        isTimeLimited: false,
-        timeLimit: 0,
-        isPartialCreditAllowed: false,
-        isMultipleSelectionAllowed: false
-    };
-    const newQuestions = questions
-    newQuestions.push(newQuestion)
-    setQuestions(newQuestions);
-    if (questions.length === 1) {
-        setActiveQuestion(questions[0]);
-    }
+import axios from 'axios';
+
+export function createQuestion(state, setCreatorState) {
+    axios.post("questions/", {
+        presentation: state.presentationId,
+        index: state.questions.length,
+        text: "A Blank Question",
+        is_partial_allowed: false,
+    }).then((r) => {
+        const newQuestions = state.questions
+        newQuestions.push(r.data)
+        if (state.length === 1) {
+            setCreatorState({questions: newQuestions, activeQuestion: state.questions[0]});
+        } else {
+            setCreatorState({questions: newQuestions});
+        }
+    })
 }
 

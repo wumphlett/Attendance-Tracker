@@ -9,10 +9,10 @@
 // Functions
 import modifyQuestion from '../modifyQuestion'
 
-function handleTextChange(event, activeQuestion, questions, setQuestions) {
-    let questionToModify = activeQuestion;
-    questionToModify.prompt = event.target.value;
-    modifyQuestion(questionToModify, questions, setQuestions);
+function handleTextChange(event, state, setCreatorState) {
+    let questionToModify = state.activeQuestion;
+    questionToModify.text = event.target.value;
+    modifyQuestion(questionToModify, state, setCreatorState);
 }
 
 export default handleTextChange;

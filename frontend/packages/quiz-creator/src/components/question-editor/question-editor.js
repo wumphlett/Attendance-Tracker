@@ -20,17 +20,17 @@ import '../../stylesheets/question-editor.css'
 class QuestionEditor extends React.Component {
     constructor(props) {
         super(props);
-        this.setQuestions = props.setQuestions;
-        this.setActiveQuestion = props.setActiveQuestion;
-        this.state = { questions: props.questions, activeQuestion: props.activeQuestion }
+        this.state = props.state;
+        this.setCreatorState = props.setCreatorState;
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.activeQuestion !== this.props.activeQuestion) {
-            this.setState({ activeQuestion: this.props.activeQuestion, questions: this.props.questions});
-        }
-        if (prevProps.questions !== this.props.questions) {
-            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            if (nextProps.state.questions.length > 0) {
+                return {questions: nextProps.state.questions, activeQuestion: nextProps.state.questions[0]}
+            } else {
+                return nextProps.state
+            }
         }
     }
 
@@ -39,25 +39,20 @@ class QuestionEditor extends React.Component {
             <div className="container-fluid h-100 p-2">
                 {this.state.activeQuestion === null ?
                     <QuestionPlaceholder
-                        questions={this.state.questions}
                         state={this.state}
-                        setQuestions={this.setQuestions}
-                        setActiveQuestion={this.setActiveQuestion}
+                        setCreatorState={this.setCreatorState}
                     /> :
                     <div className="row h-100">
                         <div className="col-9 container-fluid container-no-padding h-100"> {/* Question card preview */}
                             <QuestionPreview
-                                questions={this.state.questions}
-                                activeQuestion={this.state.activeQuestion}
-                                setQuestions={this.setQuestions}
-                                setActiveQuestion={this.setActiveQuestion}
+                                state={this.state}
+                                setCreatorState={this.setCreatorState}
                             />
                         </div>
                         <div className={"col-3 container-fluid container-no-padding h-100"}> {/* Question options*/}
                             <QuestionOptions
                                 state={this.state}
-                                setQuestions={this.setQuestions}
-                                setActiveQuestion={this.setActiveQuestion}
+                                setCreatorState={this.setCreatorState}
                             />
                         </div>
                     </div>

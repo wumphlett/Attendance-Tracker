@@ -7,11 +7,18 @@
  * Create a new question within a quiz
  */
 
-function modifyQuestion(questionToModify, questions, setQuestions) {
-    let newQuestions = [...questions];
+import axios from 'axios';
+
+function modifyQuestion(questionToModify, state, setCreatorState) {
+    let newQuestions = [...state.questions];
     const index = newQuestions.findIndex((question) => question.id === questionToModify.id);
-    newQuestions[index] = questionToModify;
-    setQuestions(newQuestions);
+    axios.patch(`questions/${questionToModify.id}/`, {
+        text: questionToModify.text,
+        is_partial_allowed: questionToModify.is_partial_allowed,
+    }).then((r) => {
+        newQuestions[index] = questionToModify;
+        setCreatorState({questions: newQuestions});
+    });
 }
 
 export default modifyQuestion;

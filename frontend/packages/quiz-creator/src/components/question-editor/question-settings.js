@@ -20,17 +20,12 @@ class QuestionSettings extends React.Component {
     constructor(props) {
         super(props);
         this.state = props.state;
-        this.setQuestions = props.setQuestions
+        this.setCreatorState = props.setCreatorState
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.state.activeQuestion !== this.props.state.activeQuestion) {
-            this.setState({ activeQuestion: this.props.state.activeQuestion,
-                questions: this.props.state.questions })
-        }
-        if (prevProps.state.questions !== this.props.state.questions) {
-            this.setState({ activeQuestion: this.props.state.activeQuestion,
-                questions: this.props.state.questions })
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            return nextProps.state
         }
     }
 
@@ -39,30 +34,19 @@ class QuestionSettings extends React.Component {
             <div className={"card card-very-dark mb-2"}>
                 <div className={"card-body pb-2 pt-2"}>
                     <div className={"pb-1"}>
-                        <Checkbox label={"Enforce time limit"}
-                                  isChecked={this.state.activeQuestion.isTimeLimited}
-                                  handler={(label, state) => handleCheckboxChange(label, state,
-                                      this.state.activeQuestion,
-                                      this.state.questions,
-                                      this.setQuestions)}
-                        />
-                    </div>
-                    <div className={"pb-1"}>
                         <Checkbox label={"Allow partial credit"}
-                                  isChecked={this.state.activeQuestion.isPartialCreditAllowed}
+                                  isChecked={this.state.activeQuestion.is_partial_allowed}
                                   handler={(label, state) => handleCheckboxChange(label, state,
-                                      this.state.activeQuestion,
-                                      this.state.questions,
-                                      this.setQuestions)}
+                                      this.state,
+                                      this.setCreatorState)}
                         />
                     </div>
                     <div>
                         <Checkbox label={"Allow multiple selection"}
                                   isChecked={this.state.activeQuestion.isMultipleSelectionAllowed}
                                   handler={(label, state) => handleCheckboxChange(label, state,
-                                      this.state.activeQuestion,
-                                      this.state.questions,
-                                      this.setQuestions)}
+                                      this.state,
+                                      this.setCreatorState)}
                         />
                     </div>
                 </div>

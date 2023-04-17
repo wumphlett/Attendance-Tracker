@@ -18,54 +18,35 @@ import '../../stylesheets/question-editor.css'
 class QuestionPreview extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { questions: props.questions, activeQuestion: props.activeQuestion }
-        this.setQuestions = props.setQuestions
-        this.setActiveQuestion = props.setActiveQuestion
+        this.state = props.state
+        this.setCreatorState = props.setCreatorState
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.questions !== this.props.questions) {
-            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion });
-        }
-        if(prevProps.activeQuestion !== this.props.activeQuestion) {
-            this.setState({ questions: this.props.questions, activeQuestion: this.props.activeQuestion });
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps !== prevState) {
+            return nextProps.state
         }
     }
 
     render() {
-        if (typeof this.setActiveQuestion === 'undefined') {
-            return null;
-        }
-
         // Set question number
-        let questionNumber;
-        if (this.state.questions !== null && this.state.activeQuestion !== null) {
-            questionNumber = (this.state.questions.
-            findIndex(question => question.id === this.state.activeQuestion.id) + 1).toString();
-        }
-
         return(
             <div className={"container-fluid h-100 p-2"}>
                 <div className={"card card-dark h-100"}>
                     <div className={"card-body"} style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                         <div className={"card card-very-dark mb-2"}> {/* Question Number*/}
                             <div className={"card-body"}>
-                                <h3 className="text-center"><strong>Question {questionNumber}</strong></h3>
+                                <h3 className="text-center"><strong>Question {this.state.activeQuestion.index + 1}</strong></h3>
                             </div>
                         </div>
                         <div className={"card card-very-dark"} style={{ flex: 1 }}> {/* Question Content*/}
                             <div className={"card-body"}>
+                                {/*Only trigger the text save api call on focus change*/}
                                 <textarea className="textarea question-input"
                                           placeholder={"Enter a question here..."}
-                                          value={this.state.activeQuestion.prompt}
-                                          onChange={(event) => handleTextChange(event,
-                                                              this.state.activeQuestion,
-                                                              this.state.questions,
-                                                              this.setQuestions)}
-                                          onPaste={(event) => handleTextPaste(event,
-                                                              this.state.activeQuestion,
-                                                              this.state.questions,
-                                                              this.setQuestions)}
+                                          value={this.state.activeQuestion.text}
+                                          onChange={(event) => handleTextChange(event, this.state, this.setCreatorState)}
+                                          onPaste={(event) => handleTextPaste(event, this.state, this.setCreatorState)}
                                 />
                             </div>
                         </div>
