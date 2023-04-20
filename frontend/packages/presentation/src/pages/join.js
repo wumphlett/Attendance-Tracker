@@ -20,8 +20,9 @@ class CodeDisplay extends React.Component {
 
     constructor(props) {
         super(props);
+        const currentPath = window.location.pathname;
         this.state = {
-            joinCode: "SZXWS",
+            joinCode: currentPath.substring(currentPath.lastIndexOf('/') + 1),
             responseCount: 0
         }
         this.setSessionId = props.setSessionId;

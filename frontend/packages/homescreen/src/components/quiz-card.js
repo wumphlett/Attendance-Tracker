@@ -27,13 +27,17 @@ class QuizCard extends React.Component {
         }
     }
 
+    onLaunchPress = () => {
+        console.log(this.state.presentation)
+    }
+
     render() {
         return (
             <div className={"card card-body quiz-card primary-dark-theme mt-1 d-flex flex-row justify-content-center"}>
                 <h3 className={"text-dark-theme"}>{this.state.presentation.name}</h3>
 
                 <div className={"quiz-options pb-0"}>
-                    <button className={"btn btn-success mb-0 mx-1"}>Launch</button>
+                    <button className={"btn btn-success mb-0 mx-1"} onClick={this.onLaunchPress}>Launch</button>
                     <button className={"btn btn-primary mb-0 mx-1"} onClick={() => {window.location.href = `/create/${this.state.presentation.id}`}}>Edit</button>
                     <button className={"btn btn-danger mb-0 mx-1"} onClick={
                         () => deleteQuiz(this.state.presentation, this.state.presentations, this.setUserState)
