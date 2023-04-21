@@ -47,7 +47,7 @@ class QuestionDisplay extends React.Component {
         axios.post(`${this.state.sessionId}/next/`)
             .then((res) => {
                 this.setActiveQuestion(res.data)
-                axios.get(`${this.state.sessionId}respond/`)
+                axios.get(`${this.state.sessionId}/respond/`)
                     .then((res) => {
                         this.client.send(
                             JSON.stringify(res.data)

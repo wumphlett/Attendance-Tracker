@@ -10,6 +10,7 @@
 import React from "react";
 // Functions
 import { deleteQuiz } from "../functions/deleteQuiz";
+import { launchQuiz } from "../functions/launchQuiz";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"
@@ -29,6 +30,7 @@ class QuizCard extends React.Component {
 
     onLaunchPress = () => {
         console.log(this.state.presentation)
+        launchQuiz(this.state.presentation)
     }
 
     render() {
