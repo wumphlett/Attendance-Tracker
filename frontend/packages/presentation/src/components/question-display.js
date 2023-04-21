@@ -8,6 +8,7 @@
  */
 // Main
 import React from "react";
+import axios from "axios";
 // Components
 // Functions
 // Stylesheets
@@ -18,19 +19,57 @@ class QuestionDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sessionId: props.sessionId
+            sessionId: props.sessionId,
+            activeQuestion: {
+                prompt: "This is a prompt.",
+                index: 0,
+                answerChoices: [
+                    "",
+                    "",
+                    "",
+                    "",
+                ]
+            }
         }
+        this.setState = this.setState.bind(this);
+    }
+
+    setActiveQuestion(data) {
+        console.log(data)
+        // this.setState({ activeQuestion: {
+        //     prompt: question.prompt,
+        //         index: question.index,
+        //         answerChoices: question.answerChoices
+        // }})
+    }
+
+    cycleNextQuestion() {
+        axios.post(`${this.state.sessionId}/next/`)
+            .then((res) => {
+                this.setActiveQuestion(res.data)
+                axios.get(`${this.state.sessionId}respond/`)
+                    .then((res) => {
+                        this.client.send(
+                            JSON.stringify(res.data)
+                        );
+                    });
+            })
+    }
+
+    onNextClicked = (event) => {
+        event.preventDefault();
+        this.cycleNextQuestion();
     }
 
     render() {
         return (
             <div className={"d-flex flex-column h-100 col-12 col-md-8 mx-auto"}>
                 <div className={"card question-number-card secondary-dark-theme text-dark-theme p-2 px-3 w-100"}>
-                    <h1 className="text-center pb-0 pt-0"><strong>Question 1</strong></h1>
+                    <h1 className="text-center pb-0 pt-0"><strong>{this.state.activeQuestion.index}</strong></h1>
                 </div>
                 <div className={"card display-card d-flex flex-column secondary-dark-theme w-100 mt-2 p-2"}>
                     <div className={"card primary-dark-theme text-dark-theme p-2"} style={{ flex: 0.50}}>
-                        <h1><strong>This is a prompt...</strong></h1>
+                        <h1><strong>{this.state.activeQuestion.prompt}</strong></h1>
                     </div>
                     <div className={"d-flex bg-black flex-column mt-2"} style={{ flex: 0.40 }}> {/* Answers */}
                         {/*<div className={"pb-1"} style={{ flex: 0.50 }}>*/}
@@ -61,7 +100,8 @@ class QuestionDisplay extends React.Component {
                             </div>
                         </div>
                         <div className={"col-6 ps-1"}>
-                            <div className="card btn button-card next join-button primary-dark-theme text-dark-theme col-12 mt-3 align-self-center">
+                            <div className="card btn button-card next join-button primary-dark-theme text-dark-theme col-12 mt-3 align-self-center"
+                                 onClick={this.onNextClicked}>
                                 Next
                             </div>
                         </div>

@@ -44,7 +44,7 @@ class CodeDisplay extends React.Component {
 
     handleJoinClick = (event) => {
         event.stopPropagation();
-        joinAsPresenter(this.state.joinCode, this.client, this.setSessionId);
+        joinAsPresenter(this.state.joinCode, this.client, this.addClientHandlers, this.setSessionId);
     }
 
     render() {

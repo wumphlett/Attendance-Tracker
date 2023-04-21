@@ -16,11 +16,10 @@ export function joinAsPresenter(joinCode, client, addClientHandlers, setSessionI
             let sessionId = r.data.id;
 
             client = new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/?presenter");
-            console.log(client);
             // addClientHandlers();
             axios.get(`sessions/${sessionId}/`)
                 .then((r) => {
-                    // setSessionId(r.data.id);
+                    setSessionId(r.data.id);
                 });
         });
 }
