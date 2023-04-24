@@ -22,12 +22,18 @@ class Presentation extends React.Component {
         super(props);
         this.state = {
             sessionId: null,
+            client: null
         }
         this.setSessionId = this.setSessionId.bind(this);
+        this.setClient = this.setClient.bind(this);
     }
 
     setSessionId = (sessionId) => {
         this.setState({ sessionId: sessionId });
+    }
+
+    setClient = (client) => {
+        this.setState({ client: client });
     }
 
    render() {
@@ -42,6 +48,8 @@ class Presentation extends React.Component {
                                     <CodeDisplay
                                         sessionId={this.state.sessionId}
                                         setSessionId={this.setSessionId}
+                                        client={this.state.client}
+                                        setClient={this.setClient}
                                     />
                                     {/* Active Users */}
                                     <CounterCard
@@ -52,6 +60,8 @@ class Presentation extends React.Component {
                                 <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
                                     <QuestionDisplay
                                         sessionId={this.state.sessionId}
+                                        client={this.state.client}
+                                        setClient={this.setClient}
                                     />
                                 </div>
                             )}

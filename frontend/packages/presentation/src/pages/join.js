@@ -22,12 +22,13 @@ class CodeDisplay extends React.Component {
         super(props);
         const currentPath = window.location.pathname;
         this.state = {
+            client: props.client,
             joinCode: currentPath.substring(currentPath.lastIndexOf('/') + 1),
             responseCount: 0
         }
+        this.setClient = props.setClient;
         this.setSessionId = props.setSessionId;
     }
-    client = null;
 
     addClientHandlers = (client) => {
         client.onmessage = (message) => {
@@ -44,7 +45,7 @@ class CodeDisplay extends React.Component {
 
     handleJoinClick = (event) => {
         event.stopPropagation();
-        joinAsPresenter(this.state.joinCode, this.client, this.addClientHandlers, this.setSessionId);
+        joinAsPresenter(this.state.joinCode, this.state.client, this.setClient, this.addClientHandlers, this.setSessionId);
     }
 
     render() {

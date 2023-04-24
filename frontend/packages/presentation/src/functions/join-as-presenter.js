@@ -10,12 +10,12 @@
 import axios from "axios";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 
-export function joinAsPresenter(joinCode, client, addClientHandlers, setSessionId) {
+export function joinAsPresenter(joinCode, client, setClient, addClientHandlers, setSessionId) {
     axios.get('sessions/join/', {params: {token: joinCode}})
         .then((r) => {
             let sessionId = r.data.id;
 
-            client = new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/?presenter");
+            setClient(new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/?presenter"))
             // addClientHandlers();
             axios.get(`sessions/${sessionId}/`)
                 .then((r) => {
