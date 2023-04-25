@@ -47,6 +47,21 @@ class Response extends React.Component {
         });
     }
 
+    cycleQuizState = (data) => {
+        if (data.currentQuestion === null) {
+            this.setQuizState("completed")
+        }
+        else if (this.state.quizState === "loading") {
+            this.setQuizState("pre-response")
+        }
+        else if (this.state.quizState === "pre-response") {
+            this.setQuizState("response")
+        }
+        else if (this.state.quizState === "response") {
+            this.setQuizState("pre-response")
+        }
+    }
+
     setQuizState = (state) => {
         this.setState( { quizState: state})
     }
@@ -55,8 +70,8 @@ class Response extends React.Component {
         client.onmessage = (message) => {
             const data = JSON.parse(message.data)
             if (data) {
-                console.log(data)
                 setActiveQuestion(data)
+                this.cycleQuizState(data)
             }
         }
     }

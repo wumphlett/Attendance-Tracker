@@ -10,7 +10,7 @@
 import React from "react";
 import axios from "axios";
 // Components
-import AnswerCard from "./answer-card";
+import AnswerSelector from "./answer-selector";
 // Functions
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
@@ -24,6 +24,7 @@ class QuizDisplay extends React.Component {
             activeQuestion: props.activeQuestion,
             quizState: props.quizState,
             isAcceptingResponses: props.isAcceptingResponses,
+            answersSelected: []
         }
     }
 
@@ -39,15 +40,10 @@ class QuizDisplay extends React.Component {
                 <div className={"col-12 col-md-8 h-100 py-2 mx-auto"}>
                     {this.state.activeQuestion === null ? (<div></div>) : (
                         <div className={"card display-card d-flex flex-column secondary-dark-theme h-100 w-100 p-2 no-gutters"}>
-                            <div className={"flex-wrap-container"} style={{ height: "100%" }}>
-                                {this.state.activeQuestion.answerChoices.map((answerChoice, index) => (
-                                    <div key={index} className={"flex-wrap-item"}>
-                                        <AnswerCard
-                                            answer={answerChoice}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
+                            <AnswerSelector
+                                quizState={this.state.quizState}
+                                activeQuestion={this.state.activeQuestion}
+                            />
                         </div>
                     )}
                 </div>
