@@ -23,15 +23,7 @@ class QuizDisplay extends React.Component {
         this.client = props.client
         this.state = {
             sessionId: props.sessionId,
-            isLoadingComplete: false,
-            activeQuestion: {
-                prompt: "",
-                answerChoices: [
-                    {},
-                    {},
-
-                ]
-            },
+            activeQuestion: null,
             quizState: props.quizState,
             isAcceptingResponses: false,
             currentlyJoined: props.currentlyJoined
@@ -40,7 +32,9 @@ class QuizDisplay extends React.Component {
 
         this.setState = this.setState.bind(this);
         this.onNextClicked = this.onNextClicked.bind(this)
-        this.cycleNextQuestion()
+        if (this.state.activeQuestion === null) {
+            this.cycleNextQuestion()
+        }
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -63,7 +57,7 @@ class QuizDisplay extends React.Component {
         })
     }
 
-    cycleNextQuestion() {
+    cycleNextQuestion(callback) {
         axios.post(`sessions/${this.state.sessionId}/next/`)
             .then((res) => {
                 // Quiz is complete
@@ -79,22 +73,28 @@ class QuizDisplay extends React.Component {
                                 JSON.stringify(res.data)
                             );
                         });
+                    if (typeof callback === "function") {
+                        // Call the callback function
+                        callback();
+                    }
                 }
             })
     }
 
     cycleQuizState() {
         if (this.state.quizState === "pre-response") {
-            this.setQuizState("response")
-            this.cycleNextQuestion()
+            this.cycleNextQuestion(() => {
+                this.setQuizState("response")
+            })
         }
         else if (this.state.quizState === "response") {
             this.setQuizState("post-response")
             this.setState({ isAcceptingResponses: false})
         }
         else if (this.state.quizState === "post-response") {
-            this.setQuizState("pre-response")
-            this.cycleNextQuestion()
+            this.cycleNextQuestion(() => {
+                this.setQuizState("pre-response")
+            })
         }
     }
 
@@ -107,7 +107,7 @@ class QuizDisplay extends React.Component {
         return (
             <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
                 <div className={"col-12 col-md-8 h-100 mx-auto"}>
-                    {!this.state.isLoadingComplete ? (<div></div>) : (
+                    {this.state.activeQuestion === null ? (<div></div>) : (
                         <div className={"d-flex flex-column h-100"}>
                             <div className={"card question-number-card secondary-dark-theme text-dark-theme p-2 px-3 w-100"}>
                                 <h1 className="text-center pb-0 pt-0"><strong>Question {this.state.activeQuestion.index + 1}</strong></h1>
