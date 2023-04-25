@@ -19,14 +19,28 @@ class AnswerSelector extends React.Component {
         super(props);
         this.state = {
             quizState: props.quizState,
-            activeQuestion: props.activeQuestion
+            activeQuestion: props.activeQuestion,
+            answersSelected: props.answersSelected
         }
+        this.setAnswersSelected = props.setAnswersSelected
+        this.selectAnswer = this.selectAnswer.bind(this)
+        this.deselectAnswer = this.deselectAnswer.bind(this)
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
             return nextProps
         }
+    }
+
+    selectAnswer = (answer) => {
+        let modifiedAnswers = ([...this.state.answersSelected, answer])
+        this.setAnswersSelected(modifiedAnswers);
+    }
+
+    deselectAnswer = (answerToRemove) => {
+        let modifiedAnswers = this.state.answersSelected.filter((answer) => answer.id !== answerToRemove.id)
+        this.setAnswersSelected(modifiedAnswers)
     }
 
     render() {
@@ -38,6 +52,8 @@ class AnswerSelector extends React.Component {
                             <div key={index} className={"flex-wrap-item"}>
                                 <AnswerCard
                                     answer={answerChoice}
+                                    selectAnswer={this.selectAnswer}
+                                    deselectAnswer={this.deselectAnswer}
                                 />
                             </div>
                         ))}

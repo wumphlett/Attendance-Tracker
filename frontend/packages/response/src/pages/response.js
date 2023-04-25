@@ -28,7 +28,7 @@ class Response extends React.Component {
             activeQuestion: null,
             quizState: "loading",
             isAcceptingResponses: false,
-            endTime: null
+            endTime: null,
         }
         this.setSessionId = this.setSessionId.bind(this);
         this.setClient = this.setClient.bind(this);

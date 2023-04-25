@@ -18,7 +18,10 @@ class AnswerCard extends React.Component {
         this.state = {
             answer: props.answer,
             quizState: props.quizState,
+            answerSelected: false
         }
+        this.selectAnswer = props.selectAnswer
+        this.deselectAnswer = props.deselectAnswer
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -27,9 +30,22 @@ class AnswerCard extends React.Component {
         }
     }
 
+    handleButtonPress = (event) => {
+        event.stopPropagation();
+        if (!this.state.answerSelected) {
+            this.setState({ answerSelected: true })
+            this.selectAnswer(this.state.answer)
+        }
+        else if (this.state.answerSelected) {
+            this.setState({ answerSelected: false })
+            this.deselectAnswer(this.state.answer)
+        }
+    }
+
     render() {
         return (
-            <div className={"card primary-dark-theme text-dark-theme p-2 h-100 overflow-auto answer-card text-center"}>
+            <div className={`card primary-dark-theme text-dark-theme p-2 h-100 overflow-auto text-center btn answer-button${this.state.answerSelected ? " selected" : ""}`}
+            onClick={this.handleButtonPress}>
                 <text className={"pt-0"}>{this.state.answer.symbol}</text>
             </div>
         )

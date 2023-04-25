@@ -72,13 +72,27 @@
     color: floralwhite;
 }
 
-.card.answer-card {
+.card.answer-button {
     border: 4px solid rgba(255, 250, 240, .0);
     font-weight: bold;
     font-size: 10vh;
     display: flex;
     justify-content: center;
     align-self: center;
+}
+
+.card.answer-button:hover {
+    border: 4px solid rgba(255, 250, 240, .4);
+    color: floralwhite;
+}
+
+.card.answer-button.selected {
+    color: floralwhite;
+    background: darkorange;
+}
+
+.card.answer-button.disabled {
+    display: none;
 }
 
 .flex-wrap-container {

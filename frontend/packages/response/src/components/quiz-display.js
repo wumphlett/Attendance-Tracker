@@ -26,12 +26,17 @@ class QuizDisplay extends React.Component {
             isAcceptingResponses: props.isAcceptingResponses,
             answersSelected: []
         }
+        this.setAnswersSelected = this.setAnswersSelected.bind(this)
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
             return nextProps
         }
+    }
+
+    setAnswersSelected = (answers) => {
+        this.setState( { answersSelected: answers })
     }
 
     render() {
@@ -43,6 +48,8 @@ class QuizDisplay extends React.Component {
                             <AnswerSelector
                                 quizState={this.state.quizState}
                                 activeQuestion={this.state.activeQuestion}
+                                answersSelected={this.state.answersSelected}
+                                setAnswersSelected={this.setAnswersSelected}
                             />
                         </div>
                     )}
