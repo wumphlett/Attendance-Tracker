@@ -20,7 +20,7 @@ class ControlCard extends React.Component {
         this.state = {
             recordedResponses: props.recordedResponses,
             currentlyJoined: props.currentlyJoined,
-            questionState: props.questionState,
+            quizState: props.quizState,
             timeElapsed: 0,
             interval: null
         }
@@ -50,15 +50,15 @@ class ControlCard extends React.Component {
 
     handleTimer = () => {
         // Response window is now open. Start timer.
-        if (this.state.questionState === "pre-response") {
+        if (this.state.quizState === "pre-response") {
             this.startTimer()
         }
         // Response window is now closed. Stop timer.
-        else if (this.state.questionState === "response") {
+        else if (this.state.quizState === "response") {
             this.stopTimer()
         }
         // Reset the timer between questions.
-        else if (this.state.questionState === "post-response") {
+        else if (this.state.quizState === "post-response") {
             this.setState({ timeElapsed: 0})
         }
     }
@@ -76,12 +76,12 @@ class ControlCard extends React.Component {
                 </div>
                 <div className={"col-4"}><strong>Time Elapsed:   {this.state.timeElapsed}s</strong></div>
                 <div className={"col-4"}>
-                    {this.state.questionState === "pre-response" ? (
+                    {this.state.quizState === "pre-response" ? (
                         <div className="card btn button-card control-button start primary-dark-theme text-dark-theme col-12"
                              onClick={this.onClick}>
                             Start
                         </div>
-                    ) : this.state.questionState === "response"? (
+                    ) : this.state.quizState === "response"? (
                         <div className="card btn button-card control-button stop primary-dark-theme text-dark-theme col-12"
                              onClick={this.onClick}>
                             Stop

@@ -2,7 +2,7 @@
  * presentation.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 17 APR 23
+ * @Version - 24 APR 23
  *
  * Present a quiz
  */
@@ -10,13 +10,14 @@
 import React from "react";
 // Components
 import { Navbar } from "@frontend/common/build"
-import CodeDisplay from "./join";
+import CodeDisplay from "../components/code-display";
 import CounterCard from "../components/counter-card";
-import QuestionDisplay from "../components/question-display";
+import QuizDisplay from "../components/quiz-display";
 // Functions
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/presentation.css"
+import JoinScreen from "../components/join-screen";
 
 class Presentation extends React.Component {
     constructor(props) {
@@ -24,10 +25,12 @@ class Presentation extends React.Component {
         this.state = {
             sessionId: null,
             client: null,
-            currentlyJoined: 0
+            currentlyJoined: 0,
+            quizState: "loading"
         }
         this.setSessionId = this.setSessionId.bind(this);
         this.setClient = this.setClient.bind(this);
+        this.setQuizState = this.setQuizState.bind(this);
     }
 
     setSessionId = (sessionId) => {
@@ -38,6 +41,10 @@ class Presentation extends React.Component {
         this.setState({ client: client });
     }
 
+    setQuizState = (state) => {
+        this.setState( { quizState: state})
+    }
+
    render() {
         return (
             <div className={"primary-dark-theme"}>
@@ -45,28 +52,26 @@ class Presentation extends React.Component {
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
                         {this.state.sessionId === null ? (
-                                // Join Code
-                                <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
-                                    <CodeDisplay
-                                        sessionId={this.state.sessionId}
-                                        setSessionId={this.setSessionId}
-                                        client={this.state.client}
-                                        setClient={this.setClient}
-                                    />
-                                    {/* Active Users */}
-                                    <CounterCard
-                                        currentlyJoined={this.state.currentlyJoined}
-                                    />
-                                </div>
+                                <JoinScreen
+                                    sessionId={this.state.sessionId}
+                                    client={this.state.client}
+                                    currentlyJoined={this.state.currentlyJoined}
+                                    quizState={this.state.quizState}
+                                    setSessionId={this.setSessionId}
+                                    setClient={this.setClient}
+                                    setQuizState={this.setQuizState}
+                                />
+                            ) : this.state.quizState !== "completed" ? (
+                                <QuizDisplay
+                                    sessionId={this.state.sessionId}
+                                    client={this.state.client}
+                                    setClient={this.setClient}
+                                    currentlyJoined={this.state.currentlyJoined}
+                                    quizState={this.state.quizState}
+                                    setQuizState={this.setQuizState}
+                                />
                             ) : (
-                                <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
-                                    <QuestionDisplay
-                                        sessionId={this.state.sessionId}
-                                        client={this.state.client}
-                                        setClient={this.setClient}
-                                        currentlyJoined={this.state.currentlyJoined}
-                                    />
-                                </div>
+                                <div></div>
                             )}
                     </div>
                 </div>

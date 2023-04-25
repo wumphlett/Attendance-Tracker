@@ -1,5 +1,5 @@
 /**
- * join.js
+ * code-display.js
  *
  * @Author - Will Humphlett - will@humphlett.net
  * @Author - Ethan Brown - ewbrowntech@gmail.com

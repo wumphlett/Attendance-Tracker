@@ -1,8 +1,8 @@
 /**
- * join.js
+ * code-display.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 16 APR 23
+ * @Version - 24 APR 23
  *
  * Display the join code and active users in presentation
  */
@@ -28,6 +28,7 @@ class CodeDisplay extends React.Component {
         }
         this.setClient = props.setClient;
         this.setSessionId = props.setSessionId;
+        this.setQuizState = props.setQuizState;
     }
 
     addClientHandlers = (client) => {
@@ -46,6 +47,7 @@ class CodeDisplay extends React.Component {
     handleJoinClick = (event) => {
         event.stopPropagation();
         joinAsPresenter(this.state.joinCode, this.state.client, this.setClient, this.addClientHandlers, this.setSessionId);
+        this.setQuizState("pre-response")
     }
 
     render() {

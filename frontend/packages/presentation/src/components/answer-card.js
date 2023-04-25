@@ -17,7 +17,7 @@ class AnswerCard extends React.Component {
         super(props);
         this.state = {
             answer: props.answer,
-            questionState: props.questionState,
+            quizState: props.quizState,
         }
     }
 
@@ -30,8 +30,8 @@ class AnswerCard extends React.Component {
     render() {
         return (
             <div className={`card primary-dark-theme text-dark-theme p-2 h-100 overflow-auto
-                ${this.state.questionState === "post-response" && this.state.answer.is_correct ? 'correct' :
-                this.state.questionState === "post-response" && !this.state.answer.is_correct ? 'incorrect' : 
+                ${this.state.quizState === "post-response" && this.state.answer.is_correct ? 'correct' :
+                this.state.quizState === "post-response" && !this.state.answer.is_correct ? 'incorrect' : 
                     'answer-card'}`}>
                 <h2><strong>{this.state.answer.text}</strong></h2>
             </div>
