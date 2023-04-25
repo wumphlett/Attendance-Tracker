@@ -15,6 +15,7 @@ import CounterCard from "../components/counter-card";
 import QuestionDisplay from "../components/question-display";
 // Functions
 // Stylesheets
+import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/presentation.css"
 
 class Presentation extends React.Component {
@@ -22,7 +23,8 @@ class Presentation extends React.Component {
         super(props);
         this.state = {
             sessionId: null,
-            client: null
+            client: null,
+            currentlyJoined: 0
         }
         this.setSessionId = this.setSessionId.bind(this);
         this.setClient = this.setClient.bind(this);
@@ -53,7 +55,7 @@ class Presentation extends React.Component {
                                     />
                                     {/* Active Users */}
                                     <CounterCard
-                                        currentlyJoined={0}
+                                        currentlyJoined={this.state.currentlyJoined}
                                     />
                                 </div>
                             ) : (
@@ -62,6 +64,7 @@ class Presentation extends React.Component {
                                         sessionId={this.state.sessionId}
                                         client={this.state.client}
                                         setClient={this.setClient}
+                                        currentlyJoined={this.state.currentlyJoined}
                                     />
                                 </div>
                             )}

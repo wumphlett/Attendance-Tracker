@@ -2,7 +2,7 @@
  * question-display.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 17 APR 23
+ * @Version - 24 APR 23
  *
  * Display a question and the available answer choices
  */
@@ -11,6 +11,7 @@ import React from "react";
 import axios from "axios";
 // Components
 import AnswerCard from "../components/answer-card"
+import ControlCard from "./control-card";
 // Functions
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
@@ -32,10 +33,18 @@ class QuestionDisplay extends React.Component {
                 ]
             },
             questionState: "pre-response",
-            isAcceptingResponses: false
+            isAcceptingResponses: false,
+            currentlyJoined: props.currentlyJoined
         }
         this.setState = this.setState.bind(this);
+        this.onNextClicked = this.onNextClicked.bind(this)
         this.cycleNextQuestion()
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.currentlyJoined !== prevState.currentlyJoined) {
+            this.setState({currentlyJoined: nextProps.currentlyJoined})
+        }
     }
 
     setActiveQuestion(data) {
@@ -103,10 +112,17 @@ class QuestionDisplay extends React.Component {
                             <h1 className="text-center pb-0 pt-0"><strong>Question {this.state.activeQuestion.index + 1}</strong></h1>
                         </div>
                         <div className={"card display-card d-flex flex-column secondary-dark-theme w-100 mt-2 p-2 no-gutters"}>
-                            <div className={"card primary-dark-theme text-dark-theme p-2"} style={{ flex: 0.50}}>
+                            <div className={"card primary-dark-theme text-dark-theme d-flex flex-column p-2"} style={{ flex: 0.50}}>
                                 <h1><strong>{this.state.activeQuestion.prompt}</strong></h1>
+                                <div style={{ marginTop: 'auto'}}>
+                                    <ControlCard
+                                        recordedResponses={0}
+                                        currentlyJoined={this.state.currentlyJoined}
+                                        onNextClicked={this.onNextClicked}
+                                    />
+                                </div>
                             </div>
-                            <div className={"flex-wrap-container mt-2"} style={{ flex: 0.40}}>
+                            <div className={"flex-wrap-container mt-2"} style={{ flex: 0.50}}>
                                 {this.state.activeQuestion.answerChoices.map((answerChoice, index) => (
                                     <div key={index} className={"flex-wrap-item"}>
                                         <AnswerCard
@@ -115,12 +131,6 @@ class QuestionDisplay extends React.Component {
                                         />
                                     </div>
                                 ))}
-                            </div>
-                            <div className={"d-flex bg-black mt-2"} style={{ flex: 0.10 }}>
-                                <div className="card btn button-card next join-button primary-dark-theme text-dark-theme col-12 mt-3 align-self-center"
-                                     onClick={this.onNextClicked}>
-                                    Next
-                                </div>
                             </div>
                         </div>
                     </div>
