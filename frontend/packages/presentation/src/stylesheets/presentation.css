@@ -143,3 +143,11 @@
         width: 100%; /* subtract 0.5rem to add gap between items */
     }
 }
+
+.quiz-complete-break {
+    border: none;
+    background: rgba(255, 250, 240, .8);
+    height: 4px;
+    width: 50%;
+    margin: 0.5rem auto 1rem;
+}

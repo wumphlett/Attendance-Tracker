@@ -10,14 +10,13 @@
 import React from "react";
 // Components
 import { Navbar } from "@frontend/common/build"
-import CodeDisplay from "../components/code-display";
-import CounterCard from "../components/counter-card";
+import JoinScreen from "../components/join-screen";
 import QuizDisplay from "../components/quiz-display";
+import CompletionScreen from "../components/completion-screen";
 // Functions
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/presentation.css"
-import JoinScreen from "../components/join-screen";
 
 class Presentation extends React.Component {
     constructor(props) {
@@ -71,7 +70,7 @@ class Presentation extends React.Component {
                                     setQuizState={this.setQuizState}
                                 />
                             ) : (
-                                <div></div>
+                                <CompletionScreen />
                             )}
                     </div>
                 </div>
