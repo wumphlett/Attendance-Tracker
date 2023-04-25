@@ -76,10 +76,22 @@ class ControlCard extends React.Component {
                 </div>
                 <div className={"col-4"}><strong>Time Elapsed:   {this.state.timeElapsed}s</strong></div>
                 <div className={"col-4"}>
-                    <div className="card btn button-card control-button primary-dark-theme text-dark-theme col-12"
-                         onClick={this.onClick}>
-                        Next
-                    </div>
+                    {this.state.questionState === "pre-response" ? (
+                        <div className="card btn button-card control-button start primary-dark-theme text-dark-theme col-12"
+                             onClick={this.onClick}>
+                            Start
+                        </div>
+                    ) : this.state.questionState === "response"? (
+                        <div className="card btn button-card control-button stop primary-dark-theme text-dark-theme col-12"
+                             onClick={this.onClick}>
+                            Stop
+                        </div>
+                    ) : (
+                        <div className="card btn button-card control-button primary-dark-theme text-dark-theme col-12"
+                             onClick={this.onClick}>
+                            Next
+                        </div>
+                    )}
                 </div>
             </div>
         )

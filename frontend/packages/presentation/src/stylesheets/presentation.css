@@ -60,15 +60,15 @@
 .card.button-card.stop:hover {
     display: flex;
     border: 2px solid rgba(255, 250, 240, .4);
-    background: orangered;
+    background: rgba(220, 53, 69, 1);
     justify-content: center;
     color: floralwhite;
 }
 
-.card.button-card.stop:hover {
+.card.button-card.start:hover {
     display: flex;
     border: 2px solid rgba(255, 250, 240, .4);
-    background: forestgreen;
+    background: rgba(40, 167, 69, 1);
     justify-content: center;
     color: floralwhite;
 }
