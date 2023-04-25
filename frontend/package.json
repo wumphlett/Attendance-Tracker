@@ -7,7 +7,9 @@
   "scripts": {
     "build": "yarn install && cd packages/common && yarn run build && cd ../homescreen && yarn build && cd ../quiz-creator && yarn build && cd ../presentation && yarn build && cd ../response && yarn build",
     "dev-server": "yarn run build && cd ./dev-server && npm start",
-    "presentation": "cd packages/presentation && yarn build && cd ../../dev-server && npm start"
+    "presentation": "cd packages/presentation && yarn build && cd ../../dev-server && npm start",
+    "response": "cd packages/response && yarn build && cd ../../dev-server && npm start"
+
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
