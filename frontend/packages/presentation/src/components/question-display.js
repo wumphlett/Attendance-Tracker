@@ -48,7 +48,6 @@ class QuestionDisplay extends React.Component {
     }
 
     setActiveQuestion(data) {
-        console.log(data)
         this.setState(  {
             activeQuestion: {
                 prompt: data.current_question.text,
@@ -59,9 +58,6 @@ class QuestionDisplay extends React.Component {
             },
             isAcceptingResponses: data.is_accepting_responses,
             isLoadingComplete: true
-        }, () => {
-            console.log(this.state.questionState)
-            console.log(this.state.isAcceptingResponses)
         })
     }
 
@@ -86,10 +82,7 @@ class QuestionDisplay extends React.Component {
 
         }
         else if (this.state.questionState === "response") {
-            this.setState({ questionState: "post-response", isAcceptingResponses: false}, () => {
-                console.log(this.state.questionState)
-                console.log(this.state.isAcceptingResponses)
-            })
+            this.setState({ questionState: "post-response", isAcceptingResponses: false})
         }
         else if (this.state.questionState === "post-response") {
             this.setState({ questionState: "pre-response"}, () => {
@@ -118,6 +111,7 @@ class QuestionDisplay extends React.Component {
                                     <ControlCard
                                         recordedResponses={0}
                                         currentlyJoined={this.state.currentlyJoined}
+                                        questionState={this.state.questionState}
                                         onNextClicked={this.onNextClicked}
                                     />
                                 </div>

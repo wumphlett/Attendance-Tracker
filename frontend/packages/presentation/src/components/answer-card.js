@@ -2,7 +2,7 @@
  * answer-card.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 23 APR 23
+ * @Version - 24 APR 23
  *
  * Display an answer choice
  */
@@ -18,7 +18,6 @@ class AnswerCard extends React.Component {
         this.state = {
             answer: props.answer,
             questionState: props.questionState,
-
         }
     }
 
@@ -29,7 +28,6 @@ class AnswerCard extends React.Component {
     }
 
     render() {
-        console.log(this.state.answer)
         return (
             <div className={`card primary-dark-theme text-dark-theme p-2 h-100 overflow-auto
                 ${this.state.questionState === "post-response" && this.state.answer.is_correct ? 'correct' :

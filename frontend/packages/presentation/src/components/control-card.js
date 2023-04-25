@@ -20,18 +20,52 @@ class ControlCard extends React.Component {
         this.state = {
             recordedResponses: props.recordedResponses,
             currentlyJoined: props.currentlyJoined,
-            timeElapsed: 0
+            questionState: props.questionState,
+            timeElapsed: 0,
+            interval: null
         }
         this.onNextClicked = props.onNextClicked
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.currentlyJoined !== prevState.currentlyJoined) {
-            this.setState({currentlyJoined: nextProps.currentlyJoined})
+        if (nextProps !== prevState) {
+            return nextProps
         }
-        if (nextProps.recordedResponses !== prevState.recordedResponses) {
-            this.setState({recordedResponses: nextProps.recordedResponses})
+    }
+
+    // Implement Timer
+    startTimer = () => {
+        const interval = setInterval(() => {
+            this.setState(prevState => ({
+                timeElapsed: prevState.timeElapsed + 1,
+            }));
+        }, 1000);
+        this.setState({ interval });
+    }
+
+    // Stop timer
+    stopTimer = () => {
+        clearInterval(this.state.interval)
+    }
+
+    handleTimer = () => {
+        // Response window is now open. Start timer.
+        if (this.state.questionState === "pre-response") {
+            this.startTimer()
         }
+        // Response window is now closed. Stop timer.
+        else if (this.state.questionState === "response") {
+            this.stopTimer()
+        }
+        // Reset the timer between questions.
+        else if (this.state.questionState === "post-response") {
+            this.setState({ timeElapsed: 0})
+        }
+    }
+
+    onClick = (event) => {
+        this.onNextClicked(event);
+        this.handleTimer();
     }
 
     render() {
@@ -43,7 +77,7 @@ class ControlCard extends React.Component {
                 <div className={"col-4"}><strong>Time Elapsed:   {this.state.timeElapsed}s</strong></div>
                 <div className={"col-4"}>
                     <div className="card btn button-card control-button primary-dark-theme text-dark-theme col-12"
-                         onClick={this.onNextClicked}>
+                         onClick={this.onClick}>
                         Next
                     </div>
                 </div>
