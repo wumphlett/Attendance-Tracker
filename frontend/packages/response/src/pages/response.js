@@ -32,22 +32,12 @@ class Response extends React.Component {
             endTime: null,
         }
         this.client = null;
-        this.setSessionId = this.setSessionId.bind(this);
-        this.setClient = this.setClient.bind(this);
-        this.setQuizState = this.setQuizState.bind(this);
-        this.setActiveQuestion = this.setActiveQuestion.bind(this);
-        this.postAnswers = this.postAnswers.bind(this);
-        this.addClientHandlers = this.addClientHandlers.bind(this);
         this.joinAsResponder = this.joinAsResponder.bind(this);
+        this.postAnswers = this.postAnswers.bind(this);
     }
 
     setSessionId = (sessionId) => {
-        this.setState({ sessionId: sessionId });
-    }
-
-    setClient = (client, callback) => {
-        this.client = client
-        callback();
+        this.setState({ sessionId: sessionId })
     }
 
     setQuizState = (state) => {
@@ -103,7 +93,10 @@ class Response extends React.Component {
     }
 
     addClientHandlers = () => {
+        console.log("Add client handlers")
+        console.log(this.client)
         this.client.onmessage = (message) => {
+            console.log("Message received")
             const data = JSON.parse(message.data)
             if (data) {
                 console.log(data)
@@ -123,19 +116,17 @@ class Response extends React.Component {
             .then((r) => {
                 let sessionId = r.data.id;
                 this.client = new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/")
+                this.addClientHandlers();
                 this.client.onopen = () => {
-                    console.log(this.client)
-                    this.client.send("Test")
+                    this.client.send(JSON.stringify({ data: "Test" }))
+                    axios.get(`https://api.auttend.com/api/sessions/${sessionId}/respond/`)
+                        .then((r) => {
+                            console.log(r.data)
+                            this.client.send(JSON.stringify(r.data))
+                            this.setSessionId(sessionId)
+                            this.setActiveQuestion(r.data);
+                        });
                 }
-                // console.log(this.client)
-                // this.addClientHandlers();
-                // axios.get(`https://api.auttend.com/api/sessions/${sessionId}/respond/`)
-                //     .then((r) => {
-                //         console.log(this.client)
-                //         this.client.send(JSON.stringify(r.data))
-                //         console.log(r.data)
-                //         this.setActiveQuestion(r.data);
-                //     });
             })
     }
 
@@ -150,7 +141,6 @@ class Response extends React.Component {
                             />
                         ) : this.state.quizState !== "completed" ? (
                             <QuizDisplay
-                                sessionId={this.state.sessionId}
                                 activeQuestion={this.state.activeQuestion}
                                 quizState={this.state.quizState}
                                 isAcceptingResponses={this.state.isAcceptingResponses}

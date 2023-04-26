@@ -20,7 +20,6 @@ class QuizDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sessionId: props.sessionId,
             activeQuestion: props.activeQuestion,
             quizState: props.quizState,
             isAcceptingResponses: props.isAcceptingResponses,
