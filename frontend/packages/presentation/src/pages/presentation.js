@@ -164,7 +164,6 @@ class Presentation extends React.Component {
 
         // Quiz has not started yet
         if (this.existingState.current_question === null && this.existingState.end_time === null) {
-            console.log("Quiz has not yet started")
             this.cycleNextQuestion();
             this.setQuizState("pre-response")
         }

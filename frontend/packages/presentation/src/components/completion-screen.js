@@ -29,8 +29,7 @@ class CompletionScreen extends React.Component {
             method: 'GET',
             responseType: 'blob',
         }).then((response) => {
-            console.log(response.headers)
-            fileDownload(response.data, "results.csv");
+            fileDownload(response.data, response.headers['content-disposition'].split('"')[1]);
         });
     }
 
