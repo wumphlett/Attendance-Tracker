@@ -124,7 +124,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         if session.current_question is None:
             if session.end_time is None:
                 session.current_question = session.presentation.question_set.first()
-        elif not session.is_accepting_responses and not session.is_post_response:
+        elif not session.is_accepting_responses and not session.is_post_responses:
             session.is_accepting_responses = True
         elif session.is_accepting_responses and not session.is_post_responses:
             session.is_post_responses = True
