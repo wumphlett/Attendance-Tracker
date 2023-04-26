@@ -14,6 +14,7 @@ import axios from "axios";
 import { Navbar } from "@frontend/common/build"
 import JoinForm from "./join";
 import QuizDisplay from "../components/quiz-display";
+import CompletionScreen from "../components/completion-screen";
 // Functions
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
@@ -70,6 +71,7 @@ class Response extends React.Component {
         client.onmessage = (message) => {
             const data = JSON.parse(message.data)
             if (data) {
+                console.log(data)
                 setActiveQuestion(data)
                 this.cycleQuizState(data)
             }
@@ -85,8 +87,6 @@ class Response extends React.Component {
             } : null,
             isAcceptingResponses: data.isAcceptingResponses,
             endTime: data.end_time
-        }, () => {
-            console.log(this.state.activeQuestion)
         })
     }
 
@@ -110,9 +110,7 @@ class Response extends React.Component {
                                 isAcceptingResponses={this.state.isAcceptingResponses}
                             />
                         ) : (
-                            <div>
-
-                            </div>
+                            <CompletionScreen />
                         )}
                     </div>
                 </div>
