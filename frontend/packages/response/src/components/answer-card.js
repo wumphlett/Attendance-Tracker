@@ -16,6 +16,7 @@ class AnswerCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            index: props.index,
             answer: props.answer,
             quizState: props.quizState,
             isAnswerSelected: props.isAnswerSelected,
@@ -47,7 +48,7 @@ class AnswerCard extends React.Component {
             <button className={`card primary-dark-theme text-dark-theme p-2 h-100 w-100 overflow-auto text-center btn answer-button${this.state.isAnswerSelected ? " selected" : ""}`}
             onClick={this.handleButtonPress}
             disabled={this.state.isAnswerSubmitted || this.state.quizState === "post-response"}>
-                <span className={"pt-0"}>{this.state.answer.symbol}</span>
+                <span className={"pt-0"}>{this.state.index+1}</span>
             </button>
         )
     }

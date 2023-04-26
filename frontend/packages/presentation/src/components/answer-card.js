@@ -16,6 +16,7 @@ class AnswerCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            index: props.index,
             answer: props.answer,
             quizState: props.quizState,
         }
@@ -33,7 +34,7 @@ class AnswerCard extends React.Component {
                 ${this.state.quizState === "post-response" && this.state.answer.is_correct ? 'correct' :
                 this.state.quizState === "post-response" && !this.state.answer.is_correct ? 'incorrect' : 
                     'answer-card'}`}>
-                <h1 className={"pb-2"} style={{ fontSize: "5vh", paddingTop: 0 }}><strong>{this.state.answer.symbol})</strong></h1>
+                <h1 className={"pb-2"} style={{ fontSize: "5vh", paddingTop: 0 }}><strong>{this.state.index + 1})</strong></h1>
                 <div className={"ms-3 answer-div"}>
                     <h2><strong>{this.state.answer.text}</strong></h2>
                 </div>

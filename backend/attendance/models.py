@@ -60,7 +60,7 @@ class Answer(models.Model):
 
     class Meta:
         verbose_name = "Answer"
-        ordering = ("index",)
+        ordering = ("id",)  # TODO hacky, will order by creation, change to index once properly normalized
 
     def __str__(self):
         return f"{self.symbol} : {self.text}"

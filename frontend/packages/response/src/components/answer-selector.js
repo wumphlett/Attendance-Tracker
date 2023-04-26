@@ -60,6 +60,7 @@ class AnswerSelector extends React.Component {
                             {this.state.activeQuestion.answerChoices.map((answerChoice, index) => (
                                 <div key={index} className={"flex-wrap-item"}>
                                     <AnswerCard
+                                        index={index}
                                         answer={answerChoice}
                                         quizState={this.state.quizState}
                                         selectAnswer={this.selectAnswer}
