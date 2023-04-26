@@ -24,9 +24,12 @@ class QuizDisplay extends React.Component {
             activeQuestion: props.activeQuestion,
             quizState: props.quizState,
             isAcceptingResponses: props.isAcceptingResponses,
-            answersSelected: []
+            answersSelected: [],
+            isAnswerSubmitted: false,
         }
         this.setAnswersSelected = this.setAnswersSelected.bind(this)
+        this.submitAnswers = this.submitAnswers.bind(this)
+        this.resetSelection = this.resetSelection.bind(this)
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -35,8 +38,22 @@ class QuizDisplay extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.quizState === "pre-response" && prevState.quizState === "response") {
+            this.resetSelection();
+        }
+    }
+
+    resetSelection = () => {
+        this.setState({ answersSelected: [], isAnswerSubmitted: false })
+    }
+
     setAnswersSelected = (answers) => {
         this.setState( { answersSelected: answers })
+    }
+
+    submitAnswers = () => {
+        this.setState({ isAnswerSubmitted: true })
     }
 
     render() {
@@ -50,6 +67,8 @@ class QuizDisplay extends React.Component {
                                 activeQuestion={this.state.activeQuestion}
                                 answersSelected={this.state.answersSelected}
                                 setAnswersSelected={this.setAnswersSelected}
+                                isAnswerSubmitted={this.state.isAnswerSubmitted}
+                                submitAnswers={this.submitAnswers}
                             />
                         </div>
                     )}

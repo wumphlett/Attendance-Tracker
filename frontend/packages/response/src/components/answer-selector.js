@@ -20,9 +20,11 @@ class AnswerSelector extends React.Component {
         this.state = {
             quizState: props.quizState,
             activeQuestion: props.activeQuestion,
-            answersSelected: props.answersSelected
+            answersSelected: props.answersSelected,
+            isAnswerSubmitted: props.isAnswerSubmitted
         }
         this.setAnswersSelected = props.setAnswersSelected
+        this.submitAnswers = props.submitAnswers
         this.selectAnswer = this.selectAnswer.bind(this)
         this.deselectAnswer = this.deselectAnswer.bind(this)
     }
@@ -43,6 +45,7 @@ class AnswerSelector extends React.Component {
         this.setAnswersSelected(modifiedAnswers)
     }
 
+
     render() {
         return (
             <div className={"h-100 w-100"}>
@@ -55,14 +58,15 @@ class AnswerSelector extends React.Component {
                                         answer={answerChoice}
                                         selectAnswer={this.selectAnswer}
                                         deselectAnswer={this.deselectAnswer}
+                                        isAnswerSubmitted={this.state.isAnswerSubmitted}
                                     />
                                 </div>
                             ))}
                         </div>
-                        <div className="card btn button-card primary-dark-theme text-dark-theme col-12 col-md-9 col-lg-6 mt-3 mb-1 mx-auto"
-                             style={{ height: "60px" }}>
+                        <button className="card btn button-card primary-dark-theme text-dark-theme col-12 col-md-9 col-lg-6 mt-3 mb-1 mx-auto"
+                             style={{ height: "60px" }} onClick={this.submitAnswers} disabled={this.state.isAnswerSubmitted || this.state.answersSelected.length === 0}>
                             <h3><strong>Submit</strong></h3>
-                        </div>
+                        </button>
                     </div>
                 ) : (<div></div>) }
             </div>

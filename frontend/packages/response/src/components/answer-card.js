@@ -18,7 +18,8 @@ class AnswerCard extends React.Component {
         this.state = {
             answer: props.answer,
             quizState: props.quizState,
-            answerSelected: false
+            answerSelected: false,
+            isAnswerSubmitted: props.isAnswerSubmitted
         }
         this.selectAnswer = props.selectAnswer
         this.deselectAnswer = props.deselectAnswer
@@ -44,10 +45,11 @@ class AnswerCard extends React.Component {
 
     render() {
         return (
-            <div className={`card primary-dark-theme text-dark-theme p-2 h-100 overflow-auto text-center btn answer-button${this.state.answerSelected ? " selected" : ""}`}
-            onClick={this.handleButtonPress}>
+            <button className={`card primary-dark-theme text-dark-theme p-2 h-100 w-100 overflow-auto text-center btn answer-button${this.state.answerSelected ? " selected" : ""}`}
+            onClick={this.handleButtonPress}
+            disabled={this.state.isAnswerSubmitted}>
                 <text className={"pt-0"}>{this.state.answer.symbol}</text>
-            </div>
+            </button>
         )
     }
 }
