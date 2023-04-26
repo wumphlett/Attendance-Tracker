@@ -169,7 +169,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         writer.writerow(["Student", "ID", "SIS User ID", "SIS Login ID", "Section", session.presentation.name])
         writer.writerow(["Points Possible", "", "", "", "", session.presentation.question_set.count()])
 
-        for student in models.Response.objects.filter(session=session).values("user").distinct():
+        for student in models.Response.objects.filter(session=session).select_related("user").distinct():
             points = models.Response.objects.filter(session=session, user=student, answer__is_correct=True).count()  # TODO This will not work if you add partial credit
             writer.writerow([f'"{student.last_name}, {student.first_name}"', "", "", f"{student.email.split('@')[0]}", "", points])
 
