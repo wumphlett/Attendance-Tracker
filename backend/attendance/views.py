@@ -97,6 +97,15 @@ class SessionViewSet(viewsets.ModelViewSet):
             return serializers.SessionListSerializer
         return serializers.SessionDetailSerializer
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+
+        if request.query_params.get('presentation') and request.query_params.get('presentation').isdigit():
+            queryset = queryset.filter(presentation__id=int(request.query_params.get('presentation')))
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
     @action(detail=False, methods=['get'])
     def join(self, request, pk=None):
         if request.query_params.get('token') is None:

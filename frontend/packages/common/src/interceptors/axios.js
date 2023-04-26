@@ -21,7 +21,7 @@ const register_interceptors = (axios) => {
 
   axios.interceptors.response.use(resp => resp, async error => {
     // TODO Verify the refresh logic is functional
-    if (error.response.status === 403 && !refresh) {
+    if (error.response.status === 401 && !refresh) {
         refresh = true;
 
       const response = await axios.post('https://api.auttend.com/token/refresh/', {
