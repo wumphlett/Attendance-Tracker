@@ -81,8 +81,6 @@ class Presentation extends React.Component {
             .then((res) => {
                 axios.get(`sessions/${this.state.sessionId}/respond/`)
                     .then((res) => {
-                        console.log(this.client)
-                        console.log(res.data)
                         this.client.send(
                             JSON.stringify(res.data)
                         );
@@ -93,7 +91,6 @@ class Presentation extends React.Component {
                 }
                 // If quiz is not complete, update the question
                 else {
-                    console.log(res.data)
                     this.setActiveQuestion(res.data)
                     if (typeof callback === "function") {
                         // Call the callback function

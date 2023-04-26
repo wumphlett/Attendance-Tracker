@@ -42,6 +42,8 @@ CSRF_TRUSTED_ORIGINS = ["https://*.auttend.com", "http://*.auttend.com"]  # TEST
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 
+CORS_ALLOW_HEADERS = ["Content-Disposition"]
+
 INSTALLED_APPS = [
     'daphne',
     'django.contrib.admin',
