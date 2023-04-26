@@ -130,22 +130,41 @@ class Presentation extends React.Component {
     }
 
     joinAsPresenter(joinCode) {
-        axios.get('sessions/join/', {params: {token: joinCode}})
-            .then((r) => {
-                let sessionId = r.data.id;
-                this.client = new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/?presenter");
-                this.addClientHandlers()
-                axios.get(`sessions/${sessionId}/`)
+        if (joinCode) {
+            axios.get('sessions/join/', {params: {token: joinCode}})
+              .then((r) => {
+                  let sessionId = r.data.id;
+                  this.client = new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/?presenter");
+                  this.addClientHandlers()
+                  axios.get(`sessions/${sessionId}/`)
                     .then((r) => {
-                        this.setSessionId(r.data.id)
-                        this.existingState = r.data
+                        this.setSessionId(r.data.id);
+                        this.existingState = r.data;
+                        this.setLocation(sessionId);
                     });
+              });
+        }
+    }
+
+    setLocation(sessionId) {
+        console.log("Called setLocation");
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                axios.patch(`sessions/${sessionId}/`, {
+                    long: position.coords.longitude,
+                    lat: position.coords.latitude,
+                    acc: position.coords.accuracy
+                }).then((r) => {})
+            }, (error) => {
+                // console.log(error);
             });
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
     }
 
     onJoinClicked = (event) => {
         event.stopPropagation();
-        console.log(this.existingState)
 
         // Quiz has not started yet
         if (this.existingState.current_question === null && this.existingState.end_time === null) {

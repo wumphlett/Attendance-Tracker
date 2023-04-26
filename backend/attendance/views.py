@@ -88,7 +88,7 @@ class AnswerViewSet(
 
 class SessionViewSet(viewsets.ModelViewSet):
     permission_classes = [SessionPresentersCreateAndRespondersViewOnly]
-    http_method_names = ['get', 'post', 'head', 'options']
+    http_method_names = ['get', 'post', 'patch', 'head', 'options']
 
     def get_queryset(self):
         return models.Session.objects.filter(presentation__owner=self.request.user)
@@ -96,6 +96,8 @@ class SessionViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'list':
             return serializers.SessionListSerializer
+        elif self.action in ('update', 'partial_update'):
+            return serializers.SessionUpdateSerializer
         return serializers.SessionDetailSerializer
 
     def list(self, request, *args, **kwargs):

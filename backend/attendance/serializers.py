@@ -121,6 +121,12 @@ class AnswerUpdateSerializer(serializers.ModelSerializer):
         fields = ['index', 'symbol', 'text', 'is_correct']
 
 
+class SessionUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Session
+        fields = ['long', 'lat', 'acc']
+
+
 class SessionJoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Session
