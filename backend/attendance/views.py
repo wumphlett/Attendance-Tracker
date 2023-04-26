@@ -1,6 +1,7 @@
+import csv
 from datetime import datetime
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 
 from rest_framework import mixins, status, viewsets
 from rest_framework import permissions
@@ -155,6 +156,17 @@ class SessionViewSet(viewsets.ModelViewSet):
         session.save()
         serializer = serializers.SessionDetailSerializer(session, context={'request': request})
         return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def export(self, request, pk=None):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="export.csv"'
+
+        writer = csv.writer(response)
+
+        writer.writerow("Test,Testy")
+
+        return response
 
 
 class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
