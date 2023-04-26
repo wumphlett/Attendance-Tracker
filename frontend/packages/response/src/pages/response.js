@@ -123,6 +123,7 @@ class Response extends React.Component {
                             this.setSessionId(sessionId)
                             this.existingState = r.data
                             this.applyExistingState()
+                            this.setLocation()
                             this.client.send(JSON.stringify(r.data))
                         });
                 }
@@ -132,11 +133,11 @@ class Response extends React.Component {
     setLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
-                // axios.patch(`sessions/${sessionId}/`, {
-                //     long: position.coords.longitude,
-                //     lat: position.coords.latitude,
-                //     acc: position.coords.accuracy
-                // }).then((r) => {})
+                this.setState({
+                    long: position.coords.longitude,
+                    lat: position.coords.latitude,
+                    acc: position.coords.accuracy
+                })
             }, (error) => {
                 // console.log(error);
             });

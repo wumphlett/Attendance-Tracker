@@ -12,6 +12,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django_cas_ng import views as cas_views
 
 from . import models
+from . import geolocate
 from . import serializers
 from . import signals
 from .permissions import PresentersViewAndEditOnly, SessionPresentersCreateAndRespondersViewOnly
@@ -193,12 +194,16 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        session = serializer.validated_data['session']
+        print(geolocate.calculate_distance(session.lat, session.long, lat, long))
+
         response, created = serializer.Meta.model.objects.update_or_create(
             user=self.request.user,
             session=serializer.validated_data['session'],
             answer__question=serializer.validated_data['answer'].question,
             defaults={"user": self.request.user, **serializer.validated_data}
         )
+
 
         headers = self.get_success_headers(serializer.data)
         return Response({"created": created}, status=status.HTTP_201_CREATED, headers=headers)

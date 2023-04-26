@@ -70,4 +70,4 @@ class SessionAdmin(admin.ModelAdmin):
 class ResponseAdmin(admin.ModelAdmin):
     list_display = ("user", "answer")
     list_filter = ("user", "session")
-    fields = ("session", "user", "answer")
+    fields = ("session", "user", "answer", "is_geolocated")
