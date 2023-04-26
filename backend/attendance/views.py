@@ -168,7 +168,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         writer.writerow(["Student", "ID", "SIS User ID", "SIS Login ID", "Section", session.presentation.name])
         writer.writerow(["Points Possible", "", "", "", "", session.presentation.question_set.count()])
 
-        for student in models.Response.objects.filter(session=session).values("user").disctinc():
+        for student in models.Response.objects.filter(session=session).values("user").distinct():
             print(student)
 
         return response
