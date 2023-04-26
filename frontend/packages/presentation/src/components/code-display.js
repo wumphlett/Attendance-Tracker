@@ -11,7 +11,6 @@ import React from "react";
 import axios from 'axios'
 // Components
 // Functions
-import { joinAsPresenter } from "../functions/join-as-presenter";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/presentation.css"
