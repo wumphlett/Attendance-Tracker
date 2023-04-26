@@ -190,6 +190,7 @@ class Presentation extends React.Component {
                                 />
                             ) : this.state.quizState !== "completed" ? (
                                 <QuizDisplay
+                                    joinCode={this.joinCode}
                                     activeQuestion={this.state.activeQuestion}
                                     responseCount={this.state.responseCount}
                                     setResponseCount={this.setResponseCount}

@@ -27,6 +27,7 @@ class QuizDisplay extends React.Component {
             currentlyJoined: props.currentlyJoined,
             quizState: props.quizState,
         }
+        this.joinCode = props.joinCode
         this.setResponseCount = props.setResponseCount
         this.setQuizState = props.setQuizState
         this.cycleQuizState = props.cycleQuizState
@@ -48,7 +49,7 @@ class QuizDisplay extends React.Component {
     render() {
         return (
             <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
-                <div className={"col-12 col-md-8 h-100 mx-auto"}>
+                <div className={"col-12 col-md-10 col-lg-8 h-100 mx-auto"}>
                     {this.state.activeQuestion === null ? (<div></div>) : (
                         <div className={"d-flex flex-column h-100"}>
                             <div className={"card question-number-card secondary-dark-theme text-dark-theme p-2 px-3 w-100"}>
@@ -59,6 +60,7 @@ class QuizDisplay extends React.Component {
                                     <h1><strong>{this.state.activeQuestion.prompt}</strong></h1>
                                     <div style={{ marginTop: 'auto'}}>
                                         <ControlCard
+                                            joinCode={this.joinCode}
                                             responseCount={this.state.responseCount}
                                             currentlyJoined={this.state.currentlyJoined}
                                             quizState={this.state.quizState}

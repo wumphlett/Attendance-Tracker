@@ -24,6 +24,7 @@ class ControlCard extends React.Component {
             timeElapsed: 0,
             interval: null
         }
+        this.joinCode = props.joinCode
         this.onNextClicked = props.onNextClicked
     }
 
@@ -71,10 +72,15 @@ class ControlCard extends React.Component {
     render() {
         return (
             <div className={"card secondary-dark-theme text-dark-theme d-flex flex-row align-items-center p-2"}>
-                <div className={"col-4"}>
-                    <strong>Responses:   {this.state.responseCount} / {this.state.currentlyJoined}</strong>
+                <div className={"col-8 d-flex flex-row align-items-center"}>
+                    <div className={"col-4"}>
+                        <strong>Quiz Code: {this.joinCode}</strong>
+                    </div>
+                    <div className={"col-4"}>
+                        <strong>Responses:   {this.state.responseCount} / {this.state.currentlyJoined}</strong>
+                    </div>
+                    <div className={"col-4"}><strong>Time Elapsed:   {this.state.timeElapsed}s</strong></div>
                 </div>
-                <div className={"col-4"}><strong>Time Elapsed:   {this.state.timeElapsed}s</strong></div>
                 <div className={"col-4"}>
                     {this.state.quizState === "pre-response" ? (
                         <div className="card btn button-card control-button start primary-dark-theme text-dark-theme col-12"
