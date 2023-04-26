@@ -19,14 +19,6 @@ import "../../stylesheets/question-selector.css"
 class QuestionSelector extends React.Component {
     constructor(props) {
         super(props);
-        this.state = props.state
-        this.setCreatorState = props.setCreatorState;
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps !== prevState) {
-            return nextProps.state
-        }
     }
 
     render() {
@@ -36,8 +28,10 @@ class QuestionSelector extends React.Component {
                 <div className="card card-body add-question-card card-very-dark button-card btn btn-danger mr-0"
                      onClick={() => {
                          createQuestion(
-                             this.state,
-                             this.setCreatorState
+                             this.props.presentationId,
+                             this.props.questions,
+                             this.props.setQuestions,
+                             this.props.setActiveQuestion
                          );
                          this.forceUpdate();
                      }}>
@@ -58,13 +52,14 @@ class QuestionSelector extends React.Component {
                         { height: 'calc((0.25 * (100vh - 60px)) - 0.5rem)'}
                     }>
                         {/* Question Cards */}
-                        {this.state.questions.map((question, index) => (
+                        {this.props.questions.map((question, index) => (
                             <div key={index} className="h-100">
-                                <QuestionCard index={index + 1} total={this.state.questions.length}
+                                <QuestionCard index={index + 1} total={this.props.questions.length}
                                               question={question}
-                                              questions={this.state.questions}
-                                              activeQuestion={this.state.activeQuestion}
-                                              setCreatorState={this.setCreatorState}
+                                              questions={this.props.questions}
+                                              setQuestions={this.props.setQuestions}
+                                              activeQuestion={this.props.activeQuestion}
+                                              setActiveQuestion={this.props.setActiveQuestion}
                                 />
                             </div>
                         ))}

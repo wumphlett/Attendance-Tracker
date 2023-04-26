@@ -19,18 +19,6 @@ import '../../stylesheets/question-editor.css'
 class QuestionPlaceholder extends React.Component {
     constructor(props) {
         super(props);
-        this.state = props.state
-        this.setCreatorState = props.setCreatorState
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps !== prevState) {
-            if (nextProps.state.questions.length > 0) {
-                return {questions: nextProps.state.questions, activeQuestion: nextProps.state.questions[0]}
-            } else {
-                return nextProps.state
-            }
-        }
     }
 
     render() {
@@ -40,7 +28,7 @@ class QuestionPlaceholder extends React.Component {
                     <div className="card card-dark h-100">
                         <div className="card-body justify-content-center" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
                             <div className="card btn button-card card-very-dark align-self-center" onClick={
-                                () => createQuestion(this.state, this.setCreatorState)
+                                () => createQuestion(this.props.presentationId, this.props.questions, this.props.setQuestions, this.props.setActiveQuestion)
                             }>
                                 <div className="card-body">
                                     <h3 className="text-center"><strong>Add a question...</strong></h3>

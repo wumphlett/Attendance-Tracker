@@ -9,19 +9,17 @@
 
 import axios from 'axios';
 
-export function createQuestion(state, setCreatorState) {
+export function createQuestion(presentationId, questions, setQuestions, setActiveQuestion) {
     axios.post("questions/", {
-        presentation: state.presentationId,
-        index: state.questions.length,
+        presentation: presentationId,
+        index: questions.length,
         text: "A Blank Question",
         is_partial_allowed: false,
     }).then((r) => {
-        const newQuestions = state.questions
-        newQuestions.push(r.data)
-        if (state.length === 1) {
-            setCreatorState({questions: newQuestions, activeQuestion: state.questions[0]});
-        } else {
-            setCreatorState({questions: newQuestions});
+        questions.push(r.data)
+        setQuestions(questions);
+        if (questions.length === 1) {
+            setActiveQuestion(questions[0]);
         }
     })
 }

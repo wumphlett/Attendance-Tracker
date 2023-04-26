@@ -19,34 +19,28 @@ import "../../stylesheets/question-options.css"
 class QuestionSettings extends React.Component {
     constructor(props) {
         super(props);
-        this.state = props.state;
-        this.setCreatorState = props.setCreatorState
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps !== prevState) {
-            return nextProps.state
-        }
-    }
 
     render() {
         return (
             <div className={"card card-very-dark mb-2"}>
                 <div className={"card-body pb-2 pt-2"}>
+                    {/*<div className={"pb-1"}>*/}
+                    {/*    /!*NOT CURRENTLY SUPPORTED IN BACKEND RESPONSE MODEL *!/*/}
+                    {/*    <Checkbox label={"Allow partial credit"}*/}
+                    {/*              isChecked={this.props.activeQuestion.is_partial_allowed}*/}
+                    {/*              handler={(label, state) => handleCheckboxChange(label, state,*/}
+                    {/*                  this.props.activeQuestion,*/}
+                    {/*                  this.props.setActiveQuestion)}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                     <div className={"pb-1"}>
-                        <Checkbox label={"Allow partial credit"}
-                                  isChecked={this.state.activeQuestion.is_partial_allowed}
-                                  handler={(label, state) => handleCheckboxChange(label, state,
-                                      this.state,
-                                      this.setCreatorState)}
-                        />
-                    </div>
-                    <div>
                         <Checkbox label={"Allow multiple selection"}
-                                  isChecked={this.state.activeQuestion.isMultipleSelectionAllowed}
+                                  isChecked={this.props.activeQuestion.is_multiple_selection_allowed}
                                   handler={(label, state) => handleCheckboxChange(label, state,
-                                      this.state,
-                                      this.setCreatorState)}
+                                      this.props.activeQuestion,
+                                      this.props.setActiveQuestion)}
                         />
                     </div>
                 </div>

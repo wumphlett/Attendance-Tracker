@@ -17,37 +17,23 @@ import "../../stylesheets/question-selector.css"
 class QuestionCard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            questions: props.questions,
-            activeQuestion: props.activeQuestion,
-            question: props.question,   // Respective question
-            index: props.index,         // Position of question in the quiz
-            total: props.total,         // Total number of questions in the quiz
-        }
-        this.setCreatorState = props.setCreatorState
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps !== prevState) {
-            return nextProps
-        }
     }
 
     render() {
         const handleRemoveClick = (event) => {
             event.stopPropagation();
-            removeQuestion(this.state.question, this.state, this.setCreatorState)
+            removeQuestion(this.props.question, this.props.activeQuestion, this.props.setActiveQuestion, this.props.questions, this.props.setQuestions)
         }
 
         return (
             <div className={`card question-card card-very-dark p-2
-                ${(this.state.question === this.state.activeQuestion) ? 'question-card-active' : ''}`}
-                onClick={() => { this.setCreatorState({activeQuestion: this.state.question}) }}>
+                ${(this.props.question === this.props.activeQuestion) ? 'question-card-active' : ''}`}
+                onClick={() => { this.props.setActiveQuestion(this.props.question) }}>
                 <div className={"d-inline-block overflow-auto"}>
-                    <span className={"badge badge-question-number"}>{this.state.question.index+1}/{this.state.total}</span>
+                    <span className={"badge badge-question-number"}>{this.props.index}/{this.props.total}</span>
                     <span className={"btn btn-danger removal-button"}
-                          onClick={(event) => handleRemoveClick(event)}>Delete</span>
-                    <p style={{ marginTop: '20px' }}>{this.state.question.text}</p>
+                          onClick={(event) => handleRemoveClick(event)}>X</span>
+                    <p style={{ marginTop: '20px' }}>{this.props.question.text}</p>
                 </div>
             </div>
         )

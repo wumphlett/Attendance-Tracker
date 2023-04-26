@@ -13,6 +13,8 @@ import { Checkbox } from "@frontend/common/build"
 // Functions
 import { handleCheckboxChange } from "../../functions/question-editor/question-answers/handleCheckboxChange";
 import { handleTextChange } from "../../functions/question-editor/question-answers/handleTextChange";
+import { handleTextPaste } from "../../functions/question-editor/question-answers/handleTextPaste";
+import { handleTextBlur } from "../../functions/question-editor/question-answers/handleTextBlur";
 import { removeAnswer } from "../../functions/question-editor/question-answers/removeAnswer";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
@@ -21,61 +23,48 @@ import "../../stylesheets/question-editor.css"
 class AnswerCard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-          questions: props.questions,
-          activeQuestion: props.activeQuestion,
-          activeAnswer: props.activeAnswer
-        }
-        this.setCreatorState = props.setCreatorState
-        this.active = false
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps !== prevState) {
-            return nextProps
-        }
     }
 
     render() {
         const handleRemovalClick = (event) => {
             event.stopPropagation();
-            removeAnswer(this.state.activeAnswer, this.state.activeQuestion, this.state.questions, this.setCreatorState)
+            removeAnswer(this.props.answer, this.props.activeQuestion, this.props.setActiveQuestion)
         }
 
         return (
             <div className={`card card-very-dark m-2 ${this.active ? 'answer-card-active' : 'answer-card'}`}>
                 <div className={"card-body center"}>
                     <Checkbox
-                        isChecked={this.state.activeAnswer.is_correct}
+                        isChecked={this.props.answer.is_correct}
                         handler={(label, state) => handleCheckboxChange(
-                            this.state.activeAnswer,
+                            this.props.answer,
                             state,
-                            this.state.activeQuestion,
-                            this.state.questions,
-                            this.setCreatorState
+                            this.props.activeQuestion,
+                            this.props.setActiveQuestion,
                         )}
                     />
                     <textarea className="answer-input"
                               placeholder={"Enter an answer..."}
-                              value={this.state.activeAnswer.text}
-                              onFocus={() => {
-                                  this.active = true;
-                                  this.forceUpdate();
-                              }}
-                              onBlur={() => {
-                                  this.active = false
-                                  this.forceUpdate();
-                              }}
+                              value={this.props.answer.text}
                               onChange={(event) => handleTextChange(
                                   event,
-                                  this.state.activeAnswer,
-                                  this.state.activeQuestion,
-                                  this.state.questions,
-                                  this.setCreatorState
+                                  this.props.answer,
+                                  this.props.activeQuestion,
+                                  this.props.setActiveQuestion,
+                              )}
+                              onPaste={(event) => handleTextPaste(
+                                  event,
+                                  this.props.answer,
+                                  this.props.activeQuestion,
+                                  this.props.setActiveQuestion,
+                              )}
+                              onBlur={(event) => handleTextBlur(
+                                  event,
+                                  this.props.answer,
                               )}
                     />
                     <span className={"btn btn-danger answer-removal-button"}
-                          onClick={(event) => handleRemovalClick(event)}>Delete</span>
+                          onClick={(event) => handleRemovalClick(event)}>X</span>
                 </div>
             </div>
         )
