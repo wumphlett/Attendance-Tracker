@@ -27,6 +27,7 @@ class QuizDisplay extends React.Component {
             answersSelected: [],
             isAnswerSubmitted: false,
         }
+        this.postAnswers = props.postAnswers
         this.setAnswersSelected = this.setAnswersSelected.bind(this)
         this.submitAnswers = this.submitAnswers.bind(this)
         this.resetSelection = this.resetSelection.bind(this)
@@ -53,6 +54,7 @@ class QuizDisplay extends React.Component {
     }
 
     submitAnswers = () => {
+        this.postAnswers(this.state.answersSelected)
         this.setState({ isAnswerSubmitted: true })
     }
 

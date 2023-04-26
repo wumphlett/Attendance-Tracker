@@ -3,7 +3,7 @@
  *
  * @Author - Will Humphlett - will@humphlett.net
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 16 APR 23
+ * @Version - 25 APR 23
  *
  * Respond to a quiz
  */
@@ -36,6 +36,7 @@ class Response extends React.Component {
         this.setQuizState = this.setQuizState.bind(this);
         this.addClientHandlers = this.addClientHandlers.bind(this);
         this.setActiveQuestion = this.setActiveQuestion.bind(this);
+        this.postAnswers = this.postAnswers.bind(this);
     }
 
     setSessionId = (sessionId) => {
@@ -46,6 +47,10 @@ class Response extends React.Component {
         this.setState({ client: client }, () => {
             callback();
         });
+    }
+
+    setQuizState = (state) => {
+        this.setState( { quizState: state})
     }
 
     cycleQuizState = (data) => {
@@ -61,10 +66,6 @@ class Response extends React.Component {
         else if (this.state.quizState === "response") {
             this.setQuizState("pre-response")
         }
-    }
-
-    setQuizState = (state) => {
-        this.setState( { quizState: state})
     }
 
     addClientHandlers = (client, setActiveQuestion) => {
@@ -91,6 +92,19 @@ class Response extends React.Component {
         })
     }
 
+    postAnswers = (answers) => {
+        axios.post('https://api.auttend.com/api/responses/', {
+            session: this.state.sessionId,
+            answer: answers[0].id
+        }).then((r) => {
+            if (r.data["created"]) {
+                this.state.client.send(
+                    JSON.stringify(r.data)
+                );
+            }
+        })
+    }
+
     render() {
         return (
             <div className={"primary-dark-theme"}>
@@ -109,6 +123,7 @@ class Response extends React.Component {
                                 activeQuestion={this.state.activeQuestion}
                                 quizState={this.state.quizState}
                                 isAcceptingResponses={this.state.isAcceptingResponses}
+                                postAnswers={this.postAnswers}
                             />
                         ) : (
                             <CompletionScreen />
