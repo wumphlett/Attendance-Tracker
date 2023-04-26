@@ -10,9 +10,9 @@
 import axios from 'axios';
 
 export function removeAnswer(activeAnswer, activeQuestion, setActiveQuestion) {
-    axios.delete(`answers/${activeAnswer.id}/`).then((r) => {
-        let index = activeQuestion.answer_set.findIndex((answer) => answer.id === activeAnswer.id)
-        activeQuestion.answer_set.splice(index, 1)
-        setActiveQuestion(activeQuestion);
-    });
+  axios.delete(`answers/${activeAnswer.id}/`).then((r) => {
+    let index = activeQuestion.answer_set.findIndex((answer) => answer.id === activeAnswer.id)
+    activeQuestion.answer_set.splice(index, 1)
+    setActiveQuestion(activeQuestion);
+  });
 }
