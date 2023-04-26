@@ -196,7 +196,7 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         session = serializer.validated_data['session']
         if session.lat and session.long:
             distance = geolocate.calculate_distance(session.lat, session.long, lat, long)
-            is_geolocated = distance < geolocate.ATTENDANCE_DISTANCE_M + session.acc + acc
+            is_geolocated = distance < geolocate.ATTENDANCE_DISTANCE_M + float(session.acc) + acc
         else:
             is_geolocated = True
 
@@ -207,7 +207,6 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
             is_geolocated=is_geolocated,
             defaults={"user": self.request.user, **serializer.validated_data}
         )
-
 
         headers = self.get_success_headers(serializer.data)
         return Response({"created": created}, status=status.HTTP_201_CREATED, headers=headers)
