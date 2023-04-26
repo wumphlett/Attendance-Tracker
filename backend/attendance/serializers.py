@@ -70,7 +70,7 @@ class SessionDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Session
-        fields = ['id', 'presentation', 'current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
+        fields = ['id', 'presentation', 'current_question', 'is_accepting_responses', 'is_post_responses', 'join_code', 'start_time', 'end_time']
         read_only_fields = ['current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
 
     def validate(self, data, **kwargs):
@@ -83,7 +83,7 @@ class SessionDetailSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         if session := self.Meta.model.objects.filter(presentation=validated_data['presentation'], end_time__isnull=True).first():
             return session
-        return self.Meta.model.objects.create(join_code=get_random_string(5, string.ascii_uppercase), **validated_data)
+        return self.Meta.model.objects.create(join_code=get_random_string(5, string.digits), **validated_data)
 
 
 class ResponseDetailSerializer(serializers.ModelSerializer):
@@ -146,4 +146,4 @@ class ResponderSessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Session
-        fields = ['id', 'current_question', 'is_accepting_responses', 'start_time', 'end_time']
+        fields = ['id', 'current_question', 'is_accepting_responses', 'is_post_responses', 'start_time', 'end_time']

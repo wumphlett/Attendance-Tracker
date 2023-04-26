@@ -124,8 +124,11 @@ class SessionViewSet(viewsets.ModelViewSet):
         if session.current_question is None:
             if session.end_time is None:
                 session.current_question = session.presentation.question_set.first()
-        elif not session.is_accepting_responses:
+        elif not session.is_accepting_responses and not session.is_post_response:
             session.is_accepting_responses = True
+        elif session.is_accepting_responses and not session.is_post_responses:
+            session.is_post_responses = True
+            session.is_accepting_responses = False
         else:
             questions = list(session.presentation.question_set.all())  # type: list
             question_idx = questions.index(session.current_question)
@@ -138,6 +141,7 @@ class SessionViewSet(viewsets.ModelViewSet):
                 session.current_question = questions[question_idx+1]
 
             session.is_accepting_responses = False
+            session.is_post_responses = False
 
         session.save()
         serializer = serializers.SessionDetailSerializer(session, context={'request': request})

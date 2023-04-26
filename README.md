@@ -45,3 +45,8 @@ Senior Design
 ## Deploy
 - https://www.digitalocean.com/community/tutorials/how-to-set-up-an-asgi-django-app-with-postgres-nginx-and-uvicorn-on-ubuntu-20-04
 - https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04
+
+## Reload Backend
+- `sudo systemctl daemon-reload`
+- `sudo systemctl restart daphne`
+- `sudo systemctl restart nginx`

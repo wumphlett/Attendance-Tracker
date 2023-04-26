@@ -70,6 +70,7 @@ class Session(models.Model):
     presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
     current_question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, blank=True)
     is_accepting_responses = models.BooleanField(default=False)
+    is_post_responses = models.BooleanField(default=False)
     join_code = models.CharField(max_length=5, unique=True, null=True, blank=True)
     start_time = models.DateTimeField(auto_now_add=True, editable=False)
     end_time = models.DateTimeField(null=True, blank=True)
