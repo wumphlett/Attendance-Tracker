@@ -20,14 +20,16 @@ import "../stylesheets/presentation.css"
 class QuizDisplay extends React.Component {
     constructor(props) {
         super(props);
-        this.client = props.client
         this.state = {
             sessionId: props.sessionId,
+            client: props.client,
             activeQuestion: null,
-            quizState: props.quizState,
             isAcceptingResponses: false,
-            currentlyJoined: props.currentlyJoined
+            responseCount: props.responseCount,
+            currentlyJoined: props.currentlyJoined,
+            quizState: props.quizState,
         }
+        this.setResponseCount = props.setResponseCount
         this.setQuizState = props.setQuizState
 
         this.setState = this.setState.bind(this);
@@ -69,7 +71,7 @@ class QuizDisplay extends React.Component {
                     this.setActiveQuestion(res.data)
                     axios.get(`sessions/${this.state.sessionId}/respond/`)
                         .then((res) => {
-                            this.client.send(
+                            this.state.client.send(
                                 JSON.stringify(res.data)
                             );
                         });
@@ -90,6 +92,7 @@ class QuizDisplay extends React.Component {
         else if (this.state.quizState === "response") {
             this.setQuizState("post-response")
             this.setState({ isAcceptingResponses: false})
+            this.setResponseCount(0)
         }
         else if (this.state.quizState === "post-response") {
             this.cycleNextQuestion(() => {
@@ -117,7 +120,7 @@ class QuizDisplay extends React.Component {
                                     <h1><strong>{this.state.activeQuestion.prompt}</strong></h1>
                                     <div style={{ marginTop: 'auto'}}>
                                         <ControlCard
-                                            recordedResponses={0}
+                                            responseCount={this.state.responseCount}
                                             currentlyJoined={this.state.currentlyJoined}
                                             quizState={this.state.quizState}
                                             onNextClicked={this.onNextClicked}

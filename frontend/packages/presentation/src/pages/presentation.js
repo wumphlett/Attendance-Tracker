@@ -24,24 +24,48 @@ class Presentation extends React.Component {
         this.state = {
             sessionId: null,
             client: null,
+            activeQuestion: null,
+            responseCount: 0,
             currentlyJoined: 0,
-            quizState: "loading"
+            quizState: "loading",
+            isAcceptingResponses: false,
+            endTime: null,
         }
         this.setSessionId = this.setSessionId.bind(this);
         this.setClient = this.setClient.bind(this);
+        this.setResponseCount = this.setResponseCount.bind(this);
         this.setQuizState = this.setQuizState.bind(this);
+        this.addClientHandlers = this.addClientHandlers.bind(this);
     }
 
     setSessionId = (sessionId) => {
-        this.setState({ sessionId: sessionId });
+        this.setState({ sessionId: sessionId }, () => {
+            console.log(this.state.sessionId)
+        });
     }
 
-    setClient = (client) => {
-        this.setState({ client: client });
+    setClient = (client, callback) => {
+        this.setState({ client: client }, () => {
+            callback();
+        });
+    }
+
+    setResponseCount = (responseCount) => {
+        this.setState({ responseCount: responseCount });
     }
 
     setQuizState = (state) => {
         this.setState( { quizState: state})
+    }
+
+    addClientHandlers = () => {
+        this.state.client.onmessage = (message) => {
+            const data = JSON.parse(message.data);
+            if (data && data["created"]) {
+                console.log(data)
+                this.setState({ responseCount: this.state.responseCount + 1 })
+            }
+        };
     }
 
    render() {
@@ -59,12 +83,15 @@ class Presentation extends React.Component {
                                     setSessionId={this.setSessionId}
                                     setClient={this.setClient}
                                     setQuizState={this.setQuizState}
+                                    addClientHandlers={this.addClientHandlers}
                                 />
                             ) : this.state.quizState !== "completed" ? (
                                 <QuizDisplay
                                     sessionId={this.state.sessionId}
                                     client={this.state.client}
                                     setClient={this.setClient}
+                                    responseCount={this.state.responseCount}
+                                    setResponseCount={this.setResponseCount}
                                     currentlyJoined={this.state.currentlyJoined}
                                     quizState={this.state.quizState}
                                     setQuizState={this.setQuizState}

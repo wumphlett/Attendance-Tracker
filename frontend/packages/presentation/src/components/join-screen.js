@@ -27,6 +27,7 @@ class JoinScreen extends React.Component {
         this.setSessionId = props.setSessionId;
         this.setClient = props.setClient;
         this.setQuizState = props.setQuizState;
+        this.addClientHandlers = props.addClientHandlers
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -44,6 +45,7 @@ class JoinScreen extends React.Component {
                     setSessionId={this.setSessionId}
                     setClient={this.setClient}
                     setQuizState={this.setQuizState}
+                    addClientHandlers={this.addClientHandlers}
                 />
                 <CounterCard
                     currentlyJoined={this.state.currentlyJoined}

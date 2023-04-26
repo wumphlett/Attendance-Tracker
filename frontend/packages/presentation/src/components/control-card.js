@@ -18,7 +18,7 @@ class ControlCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            recordedResponses: props.recordedResponses,
+            responseCount: props.responseCount,
             currentlyJoined: props.currentlyJoined,
             quizState: props.quizState,
             timeElapsed: 0,
@@ -72,7 +72,7 @@ class ControlCard extends React.Component {
         return (
             <div className={"card secondary-dark-theme text-dark-theme d-flex flex-row align-items-center p-2"}>
                 <div className={"col-4"}>
-                    <strong>Responses:   {this.state.recordedResponses} / {this.state.currentlyJoined}</strong>
+                    <strong>Responses:   {this.state.responseCount} / {this.state.currentlyJoined}</strong>
                 </div>
                 <div className={"col-4"}><strong>Time Elapsed:   {this.state.timeElapsed}s</strong></div>
                 <div className={"col-4"}>

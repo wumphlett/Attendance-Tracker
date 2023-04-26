@@ -29,24 +29,12 @@ class CodeDisplay extends React.Component {
         this.setClient = props.setClient;
         this.setSessionId = props.setSessionId;
         this.setQuizState = props.setQuizState;
-    }
-
-    addClientHandlers = (client) => {
-        client.onmessage = (message) => {
-            const data = JSON.parse(message.data);
-            if (data && data["created"]) {
-                this.setState(
-                    {
-                        responseCount: this.state.responseCount + 1,
-                    }
-                )
-            }
-        };
+        this.addClientHandlers = props.addClientHandlers;
     }
 
     handleJoinClick = (event) => {
         event.stopPropagation();
-        joinAsPresenter(this.state.joinCode, this.state.client, this.setClient, this.addClientHandlers, this.setSessionId);
+        joinAsPresenter(this.state.joinCode, this.setClient, this.addClientHandlers, this.setSessionId);
         this.setQuizState("pre-response")
     }
 
