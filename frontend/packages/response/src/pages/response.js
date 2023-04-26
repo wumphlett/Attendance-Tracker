@@ -76,13 +76,13 @@ class Response extends React.Component {
             const data = JSON.parse(message.data)
             if (data) {
                 console.log(data)
-                setActiveQuestion(data, () => {
-                    if (this.state.activeQuestion.endTime !== null) {
-                        this.setQuizState("completed")
-                    } else {
+                if (data.end_time === null) {
+                    setActiveQuestion(data, () => {
                         this.cycleQuizState()
-                    }
-                })
+                    })
+                } else {
+                    this.setQuizState("completed")
+                }
             }
         }
     }

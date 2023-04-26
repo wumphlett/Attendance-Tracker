@@ -62,6 +62,12 @@ class QuizDisplay extends React.Component {
     cycleNextQuestion(callback) {
         axios.post(`sessions/${this.state.sessionId}/next/`)
             .then((res) => {
+                axios.get(`sessions/${this.state.sessionId}/respond/`)
+                    .then((res) => {
+                        this.state.client.send(
+                            JSON.stringify(res.data)
+                        );
+                    });
                 // Quiz is complete
                 if (res.data.current_question === null) {
                     this.setQuizState("completed")
@@ -70,12 +76,6 @@ class QuizDisplay extends React.Component {
                 else {
                     console.log(res.data)
                     this.setActiveQuestion(res.data)
-                    axios.get(`sessions/${this.state.sessionId}/respond/`)
-                        .then((res) => {
-                            this.state.client.send(
-                                JSON.stringify(res.data)
-                            );
-                        });
                     if (typeof callback === "function") {
                         // Call the callback function
                         callback();
