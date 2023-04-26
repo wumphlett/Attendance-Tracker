@@ -27,11 +27,12 @@ class Response extends React.Component {
         this.state = {
             sessionId: null,
             activeQuestion: null,
-            quizState: "loading",
+            quizState: "",
             isAcceptingResponses: false,
             endTime: null,
         }
         this.client = null;
+        this.existingState = null;
         this.joinAsResponder = this.joinAsResponder.bind(this);
         this.postAnswers = this.postAnswers.bind(this);
     }
@@ -49,15 +50,12 @@ class Response extends React.Component {
             this.setQuizState("pre-response")
         }
         else if (this.state.quizState === "pre-response") {
-            console.log("setting to response")
             this.setQuizState("response")
         }
         else if (this.state.quizState === "response") {
-            console.log("setting to post-response")
             this.setQuizState("post-response")
         }
         else if (this.state.quizState === "post-response") {
-            console.log("setting to pre-response")
             this.setQuizState("pre-response")
         }
     }
@@ -93,13 +91,9 @@ class Response extends React.Component {
     }
 
     addClientHandlers = () => {
-        console.log("Add client handlers")
-        console.log(this.client)
         this.client.onmessage = (message) => {
-            console.log("Message received")
             const data = JSON.parse(message.data)
             if (data) {
-                console.log(data)
                 if (data.end_time === null) {
                     this.setActiveQuestion(data, () => {
                         this.cycleQuizState()
@@ -121,13 +115,40 @@ class Response extends React.Component {
                     this.client.send(JSON.stringify({ status: "joined" }))
                     axios.get(`https://api.auttend.com/api/sessions/${sessionId}/respond/`)
                         .then((r) => {
-                            console.log(r.data)
-                            this.client.send(JSON.stringify(r.data))
                             this.setSessionId(sessionId)
-                            this.setActiveQuestion(r.data);
+                            this.existingState = r.data
+                            this.applyExistingState()
+                            this.client.send(JSON.stringify(r.data))
                         });
                 }
             })
+    }
+
+    applyExistingState = () => {
+        // Quiz has not started yet
+        if (this.existingState.current_question === null && this.existingState.end_time === null) {
+            this.setActiveQuestion(this.existingState)
+            this.setQuizState("loading")
+        }
+        // Quiz was in progress and in pre-response stage
+        else if (!this.existingState.is_accepting_responses && !this.existingState.is_post_responses) {
+            this.setActiveQuestion(this.existingState)
+            this.setQuizState("pre-response")
+        }
+        // Quiz was in progress and in response stage
+        else if (this.existingState.is_accepting_responses) {
+            this.setActiveQuestion(this.existingState)
+            this.setQuizState("response")
+        }
+        // Qiz was in progress and in post-response stage
+        else if (this.existingState.is_post_responses) {
+            this.setActiveQuestion(this.existingState)
+            this.setQuizState("post-response")
+        }
+        // Quiz was complete
+        else if (this.existingState.current_question === null && this.existingState.end_time !== null) {
+            this.setQuizState("completed")
+        }
     }
 
     render() {
@@ -135,7 +156,7 @@ class Response extends React.Component {
             <div className={"primary-dark-theme"}>
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
-                        {this.state.sessionId === null ? (
+                        {this.state.quizState === "" ? (
                             <JoinForm
                                 joinAsResponder={this.joinAsResponder}
                             />

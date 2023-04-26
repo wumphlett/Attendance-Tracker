@@ -2,7 +2,7 @@
  * join-screen.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 24 APR 23
+ * @Version - 26 APR 23
  *
  * Display the quiz join code and the counter card
  */
