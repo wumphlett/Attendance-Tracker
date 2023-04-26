@@ -162,6 +162,8 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def export(self, request, pk=None):
+        is_geolocated = request.query_params.get('geolocate', True)  # Enforce geolocation by default
+        print(is_geolocated)
         session = self.get_object()
 
         response = HttpResponse(content_type='text/csv')
@@ -175,8 +177,10 @@ class SessionViewSet(viewsets.ModelViewSet):
         user_ids = models.Response.objects.filter(session=session).values_list("user__id", flat=True).distinct()
 
         for student in models.User.objects.filter(id__in=user_ids):
-            points = models.Response.objects.filter(session=session, user=student, answer__is_correct=True).count()  # TODO This will not work if you add partial credit
-            writer.writerow([f'{student.last_name}, {student.first_name}', "", "", f"{student.email.split('@')[0]}", "", points])
+            points = models.Response.objects.filter(session=session, user=student, answer__is_correct=True)  # TODO This will not work if you add partial credit
+            if is_geolocated:
+                points = points.filter(is_geolocated=is_geolocated)
+            writer.writerow([f'{student.last_name}, {student.first_name}', "", f"{student.email.split('@')[0]}", f"{student.email.split('@')[0]}", "", points.count()])
 
         return response
 
