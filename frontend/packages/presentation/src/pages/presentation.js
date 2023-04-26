@@ -150,9 +150,11 @@ class Presentation extends React.Component {
         console.log("Called setLocation");
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
-                console.log(sessionId);
-                console.log(position.coords.longitude);
-                console.log(position.coords.latitude);
+                axios.patch(`sessions/${sessionId}/`, {
+                    long: position.coords.longitude,
+                    lat: position.coords.latitude,
+                    acc: position.coords.accuracy
+                }).then((r) => {})
             }, (error) => {
                 // console.log(error);
             });

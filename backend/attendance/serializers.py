@@ -124,7 +124,7 @@ class AnswerUpdateSerializer(serializers.ModelSerializer):
 class SessionUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Session
-        fields = ['long', 'lat']
+        fields = ['long', 'lat', 'acc']
 
 
 class SessionJoinSerializer(serializers.ModelSerializer):

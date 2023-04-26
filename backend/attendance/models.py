@@ -77,6 +77,7 @@ class Session(models.Model):
 
     long = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+    acc = models.DecimalField(max_digits=25, decimal_places=16, blank=True, null=True)
 
     class Meta:
         verbose_name = "Session"
@@ -89,6 +90,7 @@ class Response(models.Model):
 
     long = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
     lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+    acc = models.DecimalField(max_digits=25, decimal_places=16, blank=True, null=True)
 
     class Meta:
         verbose_name = "Response"
