@@ -18,40 +18,40 @@ import '../../stylesheets/quiz-creation.css'
 import '../../stylesheets/question-editor.css'
 
 class QuestionEditor extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        return (
-            <div className="container-fluid h-100 p-2">
-                {this.props.activeQuestion === null ?
-                    <QuestionPlaceholder
-                        presentationId={this.props.presentationId}
-                        questions={this.props.questions}
-                        setQuestions={this.props.setQuestions}
-                        setActiveQuestion={this.props.setActiveQuestion}
-                    /> :
-                    <div className="row h-100">
-                        <div className="col-9 container-fluid container-no-padding h-100"> {/* Question card preview */}
-                            <QuestionPreview
-                                questions={this.props.questions}
-                                activeQuestion={this.props.activeQuestion}
-                                setQuestions={this.props.setQuestions}
-                                setActiveQuestion={this.props.setActiveQuestion}
-                            />
-                        </div>
-                        <div className={"col-3 container-fluid container-no-padding h-100"}> {/* Question options*/}
-                            <QuestionOptions
-                                activeQuestion={this.props.activeQuestion}
-                                setActiveQuestion={this.props.setActiveQuestion}
-                            />
-                        </div>
-                    </div>
-                }
+  render() {
+    return (
+      <div className="container-fluid h-100 p-2">
+        {this.props.activeQuestion === null ?
+          <QuestionPlaceholder
+            presentationId={this.props.presentationId}
+            questions={this.props.questions}
+            setQuestions={this.props.setQuestions}
+            setActiveQuestion={this.props.setActiveQuestion}
+          /> :
+          <div className="row h-100">
+            <div className="col-9 container-fluid container-no-padding h-100"> {/* Question card preview */}
+              <QuestionPreview
+                questions={this.props.questions}
+                activeQuestion={this.props.activeQuestion}
+                setQuestions={this.props.setQuestions}
+                setActiveQuestion={this.props.setActiveQuestion}
+              />
             </div>
-        )
-    };
+            <div className={"col-3 container-fluid container-no-padding h-100"}> {/* Question options*/}
+              <QuestionOptions
+                activeQuestion={this.props.activeQuestion}
+                setActiveQuestion={this.props.setActiveQuestion}
+              />
+            </div>
+          </div>
+        }
+      </div>
+    )
+  };
 }
 
 export default QuestionEditor;

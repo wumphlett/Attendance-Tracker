@@ -8,8 +8,8 @@
  */
 
 function handleTextChange(event, activeQuestion, setActiveQuestion) {
-    activeQuestion.text = event.target.value;
-    setActiveQuestion(activeQuestion)
+  activeQuestion.text = event.target.value;
+  setActiveQuestion(activeQuestion)
 }
 
 export default handleTextChange;

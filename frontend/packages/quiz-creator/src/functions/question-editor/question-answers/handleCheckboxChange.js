@@ -10,24 +10,24 @@
 import axios from 'axios';
 
 export function handleCheckboxChange(activeAnswer, checkboxState, activeQuestion, setActiveQuestion) {
-    if (checkboxState) {
-        if (!activeQuestion.is_multiple_selection_allowed) {
-            activeQuestion.answer_set.map((answer) => {
-                if (answer.is_correct) {
-                    axios.patch(`answers/${answer.id}/`, {
-                        is_correct: false
-                    }).then((r) => {
-                        answer.is_correct = false;
-                    });
-                }
-            })
+  if (checkboxState) {
+    if (!activeQuestion.is_multiple_selection_allowed) {
+      activeQuestion.answer_set.map((answer) => {
+        if (answer.is_correct) {
+          axios.patch(`answers/${answer.id}/`, {
+            is_correct: false
+          }).then((r) => {
+            answer.is_correct = false;
+          });
         }
+      })
     }
+  }
 
-    axios.patch(`answers/${activeAnswer.id}/`, {
-        is_correct: checkboxState
-    }).then((r) => {
-        activeAnswer.is_correct = checkboxState;
-        setActiveQuestion(activeQuestion)
-    });
+  axios.patch(`answers/${activeAnswer.id}/`, {
+    is_correct: checkboxState
+  }).then((r) => {
+    activeAnswer.is_correct = checkboxState;
+    setActiveQuestion(activeQuestion)
+  });
 }

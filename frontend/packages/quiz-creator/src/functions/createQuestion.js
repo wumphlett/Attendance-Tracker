@@ -10,17 +10,17 @@
 import axios from 'axios';
 
 export function createQuestion(presentationId, questions, setQuestions, setActiveQuestion) {
-    axios.post("questions/", {
-        presentation: presentationId,
-        index: questions.length,
-        text: "A Blank Question",
-        is_partial_allowed: false,
-    }).then((r) => {
-        questions.push(r.data)
-        setQuestions(questions);
-        if (questions.length === 1) {
-            setActiveQuestion(questions[0]);
-        }
-    })
+  axios.post("questions/", {
+    presentation: presentationId,
+    index: questions.length,
+    text: "A Blank Question",
+    is_partial_allowed: false,
+  }).then((r) => {
+    questions.push(r.data)
+    setQuestions(questions);
+    if (questions.length === 1) {
+      setActiveQuestion(questions[0]);
+    }
+  })
 }
 
