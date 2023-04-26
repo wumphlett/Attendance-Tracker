@@ -88,7 +88,7 @@ class AnswerViewSet(
 
 class SessionViewSet(viewsets.ModelViewSet):
     permission_classes = [SessionPresentersCreateAndRespondersViewOnly]
-    http_method_names = ['get', 'post', 'head', 'options']
+    http_method_names = ['get', 'post', 'patch', 'head', 'options']
 
     def get_queryset(self):
         return models.Session.objects.filter(presentation__owner=self.request.user)
