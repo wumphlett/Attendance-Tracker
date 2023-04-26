@@ -71,7 +71,7 @@ class SessionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Session
         fields = ['id', 'presentation', 'current_question', 'is_accepting_responses', 'is_post_responses', 'join_code', 'start_time', 'end_time']
-        read_only_fields = ['current_question', 'is_accepting_responses', 'join_code', 'start_time', 'end_time']
+        read_only_fields = ['current_question', 'is_accepting_responses', 'is_post_responses', 'join_code', 'start_time', 'end_time']
 
     def validate(self, data, **kwargs):
         if data['presentation'].owner != self.context['request'].user:
