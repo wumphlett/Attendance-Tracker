@@ -78,6 +78,20 @@
     user-select: none
 }
 
+.title-entry-input {
+    color: floralwhite;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    font-size: 1.5rem;
+    box-sizing: border-box;
+}
+
+.title-entry-input:focus {
+    border: none;
+    outline: none;
+}
+
 .quiz-options {
     position: absolute;
     z-index: 3;

@@ -18,13 +18,18 @@ import "../stylesheets/main.css"
 class QuizCard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { presentation: props.presentation, presentations: props.presentations }
+        this.state = {
+            presentation: props.presentation,
+            presentations: props.presentations,
+            inRenamingMode: false,
+        }
         this.setUserState = props.setUserState
+        this.inputRef = React.createRef();
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps !== prevState) {
-            return { presentation: nextProps.presentation, presentations: nextProps.presentations }
+        if (nextProps.presentations !== prevState.presentations) {
+            return { presentations: nextProps.presentations }
         }
     }
 
@@ -33,16 +38,71 @@ class QuizCard extends React.Component {
         launchQuiz(this.state.presentation)
     }
 
+    enterRenamingMode = (event) => {
+        event.stopPropagation()
+        this.setState({ inRenamingMode: true })
+    }
+
+    exitRenamingMode = () => {
+        this.setState({ inRenamingMode: false })
+    }
+
+    handleInputChange = (event) => {
+        const title = event.target.value;
+        this.setState({ presentation: { ...this.state.presentation, name: title } }, () => {
+            this.inputRef.current.focus();
+            this.inputRef.current.setSelectionRange(this.state.presentation.name.length, this.state.presentation.name.length);
+        });
+    };
+
+    handleInputPaste = (event) => {
+        event.preventDefault();
+        const pastedText = event.clipboardData.getData('Text');
+        const {selectionStart, selectionEnd} = event.target;
+        const textBeforeSelection = this.state.presentation.name.slice(0, selectionStart);
+        const textAfterSelection = this.state.presentation.name.slice(selectionEnd);
+        let newTitle = textBeforeSelection + pastedText + textAfterSelection;
+        this.setState({ presentation: { ...this.state.presentation, name: newTitle } }, () => {
+            // finally, set the cursor position to end of pasted text
+            const cursorPosition = selectionStart + pastedText.length;
+            this.inputRef.current.focus();
+            this.inputRef.current.setSelectionRange(cursorPosition, cursorPosition);
+        });
+
+
+    }
+
+    saveQuizTitle = (event) => {
+        this.setState({ presentation: { ...this.state.presentation, name: event.target.value}}, () => {
+            this.exitRenamingMode();
+        })
+    }
+
+
     render() {
         return (
             <div className={"card card-body quiz-card secondary-dark-theme mt-2 d-flex flex-row align-items-center"}>
-                <div className={"card primary-dark-theme quiz-title-card text-center align-items-center px-2 py-0"}>
-                    <h3 className={"quiz-title text-dark-theme"}>{this.state.presentation.name}</h3>
+                <div className={"card primary-dark-theme quiz-title-card text-center align-items-center px-2 py-0"}
+                onDoubleClick={this.enterRenamingMode}>
+                    {!this.state.inRenamingMode ? (
+                        <h3 className={"quiz-title text-dark-theme"}>{this.state.presentation.name}</h3>
+                    ) : (
+                        <input
+                            className={"title-entry-input"}
+                            type={"text"}
+                            value={this.state.presentation.name}
+                            key={this.state.presentation.name}
+                            ref={this.inputRef}
+                            onChange={this.handleInputChange}
+                            onPaste={this.handleInputPaste}
+                            onBlur={this.saveQuizTitle}
+                        />
+                    )}
                 </div>
 
                 <div className={"quiz-options pb-0"}>
                     <button className={"btn btn-success mb-0 mx-1"} onClick={this.onLaunchPress}>Launch</button>
-                    <button className={"btn btn-primary mb-0 mx-1"} onClick={() => {window.location.href = `/create/${this.state.presentation.id}`}}>Edit</button>
+                    <button className={"btn btn-primary mb-0 mx-1"} onClick={() => {window.location.href = `/create/?p=${this.state.presentation.id}`}}>Edit</button>
                     <button className={"btn btn-danger mb-0 mx-1"} onClick={
                         () => deleteQuiz(this.state.presentation, this.state.presentations, this.setUserState)
                     }>Delete</button>
