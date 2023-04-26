@@ -45,6 +45,7 @@ class QuizCreator extends React.Component {
       this.setState({
           presentationId: presentationId,
           questions: r.data.question_set,
+          activeQuestion: r.data.question_set.length > 0 ? r.data.question_set[0] : null,
         }
       )
     }).catch((r) => {
