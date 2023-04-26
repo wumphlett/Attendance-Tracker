@@ -79,7 +79,7 @@ class QuizCard extends React.Component {
             axios.patch(`presentations/${this.state.presentation.id}/`, {
                 name: event.target.value,
             }).then((r) => {
-        
+
             });
             this.exitRenamingMode();
         })
