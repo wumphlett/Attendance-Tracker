@@ -118,7 +118,7 @@ class Response extends React.Component {
                 this.client = new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/")
                 this.addClientHandlers();
                 this.client.onopen = () => {
-                    this.client.send(JSON.stringify({ data: "Test" }))
+                    this.client.send(JSON.stringify({ status: "joined" }))
                     axios.get(`https://api.auttend.com/api/sessions/${sessionId}/respond/`)
                         .then((r) => {
                             console.log(r.data)

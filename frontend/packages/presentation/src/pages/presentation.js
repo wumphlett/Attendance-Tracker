@@ -119,11 +119,12 @@ class Presentation extends React.Component {
 
     addClientHandlers = () => {
         this.client.onmessage = (message) => {
-            console.log(message)
             const data = JSON.parse(message.data);
             if (data && data["created"]) {
-                console.log(data)
                 this.setState({ responseCount: this.state.responseCount + 1 })
+            }
+            else if (data && data["status"]) {
+                this.setState({ currentlyJoined: this.state.currentlyJoined + 1})
             }
         };
     }
