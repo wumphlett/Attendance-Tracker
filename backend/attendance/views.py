@@ -173,7 +173,7 @@ class SessionViewSet(viewsets.ModelViewSet):
 
         for student in models.User.objects.filter(id__in=user_ids):
             points = models.Response.objects.filter(session=session, user=student, answer__is_correct=True).count()  # TODO This will not work if you add partial credit
-            writer.writerow([f'"{student.last_name}, {student.first_name}"', "", "", f"{student.username}", "", points])
+            writer.writerow([f'{student.last_name}, {student.first_name}', "", "", f"{student.email.split('@')[0]}", "", points])
 
         return response
 
