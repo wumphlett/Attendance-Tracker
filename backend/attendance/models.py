@@ -75,6 +75,9 @@ class Session(models.Model):
     start_time = models.DateTimeField(auto_now_add=True, editable=False)
     end_time = models.DateTimeField(null=True, blank=True)
 
+    long = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+    lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+
     class Meta:
         verbose_name = "Session"
 
@@ -83,6 +86,9 @@ class Response(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+
+    long = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
+    lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
 
     class Meta:
         verbose_name = "Response"
