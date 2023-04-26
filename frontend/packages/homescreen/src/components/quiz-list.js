@@ -2,7 +2,7 @@
  * quiz-list.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 23 MAR 23
+ * @Version - 26 APR 23
  *
  * List all available quizzes
  */
@@ -35,7 +35,7 @@ class QuizList extends React.Component {
 
         const CreateQuizButton = () => {
             return (
-                <div className={"card card-body primary-dark-theme button-card btn"}
+                <div className={"card card-body primary-dark-theme button-card btn mt-1"}
                     onClick={() => {
                         createQuiz(
                             this.state.presentations,
@@ -51,7 +51,7 @@ class QuizList extends React.Component {
             <div className={"card secondary-dark-theme p-2 d-flex flex-column overflow-auto"} style={{ flex: 1 }}>
                 <div className={"d-flex justify-content-center align-self-center"}>
                     <div className={"card primary-dark-theme pt-1 pb-0 px-3 text-center d-inline-block"}>
-                        <h3 className={"text-dark-theme"}><strong>Presentations</strong></h3>
+                        <h3 className={"text-dark-theme user-select-none"}><strong>Presentations</strong></h3>
                     </div>
                 </div>
                 <div className={"d-flex flex-column overflow-auto"} style={{ flex: 1 }}>

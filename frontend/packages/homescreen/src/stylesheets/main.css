@@ -54,32 +54,52 @@
 }
 
 .card.quiz-card {
+    border: 2px solid rgba(255, 250, 240, 0);
     color: white;
     font-weight: bold;
     font-size: 15px;
+    position: relative;
 }
 
 .card.quiz-card:hover {
     border: 2px solid rgba(255, 250, 240, .4);
 }
 
+.quiz-title {
+    position: relative;
+    z-index: 1;
+    float: left;
+    user-select: none
+}
+
 .quiz-options {
-    display: none
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    margin-right: 120px;
+    display: none;
 }
 
 .card.quiz-card:hover .quiz-options {
     display: flex;
     flex-direction: row;
-    margin-left: auto;
     justify-content: center;
     padding: 0;
 }
 
 .card.question-count-card {
     border: 2px solid rgba(255, 250, 240, .4);
-    margin-left: auto;
     justify-content: center;
+    margin-right: 0.5rem;
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    user-select: none;
 }
+
+/*.card.quiz-card:hover .question-count-card {*/
+/*    margin-left: 0*/
+/*}*/
 
 .btn {
     margin-bottom: 0;

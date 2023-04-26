@@ -2,7 +2,7 @@
  * quiz-card.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 23 MAR 23
+ * @Version - 26 APR 23
  *
  * Card representing an available quiz
  */
@@ -35,8 +35,8 @@ class QuizCard extends React.Component {
 
     render() {
         return (
-            <div className={"card card-body quiz-card primary-dark-theme mt-1 d-flex flex-row justify-content-center"}>
-                <h3 className={"text-dark-theme"}>{this.state.presentation.name}</h3>
+            <div className={"card card-body quiz-card primary-dark-theme mt-1 d-flex flex-row align-items-center"}>
+                <h3 className={"quiz-title text-dark-theme"}>{this.state.presentation.name}</h3>
 
                 <div className={"quiz-options pb-0"}>
                     <button className={"btn btn-success mb-0 mx-1"} onClick={this.onLaunchPress}>Launch</button>
@@ -45,7 +45,7 @@ class QuizCard extends React.Component {
                         () => deleteQuiz(this.state.presentation, this.state.presentations, this.setUserState)
                     }>Delete</button>
                 </div>
-                <div className={"card primary-dark-theme question-count-card px-2"}>
+                <div className={"card primary-dark-theme question-count-card px-2 py-2"}>
                     <p className={"m-0 p-0 text-dark-theme"}>{this.state.presentation.question_set.length} Question{this.state.presentation.question_set.length !== 1 ? 's' : ''}</p>
                 </div>
             </div>
