@@ -93,14 +93,13 @@ class QuizDisplay extends React.Component {
         else if (this.state.quizState === "response") {
             this.cycleNextQuestion(() => {
                 this.setQuizState("post-response")
-                this.setState({ isAcceptingResponses: false})
-                this.setResponseCount(0)
             })
 
         }
         else if (this.state.quizState === "post-response") {
             this.cycleNextQuestion(() => {
                 this.setQuizState("pre-response")
+                this.setResponseCount(0)
             })
         }
     }
