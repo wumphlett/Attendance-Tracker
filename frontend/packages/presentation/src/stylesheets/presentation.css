@@ -151,3 +151,8 @@
     width: 50%;
     margin: 0.5rem auto 1rem;
 }
+
+.answer-div {
+    word-wrap: break-word; /* Break words that exceed the width of the div */
+    white-space: pre-line; /* Preserve line breaks and wrap lines as needed */
+}

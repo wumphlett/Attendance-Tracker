@@ -29,11 +29,14 @@ class AnswerCard extends React.Component {
 
     render() {
         return (
-            <div className={`card primary-dark-theme text-dark-theme p-2 h-100 overflow-auto
+            <div className={`card primary-dark-theme d-flex flex-row align-items-center text-dark-theme p-2 h-100
                 ${this.state.quizState === "post-response" && this.state.answer.is_correct ? 'correct' :
                 this.state.quizState === "post-response" && !this.state.answer.is_correct ? 'incorrect' : 
                     'answer-card'}`}>
-                <h2><strong>{this.state.answer.text}</strong></h2>
+                <h1 className={"pb-2"} style={{ fontSize: "5vh", paddingTop: 0 }}><strong>{this.state.answer.symbol})</strong></h1>
+                <div className={"ms-3 answer-div"}>
+                    <h2><strong>{this.state.answer.text}</strong></h2>
+                </div>
             </div>
         )
     }

@@ -24,9 +24,6 @@ class CompletionScreen extends React.Component {
 
     downloadCSV = (event) => {
         event.stopPropagation();
-        // axios.get(`/sessions/${this.sessionId}/export/`).then(() => {
-        //     console.log("CSV File downloaded.")
-        // })
         axios({
             url: `/sessions/${this.sessionId}/export/`,
             method: 'GET',
