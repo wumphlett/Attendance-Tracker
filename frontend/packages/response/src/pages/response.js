@@ -27,7 +27,7 @@ class Response extends React.Component {
         this.state = {
             sessionId: null,
             activeQuestion: null,
-            quizState: "loading",
+            quizState: "",
             isAcceptingResponses: false,
             endTime: null,
         }
@@ -94,7 +94,6 @@ class Response extends React.Component {
         this.client.onmessage = (message) => {
             const data = JSON.parse(message.data)
             if (data) {
-                console.log(data)
                 if (data.end_time === null) {
                     this.setActiveQuestion(data, () => {
                         this.cycleQuizState()
@@ -126,13 +125,10 @@ class Response extends React.Component {
     }
 
     applyExistingState = () => {
-        console.log(this.existingState)
-
         // Quiz has not started yet
         if (this.existingState.current_question === null && this.existingState.end_time === null) {
-            console.log("Quiz has not yet started")
             this.setActiveQuestion(this.existingState)
-            this.setQuizState("pre-response")
+            this.setQuizState("loading")
         }
         // Quiz was in progress and in pre-response stage
         else if (!this.existingState.is_accepting_responses && !this.existingState.is_post_responses) {
@@ -160,7 +156,7 @@ class Response extends React.Component {
             <div className={"primary-dark-theme"}>
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
-                        {this.state.quizState === "loading" ? (
+                        {this.state.quizState === "" ? (
                             <JoinForm
                                 joinAsResponder={this.joinAsResponder}
                             />

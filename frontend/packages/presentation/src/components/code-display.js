@@ -2,7 +2,7 @@
  * code-display.js
  *
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 24 APR 23
+ * @Version - 26 APR 23
  *
  * Display the join code and active users in presentation
  */

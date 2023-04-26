@@ -200,7 +200,9 @@ class Presentation extends React.Component {
                                     cycleNextQuestion={this.cycleNextQuestion}
                                 />
                             ) : (
-                                <CompletionScreen />
+                                <CompletionScreen
+                                    sessionId={this.state.sessionId}
+                                />
                             )}
                     </div>
                 </div>
