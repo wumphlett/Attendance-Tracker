@@ -33,14 +33,20 @@ class Presentation extends React.Component {
             endTime: null,
         }
         this.client = null
+        const currentPath = window.location.pathname;
+        this.joinCode = currentPath.substring(currentPath.lastIndexOf('/') + 1)
+        this.existingState = null;
+
         this.setResponseCount = this.setResponseCount.bind(this);
         this.setQuizState = this.setQuizState.bind(this);
-        this.joinAsPresenter = this.joinAsPresenter.bind(this);
+        this.cycleQuizState = this.cycleQuizState.bind(this);
+        this.cycleNextQuestion = this.cycleNextQuestion.bind(this);
+        this.onJoinClicked = this.onJoinClicked.bind(this);
+
+        this.joinAsPresenter(this.joinCode)
     }
     setSessionId = (sessionId) => {
-        this.setState({ sessionId: sessionId }, () => {
-            console.log(this.state.sessionId)
-        })
+        this.setState({ sessionId: sessionId })
     }
     setResponseCount = (responseCount) => {
         this.setState({ responseCount: responseCount });
@@ -48,6 +54,67 @@ class Presentation extends React.Component {
 
     setQuizState = (state) => {
         this.setState( { quizState: state})
+    }
+
+    cycleQuizState() {
+        if (this.state.quizState === "pre-response") {
+            this.cycleNextQuestion(() => {
+                this.setQuizState("response")
+            })
+        }
+        else if (this.state.quizState === "response") {
+            this.cycleNextQuestion(() => {
+                this.setQuizState("post-response")
+            })
+
+        }
+        else if (this.state.quizState === "post-response") {
+            this.cycleNextQuestion(() => {
+                this.setQuizState("pre-response")
+                this.setResponseCount(0)
+            })
+        }
+    }
+
+    cycleNextQuestion(callback) {
+        axios.post(`sessions/${this.state.sessionId}/next/`)
+            .then((res) => {
+                axios.get(`sessions/${this.state.sessionId}/respond/`)
+                    .then((res) => {
+                        console.log(this.client)
+                        console.log(res.data)
+                        this.client.send(
+                            JSON.stringify(res.data)
+                        );
+                    });
+                // Quiz is complete
+                if (res.data.current_question === null) {
+                    this.setQuizState("completed")
+                }
+                // If quiz is not complete, update the question
+                else {
+                    console.log(res.data)
+                    this.setActiveQuestion(res.data)
+                    if (typeof callback === "function") {
+                        // Call the callback function
+                        callback();
+                    }
+                }
+            })
+    }
+
+    setActiveQuestion(data) {
+        this.setState(  {
+            activeQuestion: {
+                prompt: data.current_question.text,
+                index: data.current_question.index,
+                answerChoices: data.current_question.answer_set,
+                end_time: data.end_time,
+                responseCount: 0
+            },
+            isAcceptingResponses: data.is_accepting_responses,
+            isLoadingComplete: true
+        })
     }
 
     addClientHandlers = () => {
@@ -66,14 +133,44 @@ class Presentation extends React.Component {
             .then((r) => {
                 let sessionId = r.data.id;
                 this.client = new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/?presenter");
-                this.client.onopen = () => {
-                    this.addClientHandlers()
-                    axios.get(`sessions/${sessionId}/`)
-                        .then((r) => {
-                            this.setSessionId(r.data.id)
-                        });
-                }
+                this.addClientHandlers()
+                axios.get(`sessions/${sessionId}/`)
+                    .then((r) => {
+                        this.setSessionId(r.data.id)
+                        this.existingState = r.data
+                    });
             });
+    }
+
+    onJoinClicked = (event) => {
+        event.stopPropagation();
+        console.log(this.existingState)
+
+        // Quiz has not started yet
+        if (this.existingState.current_question === null && this.existingState.end_time === null) {
+            console.log("Quiz has not yet started")
+            this.cycleNextQuestion();
+            this.setQuizState("pre-response")
+        }
+        // Quiz was in progress and in pre-response stage
+        else if (!this.existingState.is_accepting_responses && !this.existingState.is_post_responses) {
+            this.setActiveQuestion(this.existingState)
+            this.setQuizState("pre-response")
+        }
+        // Quiz was in progress and in response stage
+        else if (this.existingState.is_accepting_responses) {
+            this.setActiveQuestion(this.existingState)
+            this.setQuizState("response")
+        }
+        // Qiz was in progress and in post-response stage
+        else if (this.existingState.is_post_responses) {
+            this.setActiveQuestion(this.existingState)
+            this.setQuizState("post-response")
+        }
+        // Quiz was complete
+        else if (this.existingState.current_question === null && this.existingState.end_time !== null) {
+            this.setQuizState("completed")
+        }
     }
 
    render() {
@@ -82,22 +179,24 @@ class Presentation extends React.Component {
                 <Navbar />
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
-                        {this.state.sessionId === null ? (
+                        {this.state.quizState === "loading" ? (
                                 <JoinScreen
+                                    joinCode={this.joinCode}
                                     currentlyJoined={this.state.currentlyJoined}
                                     quizState={this.state.quizState}
                                     setQuizState={this.setQuizState}
-                                    joinAsPresenter={this.joinAsPresenter}
+                                    onJoinClicked={this.onJoinClicked}
                                 />
                             ) : this.state.quizState !== "completed" ? (
                                 <QuizDisplay
-                                    sessionId={this.state.sessionId}
-                                    client={this.client}
+                                    activeQuestion={this.state.activeQuestion}
                                     responseCount={this.state.responseCount}
                                     setResponseCount={this.setResponseCount}
                                     currentlyJoined={this.state.currentlyJoined}
                                     quizState={this.state.quizState}
                                     setQuizState={this.setQuizState}
+                                    cycleQuizState={this.cycleQuizState}
+                                    cycleNextQuestion={this.cycleNextQuestion}
                                 />
                             ) : (
                                 <CompletionScreen />

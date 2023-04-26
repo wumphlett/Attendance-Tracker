@@ -19,19 +19,12 @@ class CodeDisplay extends React.Component {
 
     constructor(props) {
         super(props);
-        const currentPath = window.location.pathname;
         this.state = {
-            joinCode: currentPath.substring(currentPath.lastIndexOf('/') + 1),
             responseCount: 0
         }
+        this.joinCode = props.joinCode
         this.setQuizState = props.setQuizState;
-        this.joinAsPresenter = props.joinAsPresenter
-    }
-
-    handleJoinClick = (event) => {
-        event.stopPropagation();
-        this.joinAsPresenter(this.state.joinCode);
-        this.setQuizState("pre-response")
+        this.onJoinClicked = props.onJoinClicked
     }
 
     render() {
@@ -42,10 +35,10 @@ class CodeDisplay extends React.Component {
                         <h3><strong>Quiz Code:</strong></h3>
                     </div>
                     <div className={"card code-display-card col-12 mt-3 pb-0 px-3 text-center d-inline-block"}>
-                        {this.state.joinCode}
+                        {this.joinCode}
                     </div>
                     <div className="card btn button-card join-button primary-dark-theme text-dark-theme col-12 mt-3 align-self-center"
-                         onClick={this.handleJoinClick}>
+                         onClick={this.onJoinClicked}>
                         Start
                     </div>
                 </div>

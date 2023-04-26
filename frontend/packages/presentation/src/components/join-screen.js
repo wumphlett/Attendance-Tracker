@@ -22,8 +22,9 @@ class JoinScreen extends React.Component {
             currentlyJoined: props.currentlyJoined,
             quizState: props.quizState
         }
+        this.joinCode = props.joinCode
         this.setQuizState = props.setQuizState;
-        this.joinAsPresenter = props.joinAsPresenter
+        this.onJoinClicked = props.onJoinClicked
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -36,8 +37,9 @@ class JoinScreen extends React.Component {
         return (
             <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
                 <CodeDisplay
+                    joinCode={this.joinCode}
                     setQuizState={this.setQuizState}
-                    joinAsPresenter={this.joinAsPresenter}
+                    onJoinClicked={this.onJoinClicked}
                 />
                 <CounterCard
                     currentlyJoined={this.state.currentlyJoined}

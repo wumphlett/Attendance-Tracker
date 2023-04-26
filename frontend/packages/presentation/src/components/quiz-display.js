@@ -21,86 +21,22 @@ class QuizDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeQuestion: null,
+            activeQuestion: props.activeQuestion,
             isAcceptingResponses: false,
             responseCount: props.responseCount,
             currentlyJoined: props.currentlyJoined,
             quizState: props.quizState,
         }
-        this.client = props.client
-        this.sessionId = props.sessionId
         this.setResponseCount = props.setResponseCount
         this.setQuizState = props.setQuizState
+        this.cycleQuizState = props.cycleQuizState
 
-        this.setState = this.setState.bind(this);
         this.onNextClicked = this.onNextClicked.bind(this)
-        if (this.state.activeQuestion === null) {
-            this.cycleNextQuestion()
-        }
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
             return nextProps
-        }
-    }
-
-    setActiveQuestion(data) {
-        this.setState(  {
-            activeQuestion: {
-                prompt: data.current_question.text,
-                index: data.current_question.index,
-                answerChoices: data.current_question.answer_set,
-                end_time: data.end_time,
-                responseCount: 0
-            },
-            isAcceptingResponses: data.is_accepting_responses,
-            isLoadingComplete: true
-        })
-    }
-
-    cycleNextQuestion(callback) {
-        axios.post(`sessions/${this.sessionId}/next/`)
-            .then((res) => {
-                axios.get(`sessions/${this.sessionId}/respond/`)
-                    .then((res) => {
-                        this.client.send(
-                            JSON.stringify(res.data)
-                        );
-                    });
-                // Quiz is complete
-                if (res.data.current_question === null) {
-                    this.setQuizState("completed")
-                }
-                // If quiz is not complete, update the question
-                else {
-                    console.log(res.data)
-                    this.setActiveQuestion(res.data)
-                    if (typeof callback === "function") {
-                        // Call the callback function
-                        callback();
-                    }
-                }
-            })
-    }
-
-    cycleQuizState() {
-        if (this.state.quizState === "pre-response") {
-            this.cycleNextQuestion(() => {
-                this.setQuizState("response")
-            })
-        }
-        else if (this.state.quizState === "response") {
-            this.cycleNextQuestion(() => {
-                this.setQuizState("post-response")
-            })
-
-        }
-        else if (this.state.quizState === "post-response") {
-            this.cycleNextQuestion(() => {
-                this.setQuizState("pre-response")
-                this.setResponseCount(0)
-            })
         }
     }
 
