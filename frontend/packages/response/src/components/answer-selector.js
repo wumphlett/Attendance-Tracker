@@ -47,16 +47,22 @@ class AnswerSelector extends React.Component {
         return (
             <div className={"h-100 w-100"}>
                 {this.state.quizState === "response" || this.state.quizState === "post-response" ? (
-                    <div className={"flex-wrap-container h-100 w-100"}>
-                        {this.state.activeQuestion.answerChoices.map((answerChoice, index) => (
-                            <div key={index} className={"flex-wrap-item"}>
-                                <AnswerCard
-                                    answer={answerChoice}
-                                    selectAnswer={this.selectAnswer}
-                                    deselectAnswer={this.deselectAnswer}
-                                />
-                            </div>
-                        ))}
+                    <div className={"h-100 w-100"}>
+                        <div className={"flex-wrap-container w-100"} style={{ height: "calc(100% - 60px - 1rem"}}>
+                            {this.state.activeQuestion.answerChoices.map((answerChoice, index) => (
+                                <div key={index} className={"flex-wrap-item"}>
+                                    <AnswerCard
+                                        answer={answerChoice}
+                                        selectAnswer={this.selectAnswer}
+                                        deselectAnswer={this.deselectAnswer}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                        <div className="card btn button-card primary-dark-theme text-dark-theme col-12 col-md-9 col-lg-6 mt-3 mb-1 mx-auto"
+                             style={{ height: "60px" }}>
+                            <h3><strong>Submit</strong></h3>
+                        </div>
                     </div>
                 ) : (<div></div>) }
             </div>

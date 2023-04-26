@@ -93,7 +93,6 @@ class Response extends React.Component {
     render() {
         return (
             <div className={"primary-dark-theme"}>
-                <Navbar />
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
                         {this.state.sessionId === null ? (
