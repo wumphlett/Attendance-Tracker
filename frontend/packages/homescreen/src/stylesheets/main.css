@@ -27,10 +27,6 @@
     flex: 1
 }
 
-.card.list-card {
-    border: 2px solid rgba(255, 250, 240, .4);
-}
-
 .quiz-list {
     display: flex;
     flex-direction: column;
@@ -66,6 +62,16 @@
 }
 
 .quiz-title {
+    position: relative;
+    z-index: 1;
+    float: left;
+    user-select: none
+}
+
+.card.quiz-title-card {
+    border: 2px solid rgba(255, 250, 240, .4);
+    justify-content: center;
+    user-select: none;
     position: relative;
     z-index: 1;
     float: left;

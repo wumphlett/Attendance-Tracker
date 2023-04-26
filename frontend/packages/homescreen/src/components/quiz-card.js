@@ -35,8 +35,10 @@ class QuizCard extends React.Component {
 
     render() {
         return (
-            <div className={"card card-body quiz-card primary-dark-theme mt-1 d-flex flex-row align-items-center"}>
-                <h3 className={"quiz-title text-dark-theme"}>{this.state.presentation.name}</h3>
+            <div className={"card card-body quiz-card secondary-dark-theme mt-2 d-flex flex-row align-items-center"}>
+                <div className={"card primary-dark-theme quiz-title-card text-center align-items-center px-2 py-0"}>
+                    <h3 className={"quiz-title text-dark-theme"}>{this.state.presentation.name}</h3>
+                </div>
 
                 <div className={"quiz-options pb-0"}>
                     <button className={"btn btn-success mb-0 mx-1"} onClick={this.onLaunchPress}>Launch</button>

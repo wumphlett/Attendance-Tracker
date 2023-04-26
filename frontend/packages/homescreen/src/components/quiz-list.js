@@ -35,7 +35,7 @@ class QuizList extends React.Component {
 
         const CreateQuizButton = () => {
             return (
-                <div className={"card card-body primary-dark-theme button-card btn mt-1"}
+                <div className={"card card-body secondary-dark-theme button-card btn mt-2 text-white"}
                     onClick={() => {
                         createQuiz(
                             this.state.presentations,
@@ -55,7 +55,7 @@ class QuizList extends React.Component {
                     </div>
                 </div>
                 <div className={"d-flex flex-column overflow-auto"} style={{ flex: 1 }}>
-                    <div className={"card secondary-dark-theme list-card d-flex flex-column mt-2 overflow-auto"} style={{ flex: 1 }}>
+                    <div className={"card primary-dark-theme d-flex flex-column mt-2 overflow-auto"} style={{ flex: 1 }}>
                         <div className={"container-fluid quiz-list overflow-auto p-2"}>
                             <div className={"d-inline-block pe-2"}>
                                 {this.state.presentations.map((presentation, index) => (
