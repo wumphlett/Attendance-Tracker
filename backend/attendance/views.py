@@ -159,17 +159,19 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def export(self, request, pk=None):
+        session = self.get_object()
+
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="export.csv"'
+        response['Content-Disposition'] = f'attachment; filename="sess-exp-{session.start_time.strftime("%Y-%m-%d_%H-%M")}.csv"'
 
         writer = csv.writer(response)
 
-        session = self.get_object()
         writer.writerow(["Student", "ID", "SIS User ID", "SIS Login ID", "Section", session.presentation.name])
         writer.writerow(["Points Possible", "", "", "", "", session.presentation.question_set.count()])
 
         for student in models.Response.objects.filter(session=session).values("user").distinct():
-            print(student)
+            points = models.Response.objects.filter(session=session, user=student, answer__is_correct=True).count()  # TODO This will not work if you add partial credit
+            writer.writerow([f'"{student.last_name}, {student.first_name}"', "", "", f"{student.email.split('@')[0]}", "", points])
 
         return response
 
