@@ -189,18 +189,22 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         long = request.data.pop("long", None)
         lat = request.data.pop("lat", None)
         acc = request.data.pop("acc", None)
-        print(long, lat, acc)
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         session = serializer.validated_data['session']
-        print(geolocate.calculate_distance(session.lat, session.long, lat, long))
+        if session.lat and session.long:
+            distance = geolocate.calculate_distance(session.lat, session.long, lat, long)
+            is_geolocated = distance < geolocate.ATTENDANCE_DISTANCE_M + session.acc + acc
+        else:
+            is_geolocated = True
 
         response, created = serializer.Meta.model.objects.update_or_create(
             user=self.request.user,
             session=serializer.validated_data['session'],
             answer__question=serializer.validated_data['answer'].question,
+            is_geolocated=is_geolocated,
             defaults={"user": self.request.user, **serializer.validated_data}
         )
 

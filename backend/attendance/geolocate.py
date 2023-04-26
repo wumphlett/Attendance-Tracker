@@ -2,6 +2,7 @@ import math
 
 
 EARTH_RADIUS_KM = 6371.0088
+ATTENDANCE_DISTANCE_M = 300
 
 
 def calculate_distance(prof_lat, prof_long, student_lat, student_long):
