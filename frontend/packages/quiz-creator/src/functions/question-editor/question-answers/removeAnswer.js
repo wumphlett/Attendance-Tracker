@@ -9,15 +9,10 @@
 
 import axios from 'axios';
 
-// Functions
-import modifyQuestion from "../modifyQuestion";
-
-export function removeAnswer(activeAnswer, activeQuestion, questions, setCreatorState) {
+export function removeAnswer(activeAnswer, activeQuestion, setActiveQuestion) {
     axios.delete(`answers/${activeAnswer.id}/`).then((r) => {
-        let modifiedQuestion = activeQuestion;
-        // Remove from potential answers
-        let index = modifiedQuestion.answer_set.findIndex((answer) => answer.id === activeAnswer.id)
-        modifiedQuestion.answer_set.splice(index, 1)
-        modifyQuestion(modifiedQuestion, {questions: questions}, setCreatorState);
+        let index = activeQuestion.answer_set.findIndex((answer) => answer.id === activeAnswer.id)
+        activeQuestion.answer_set.splice(index, 1)
+        setActiveQuestion(activeQuestion);
     });
 }

@@ -9,10 +9,7 @@
 
 import axios from 'axios';
 
-// Functions
-import modifyQuestion from "../modifyQuestion";
-
-export function createAnswer(activeQuestion, questions, setCreatorState) {
+export function createAnswer(activeQuestion, setActiveQuestion) {
     axios.post("answers/", {
         question: activeQuestion.id,
         index: activeQuestion.answer_set.length,
@@ -20,8 +17,7 @@ export function createAnswer(activeQuestion, questions, setCreatorState) {
         text: "A Blank Answer",
         is_correct: false,
     }).then((r) => {
-        const modifiedQuestion = activeQuestion;
-        modifiedQuestion.answer_set.push(r.data);
-        modifyQuestion(modifiedQuestion, {questions: questions}, setCreatorState);
+        activeQuestion.answer_set.push(r.data);
+        setActiveQuestion(activeQuestion)
     })
 }

@@ -6,13 +6,10 @@
  *
  * Insert changed text into question prompt
  */
-// Functions
-import modifyQuestion from '../modifyQuestion'
 
-function handleTextChange(event, state, setCreatorState) {
-    let questionToModify = state.activeQuestion;
-    questionToModify.text = event.target.value;
-    modifyQuestion(questionToModify, state, setCreatorState);
+function handleTextChange(event, activeQuestion, setActiveQuestion) {
+    activeQuestion.text = event.target.value;
+    setActiveQuestion(activeQuestion)
 }
 
 export default handleTextChange;

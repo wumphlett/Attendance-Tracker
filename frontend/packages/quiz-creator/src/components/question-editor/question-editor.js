@@ -20,39 +20,31 @@ import '../../stylesheets/question-editor.css'
 class QuestionEditor extends React.Component {
     constructor(props) {
         super(props);
-        this.state = props.state;
-        this.setCreatorState = props.setCreatorState;
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps !== prevState) {
-            if (nextProps.state.questions.length > 0) {
-                return {questions: nextProps.state.questions, activeQuestion: nextProps.state.questions[0]}
-            } else {
-                return nextProps.state
-            }
-        }
     }
 
     render() {
         return (
             <div className="container-fluid h-100 p-2">
-                {this.state.activeQuestion === null ?
+                {this.props.activeQuestion === null ?
                     <QuestionPlaceholder
-                        state={this.state}
-                        setCreatorState={this.setCreatorState}
+                        presentationId={this.props.presentationId}
+                        questions={this.props.questions}
+                        setQuestions={this.props.setQuestions}
+                        setActiveQuestion={this.props.setActiveQuestion}
                     /> :
                     <div className="row h-100">
                         <div className="col-9 container-fluid container-no-padding h-100"> {/* Question card preview */}
                             <QuestionPreview
-                                state={this.state}
-                                setCreatorState={this.setCreatorState}
+                                questions={this.props.questions}
+                                activeQuestion={this.props.activeQuestion}
+                                setQuestions={this.props.setQuestions}
+                                setActiveQuestion={this.props.setActiveQuestion}
                             />
                         </div>
                         <div className={"col-3 container-fluid container-no-padding h-100"}> {/* Question options*/}
                             <QuestionOptions
-                                state={this.state}
-                                setCreatorState={this.setCreatorState}
+                                activeQuestion={this.props.activeQuestion}
+                                setActiveQuestion={this.props.setActiveQuestion}
                             />
                         </div>
                     </div>

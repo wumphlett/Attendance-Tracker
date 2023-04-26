@@ -7,9 +7,9 @@
  * Quiz creator UI
  */
 // Main
-import React, { useState } from 'react'
+import React from 'react'
 // Components
-import { Navbar } from "@frontend/common/build";
+import {Navbar} from "@frontend/common/build";
 import QuestionEditor from "../components/question-editor/question-editor";
 import QuestionSelector from "../components/question-selector/question-selector";
 // Stylesheets
@@ -18,65 +18,84 @@ import '../stylesheets/quiz-creation.css'
 
 import axios from 'axios';
 
+
 class QuizCreator extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-          presentationId: null,
-          questions: [],
-          activeQuestion: null,
-        }
-        this.setState = this.setState.bind(this)
+    this.state = {
+      presentationId: null,
+      questions: [],
+      activeQuestion: null,
     }
+  }
 
-      componentDidMount() {
-        this.set_quiz_list();
+  componentDidMount() {
+    const queryParams = new URLSearchParams(window.location.search);
+
+    let presentationId = queryParams.get("p");
+    if (presentationId === null) {
+      window.location.href = "/"
+    }
+    axios.get(`presentations/${presentationId}/`).then((r) => {
+      for (let question of r.data.question_set) {
+        question.is_multiple_selection_allowed = question.answer_set.filter(answer => answer.is_correct).length > 1;
       }
 
-      set_quiz_list = () => {
-        let presentationId = window.location.pathname.split("/").pop();
-        if (presentationId === "") {
-          window.location.href = "/"
+      this.setState({
+          presentationId: presentationId,
+          questions: r.data.question_set,
         }
-        axios.get(`presentations/${presentationId}/`).then((r) => {
-          this.setState({
-              presentationId: presentationId,
-              questions: r.data.question_set,
-            }
-          )
-        })
-      };
+      )
+    }).catch((r) => {
+      window.location.href = "/"
+    })
+  }
 
-    render() {
-        return (
-          <div>
-            <div className={"bg-black"} style={{ height: '60px' }}>
-                <Navbar />
-            </div>
-            <div className="container-fluid content-container page-dark">
-                <div className={"row"} style={{ height: 'calc(0.75 * (100vh - 60px))' }}>
-                    <div> {/* Quiz Options */}
+  setQuestions = (questions) => {
+    this.setState({questions: questions});
+  };
 
-                    </div>
-                    <div className="h-100"> {/* Question Editor */}
-                        <QuestionEditor
-                            state={this.state}
-                            setCreatorState={this.setState}
-                        />
-                    </div>
-                </div>
-                <div className={"row"} style={{ height: 'calc(0.25 * (100vh - 60px))' }}>
-                    <div className={"container-fluid"}> {/* Question Selector*/}
-                        <QuestionSelector
-                            state={this.state}
-                            setCreatorState={this.setState}
-                        />
-                    </div>
-                </div>
-            </div>
+  setActiveQuestion = (question) => {
+    this.setState({activeQuestion: question});
+  }
+
+  render() {
+    return (
+      <div>
+        <div className={"bg-black"} style={{height: '60px'}}>
+          <Navbar/>
         </div>
-        );
-    }
+        <div className="container-fluid content-container page-dark">
+          <div className={"row"} style={{height: 'calc(0.75 * (100vh - 60px))'}}>
+            <div> {/* Quiz Options */}
+
+            </div>
+            <div className="h-100"> {/* Question Editor */}
+              <QuestionEditor
+                presentationId={this.state.presentationId}
+                questions={this.state.questions}
+                setQuestions={this.setQuestions}
+                activeQuestion={this.state.activeQuestion}
+                setActiveQuestion={this.setActiveQuestion}
+              />
+            </div>
+          </div>
+          <div className={"row"} style={{height: 'calc(0.25 * (100vh - 60px))'}}>
+            <div className={"container-fluid"}> {/* Question Selector*/}
+              <QuestionSelector
+                presentationId={this.state.presentationId}
+                questions={this.state.questions}
+                setQuestions={this.setQuestions}
+                activeQuestion={this.state.activeQuestion}
+                setActiveQuestion={this.setActiveQuestion}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
+
 export default QuizCreator;

@@ -9,30 +9,35 @@
 
 import axios from 'axios';
 
-// Functions
-import modifyQuestion from '../modifyQuestion'
-
-function handleCheckboxChange(label, checkboxState, state, setCreatorState) {
-    if (label === "Allow partial credit") {
-        let modifiedQuestion = state.activeQuestion
-        modifiedQuestion.is_partial_allowed = checkboxState
-        axios.patch(`questions/${modifiedQuestion.id}/`, {
-            is_partial_allowed: modifiedQuestion.is_partial_allowed,
-        }).then((r) => {
-            modifyQuestion(modifiedQuestion, state, setCreatorState)
-        });
+function handleCheckboxChange(label, checkboxState, activeQuestion, setActiveQuestion) {
+    if (label === "Enforce time limit") {
+        activeQuestion.is_time_limited = checkboxState
+    }
+    else if (label === "Allow partial credit") {
+        activeQuestion.is_partial_allowed = checkboxState
     }
     else if (label === "Allow multiple selection") {
-        let modifiedQuestion = state.activeQuestion
-        modifiedQuestion.isMultipleSelectionAllowed = checkboxState
+        activeQuestion.is_multiple_selection_allowed = checkboxState
         // If single selection is enforced and multiple answers are already marked as correct, unmark all answers
-        if (checkboxState === false && state.activeQuestion.answer_set.filter((answer) => answer.is_correct).length > 1) {
-            state.activeQuestion.answer_set.map((answer) => {
-                answer.is_correct = false;
-            })
+        if (checkboxState === false && activeQuestion.answer_set.filter(answer => answer.is_correct).length > 1) {
+            for (let answer of activeQuestion.answer_set) {  // TODO wrangle DRF to allow setting this through queryset
+                if (answer.is_correct) {
+                    answer.is_correct = false;
+                    axios.patch(`answers/${answer.id}/`, {
+                        is_correct: answer.is_correct,
+                    }).then((r) => {
+
+                    });
+                }
+            }
         }
-        modifyQuestion(modifiedQuestion, state, setCreatorState)
     }
+
+    axios.patch(`questions/${activeQuestion.id}/`, {
+        is_partial_allowed: activeQuestion.is_partial_allowed,
+    }).then((r) => {
+        setActiveQuestion(activeQuestion)
+    });
 }
 
 export default handleCheckboxChange;

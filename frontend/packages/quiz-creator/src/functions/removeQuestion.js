@@ -9,29 +9,22 @@
 
 import axios from 'axios';
 
-export function removeQuestion(questionToRemove, state, setCreatorState) {
-    const index = state.questions.findIndex((question) => question.id === questionToRemove.id)
-    const modifiedQuestions = state.questions.filter((question) => question.id !== questionToRemove.id)
+export function removeQuestion(questionToRemove, activeQuestion, setActiveQuestion, questions, setQuestions) {
+    const index = questions.findIndex((question) => question.id === questionToRemove.id)
+    const modifiedQuestions = questions.filter((question) => question.id !== questionToRemove.id)
 
     axios.delete(`questions/${questionToRemove.id}/`).then((r) => {
-        modifiedQuestions.map((question, index) => {
-            console.log(question, index);
-            axios.patch(`questions/${question.id}/`, {index: index}).then((r) => {
-                modifiedQuestions[index].index = r.data.index
-            })
-        })
-
-        setCreatorState({questions: modifiedQuestions})
+        setQuestions(modifiedQuestions)
         if (modifiedQuestions.length > 0) {
-            if (questionToRemove === state.activeQuestion) {
+            if (questionToRemove === activeQuestion) {
                 if (index === 0) {
-                    setCreatorState({activeQuestion: modifiedQuestions[0]})
+                    setActiveQuestion(modifiedQuestions[0])
                 } else {
-                    setCreatorState({activeQuestion: modifiedQuestions[index - 1]})
+                    setActiveQuestion(modifiedQuestions[index - 1])
                 }
             }
         } else {
-            setCreatorState({activeQuestion: null})
+            setActiveQuestion(null)
         }
     });
 }
