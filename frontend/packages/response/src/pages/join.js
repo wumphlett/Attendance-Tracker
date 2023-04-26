@@ -36,7 +36,6 @@ class JoinForm extends React.Component {
     };
 
     handleJoinClick = (event) => {
-        console.log("Joining...")
         event.stopPropagation();
         this.joinAsResponder(this.state.joinCode);
     }
