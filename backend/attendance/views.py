@@ -96,6 +96,8 @@ class SessionViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'list':
             return serializers.SessionListSerializer
+        elif self.action in ('update', 'partial_update'):
+            return serializers.SessionUpdateSerializer
         return serializers.SessionDetailSerializer
 
     def list(self, request, *args, **kwargs):
