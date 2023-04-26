@@ -115,7 +115,7 @@ class QuizCard extends React.Component {
                     }>Delete</button>
                 </div>
                 <div className={"card primary-dark-theme question-count-card px-2 py-2"}>
-                    <p className={"m-0 p-0 text-dark-theme"}>{this.state.presentation.question_set.length} Question{this.state.presentation.question_set.length !== 1 ? 's' : ''}</p>
+                    <p className={"m-0 p-0 text-dark-theme"}>{this.state.presentation.num_questions} Question{this.state.presentation.num_questions !== 1 ? 's' : ''}</p>
                 </div>
             </div>
         )
