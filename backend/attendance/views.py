@@ -164,7 +164,12 @@ class SessionViewSet(viewsets.ModelViewSet):
 
         writer = csv.writer(response)
 
-        writer.writerow("Test,Testy")
+        session = self.get_object()
+        writer.writerow(["Student", "ID", "SIS User ID", "SIS Login ID", "Section", session.presentation.name])
+        writer.writerow(["Points Possible", "", "", "", "", session.presentation.question_set.count()])
+
+        for student in models.Response.objects.filter(session=session).values("user").disctinc():
+            print(student)
 
         return response
 
