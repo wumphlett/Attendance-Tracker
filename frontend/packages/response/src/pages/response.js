@@ -12,7 +12,6 @@ import React from "react";
 import axios from "axios";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 // Components
-import { Navbar } from "@frontend/common/build"
 import JoinForm from "./join";
 import QuizDisplay from "../components/quiz-display";
 import CompletionScreen from "../components/completion-screen";
@@ -30,6 +29,9 @@ class Response extends React.Component {
             quizState: "",
             isAcceptingResponses: false,
             endTime: null,
+            long: null,
+            lat: null,
+            acc: null,
         }
         this.client = null;
         this.existingState = null;
@@ -80,7 +82,10 @@ class Response extends React.Component {
     postAnswers = (answers) => {
         axios.post('https://api.auttend.com/api/responses/', {
             session: this.state.sessionId,
-            answer: answers[0].id
+            answer: answers[0].id,
+            long: this.state.long,
+            lat: this.state.lat,
+            acc: this.state.acc,
         }).then((r) => {
             if (r.data["created"]) {
                 this.client.send(
@@ -122,6 +127,22 @@ class Response extends React.Component {
                         });
                 }
             })
+    }
+
+    setLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                // axios.patch(`sessions/${sessionId}/`, {
+                //     long: position.coords.longitude,
+                //     lat: position.coords.latitude,
+                //     acc: position.coords.accuracy
+                // }).then((r) => {})
+            }, (error) => {
+                // console.log(error);
+            });
+        } else {
+            alert('Geolocation is not supported by this browser.');
+        }
     }
 
     applyExistingState = () => {

@@ -9,10 +9,7 @@
  */
 // Main
 import React from "react";
-import axios from "axios";
 // Components
-// Functions
-import { joinAsResponder } from "../functions/join-as-responder";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"

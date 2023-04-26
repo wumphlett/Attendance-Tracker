@@ -15,9 +15,6 @@ import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"
 
 class CompletionScreen extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (

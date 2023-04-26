@@ -88,9 +88,7 @@ class Response(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
-    long = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
-    lat = models.DecimalField(max_digits=22, decimal_places=16, blank=True, null=True)
-    acc = models.DecimalField(max_digits=25, decimal_places=16, blank=True, null=True)
+    is_geolocated = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "Response"

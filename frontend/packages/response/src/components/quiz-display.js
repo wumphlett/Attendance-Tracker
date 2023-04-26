@@ -8,7 +8,6 @@
  */
 // Main
 import React from "react";
-import axios from "axios";
 // Components
 import AnswerSelector from "./answer-selector";
 // Functions

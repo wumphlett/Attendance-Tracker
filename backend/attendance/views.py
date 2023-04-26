@@ -185,6 +185,11 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
+        long = request.data.pop("long", None)
+        lat = request.data.pop("lat", None)
+        acc = request.data.pop("acc", None)
+        print(long, lat, acc)
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
