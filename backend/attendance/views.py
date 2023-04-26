@@ -44,8 +44,9 @@ class PresentationViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         serializer = self.get_serializer(self.get_queryset(), context={'request': request}, many=True)
-        for item in serializer.data:
-            print(item)
+        for presentation in serializer.data:
+            presentation["num_questions"] = models.Presentation.objects.get(pk=presentation["id"]).question_set.count()
+            print(presentation)
         return Response({"presentations": serializer.data, "user": serializers.UserSerializer(request.user, context={'request': request}).data})
 
 
