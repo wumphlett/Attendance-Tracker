@@ -38,7 +38,9 @@ const register_interceptors = (axios) => {
     }
     refresh = false;
 
-    window.location.href = `https://api.auttend.com/accounts/logout?next=${window.location.href}`;
+    // localStorage.clear();
+    // window.location.href = `https://api.auttend.com/accounts/login?next=${window.location.href}`;
+    return error;
   });
 };
 
