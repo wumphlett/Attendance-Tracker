@@ -15,6 +15,8 @@ import { launchQuiz } from "../functions/launchQuiz";
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"
 
+import axios from "axios"
+
 class QuizCard extends React.Component {
     constructor(props) {
         super(props);
@@ -74,6 +76,11 @@ class QuizCard extends React.Component {
 
     saveQuizTitle = (event) => {
         this.setState({ presentation: { ...this.state.presentation, name: event.target.value}}, () => {
+            axios.patch(`presentations/${this.state.presentation.id}/`, {
+                name: event.target.value,
+            }).then((r) => {
+        
+            });
             this.exitRenamingMode();
         })
     }

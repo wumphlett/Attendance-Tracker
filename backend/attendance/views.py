@@ -163,7 +163,6 @@ class SessionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def export(self, request, pk=None):
         is_geolocated = request.query_params.get('geolocate', True)  # Enforce geolocation by default
-        print(is_geolocated)
         session = self.get_object()
 
         response = HttpResponse(content_type='text/csv')
