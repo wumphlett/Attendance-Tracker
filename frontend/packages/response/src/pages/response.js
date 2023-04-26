@@ -83,7 +83,8 @@ class Response extends React.Component {
             sessionId: data.id,
             activeQuestion: data.current_question ? {
                 index: data.current_question.index,
-                answerChoices: data.current_question.answer_set
+                answerChoices: data.current_question.answer_set,
+                isMultipleSelectionAllowed: false
             } : null,
             isAcceptingResponses: data.isAcceptingResponses,
             endTime: data.end_time

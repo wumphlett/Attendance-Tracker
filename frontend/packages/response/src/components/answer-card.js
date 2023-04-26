@@ -18,7 +18,7 @@ class AnswerCard extends React.Component {
         this.state = {
             answer: props.answer,
             quizState: props.quizState,
-            answerSelected: false,
+            isAnswerSelected: props.isAnswerSelected,
             isAnswerSubmitted: props.isAnswerSubmitted
         }
         this.selectAnswer = props.selectAnswer
@@ -34,7 +34,6 @@ class AnswerCard extends React.Component {
     handleButtonPress = (event) => {
         event.stopPropagation();
         if (!this.state.answerSelected) {
-            this.setState({ answerSelected: true })
             this.selectAnswer(this.state.answer)
         }
         else if (this.state.answerSelected) {
@@ -45,7 +44,7 @@ class AnswerCard extends React.Component {
 
     render() {
         return (
-            <button className={`card primary-dark-theme text-dark-theme p-2 h-100 w-100 overflow-auto text-center btn answer-button${this.state.answerSelected ? " selected" : ""}`}
+            <button className={`card primary-dark-theme text-dark-theme p-2 h-100 w-100 overflow-auto text-center btn answer-button${this.state.isAnswerSelected ? " selected" : ""}`}
             onClick={this.handleButtonPress}
             disabled={this.state.isAnswerSubmitted}>
                 <text className={"pt-0"}>{this.state.answer.symbol}</text>

@@ -36,7 +36,14 @@ class AnswerSelector extends React.Component {
     }
 
     selectAnswer = (answer) => {
-        let modifiedAnswers = ([...this.state.answersSelected, answer])
+        let modifiedAnswers
+        if (this.state.activeQuestion.isMultipleSelectionAllowed) {
+            console.log("Multiple selection allowed")
+            modifiedAnswers = ([...this.state.answersSelected, answer])
+        } else {
+            console.log("Multiple selection NOT allowed")
+            modifiedAnswers = [answer]
+        }
         this.setAnswersSelected(modifiedAnswers);
     }
 
@@ -58,6 +65,7 @@ class AnswerSelector extends React.Component {
                                         answer={answerChoice}
                                         selectAnswer={this.selectAnswer}
                                         deselectAnswer={this.deselectAnswer}
+                                        isAnswerSelected={this.state.answersSelected.includes(answerChoice)}
                                         isAnswerSubmitted={this.state.isAnswerSubmitted}
                                     />
                                 </div>
