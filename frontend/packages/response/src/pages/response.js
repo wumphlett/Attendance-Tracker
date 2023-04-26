@@ -3,7 +3,7 @@
  *
  * @Author - Will Humphlett - will@humphlett.net
  * @Author - Ethan Brown - ewbrowntech@gmail.com
- * @Version - 25 APR 23
+ * @Version - 26 APR 23
  *
  * Respond to a quiz
  */
@@ -50,20 +50,23 @@ class Response extends React.Component {
     }
 
     setQuizState = (state) => {
-        this.setState( { quizState: state})
+        this.setState( { quizState: state })
     }
 
     cycleQuizState = (data) => {
-        if (data.currentQuestion === null) {
-            this.setQuizState("completed")
-        }
-        else if (this.state.quizState === "loading") {
+        if (this.state.quizState === "loading") {
             this.setQuizState("pre-response")
         }
         else if (this.state.quizState === "pre-response") {
+            console.log("setting to response")
             this.setQuizState("response")
         }
         else if (this.state.quizState === "response") {
+            console.log("setting to post-response")
+            this.setQuizState("post-response")
+        }
+        else if (this.state.quizState === "post-response") {
+            console.log("setting to pre-response")
             this.setQuizState("pre-response")
         }
     }
@@ -73,22 +76,31 @@ class Response extends React.Component {
             const data = JSON.parse(message.data)
             if (data) {
                 console.log(data)
-                setActiveQuestion(data)
-                this.cycleQuizState(data)
+                setActiveQuestion(data, () => {
+                    if (this.state.activeQuestion.endTime !== null) {
+                        this.setQuizState("completed")
+                    } else {
+                        this.cycleQuizState()
+                    }
+                })
             }
         }
     }
 
-    setActiveQuestion = (data) => {
+    setActiveQuestion = (data, callback) => {
         this.setState({
             sessionId: data.id,
             activeQuestion: data.current_question ? {
                 index: data.current_question.index,
                 answerChoices: data.current_question.answer_set,
-                isMultipleSelectionAllowed: false
-            } : null,
-            isAcceptingResponses: data.isAcceptingResponses,
-            endTime: data.end_time
+                isMultipleSelectionAllowed: false,
+                isAcceptingResponses: data.isAcceptingResponses,
+                endTime: data.end_time
+            } : null
+        }, () => {
+            if (callback) {
+                callback();
+            }
         })
     }
 

@@ -68,6 +68,7 @@ class QuizDisplay extends React.Component {
                 }
                 // If quiz is not complete, update the question
                 else {
+                    console.log(res.data)
                     this.setActiveQuestion(res.data)
                     axios.get(`sessions/${this.state.sessionId}/respond/`)
                         .then((res) => {
@@ -90,9 +91,12 @@ class QuizDisplay extends React.Component {
             })
         }
         else if (this.state.quizState === "response") {
-            this.setQuizState("post-response")
-            this.setState({ isAcceptingResponses: false})
-            this.setResponseCount(0)
+            this.cycleNextQuestion(() => {
+                this.setQuizState("post-response")
+                this.setState({ isAcceptingResponses: false})
+                this.setResponseCount(0)
+            })
+
         }
         else if (this.state.quizState === "post-response") {
             this.cycleNextQuestion(() => {

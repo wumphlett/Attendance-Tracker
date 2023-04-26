@@ -46,7 +46,7 @@ class AnswerCard extends React.Component {
         return (
             <button className={`card primary-dark-theme text-dark-theme p-2 h-100 w-100 overflow-auto text-center btn answer-button${this.state.isAnswerSelected ? " selected" : ""}`}
             onClick={this.handleButtonPress}
-            disabled={this.state.isAnswerSubmitted}>
+            disabled={this.state.isAnswerSubmitted || this.state.quizState === "post-response"}>
                 <text className={"pt-0"}>{this.state.answer.symbol}</text>
             </button>
         )

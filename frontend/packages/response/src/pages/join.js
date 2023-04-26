@@ -54,11 +54,10 @@ class JoinForm extends React.Component {
     }
 
     handleInputChange = (event) => {
-        const filteredText = event.target.value.replace(/[^a-zA-Z]/g, '');
-        const capitalizedText = filteredText.toUpperCase();
-        this.setState({ codeInputValue: capitalizedText }, () => {
+        const joinCode = event.target.value.replace(/[^0-9]/g, '');
+        this.setState({ codeInputValue: joinCode }, () => {
             this.inputRef.current.focus();
-            this.inputRef.current.setSelectionRange(capitalizedText.length, capitalizedText.length);
+            this.inputRef.current.setSelectionRange(joinCode.length, joinCode.length);
         });
     };
 
