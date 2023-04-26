@@ -21,14 +21,14 @@ class QuizDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            sessionId: props.sessionId,
-            client: props.client,
             activeQuestion: null,
             isAcceptingResponses: false,
             responseCount: props.responseCount,
             currentlyJoined: props.currentlyJoined,
             quizState: props.quizState,
         }
+        this.client = props.client
+        this.sessionId = props.sessionId
         this.setResponseCount = props.setResponseCount
         this.setQuizState = props.setQuizState
 
@@ -60,11 +60,11 @@ class QuizDisplay extends React.Component {
     }
 
     cycleNextQuestion(callback) {
-        axios.post(`sessions/${this.state.sessionId}/next/`)
+        axios.post(`sessions/${this.sessionId}/next/`)
             .then((res) => {
-                axios.get(`sessions/${this.state.sessionId}/respond/`)
+                axios.get(`sessions/${this.sessionId}/respond/`)
                     .then((res) => {
-                        this.state.client.send(
+                        this.client.send(
                             JSON.stringify(res.data)
                         );
                     });

@@ -22,19 +22,16 @@ class CodeDisplay extends React.Component {
         super(props);
         const currentPath = window.location.pathname;
         this.state = {
-            client: props.client,
             joinCode: currentPath.substring(currentPath.lastIndexOf('/') + 1),
             responseCount: 0
         }
-        this.setClient = props.setClient;
-        this.setSessionId = props.setSessionId;
         this.setQuizState = props.setQuizState;
-        this.addClientHandlers = props.addClientHandlers;
+        this.joinAsPresenter = props.joinAsPresenter
     }
 
     handleJoinClick = (event) => {
         event.stopPropagation();
-        joinAsPresenter(this.state.joinCode, this.setClient, this.addClientHandlers, this.setSessionId);
+        this.joinAsPresenter(this.state.joinCode);
         this.setQuizState("pre-response")
     }
 

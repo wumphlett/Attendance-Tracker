@@ -10,7 +10,6 @@
 // Main
 import React from "react";
 import axios from "axios";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
 // Components
 // Functions
 import { joinAsResponder } from "../functions/join-as-responder";
@@ -22,40 +21,15 @@ class JoinForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            client: props.client,
-            codeInputValue: ''
+            joinCode: ""
         }
-        this.setClient = props.setClient;
-        this.addClientHandlers = props.addClientHandlers;
-        this.setActiveQuestion = props.setActiveQuestion;
+        this.joinAsResponder = props.joinAsResponder;
         this.inputRef = React.createRef();
-    }
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.client !== prevState.client) {
-            return nextProps
-        }
-    }
-
-     joinAsResponder = () => {
-        axios.get('sessions/join/', {params: {token: this.state.codeInputValue}})
-            .then((r) => {
-                let sessionId = r.data.id;
-                this.setClient(new W3CWebSocket("wss://api.auttend.com/ws/" + this.state.codeInputValue + "/"), () => {
-                    console.log(this.state.client)
-                    this.addClientHandlers(this.state.client, this.setActiveQuestion)
-                    axios.get(`https://api.auttend.com/api/sessions/${sessionId}/respond/`)
-                        .then((r) => {
-                            console.log(r.data)
-                            this.setActiveQuestion(r.data);
-                        });
-                });
-            })
     }
 
     handleInputChange = (event) => {
         const joinCode = event.target.value.replace(/[^0-9]/g, '');
-        this.setState({ codeInputValue: joinCode }, () => {
+        this.setState({ joinCode: joinCode }, () => {
             this.inputRef.current.focus();
             this.inputRef.current.setSelectionRange(joinCode.length, joinCode.length);
         });
@@ -64,8 +38,7 @@ class JoinForm extends React.Component {
     handleJoinClick = (event) => {
         console.log("Joining...")
         event.stopPropagation();
-        this.joinAsResponder();
-        // joinAsResponder(this.state.codeInputValue, this.client, this.setClient, this.addClientHandlers, this.setActiveQuestion)
+        this.joinAsResponder(this.state.joinCode);
     }
 
     render() {
@@ -80,8 +53,8 @@ class JoinForm extends React.Component {
                             className={"code-entry-input"}
                             type={"text"}
                             maxLength={5}
-                            value={this.state.codeInputValue}
-                            key={this.state.codeInputValue}
+                            value={this.state.joinCode}
+                            key={this.state.joinCode}
                             ref={this.inputRef}
                             onChange={this.handleInputChange}
                         />

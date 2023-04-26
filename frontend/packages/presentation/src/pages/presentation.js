@@ -8,6 +8,8 @@
  */
 // Main
 import React from "react";
+import axios from "axios";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 // Components
 import { Navbar } from "@frontend/common/build"
 import JoinScreen from "../components/join-screen";
@@ -23,7 +25,6 @@ class Presentation extends React.Component {
         super(props);
         this.state = {
             sessionId: null,
-            client: null,
             activeQuestion: null,
             responseCount: 0,
             currentlyJoined: 0,
@@ -31,25 +32,16 @@ class Presentation extends React.Component {
             isAcceptingResponses: false,
             endTime: null,
         }
-        this.setSessionId = this.setSessionId.bind(this);
-        this.setClient = this.setClient.bind(this);
+        this.client = null
         this.setResponseCount = this.setResponseCount.bind(this);
         this.setQuizState = this.setQuizState.bind(this);
-        this.addClientHandlers = this.addClientHandlers.bind(this);
+        this.joinAsPresenter = this.joinAsPresenter.bind(this);
     }
-
     setSessionId = (sessionId) => {
         this.setState({ sessionId: sessionId }, () => {
             console.log(this.state.sessionId)
-        });
+        })
     }
-
-    setClient = (client, callback) => {
-        this.setState({ client: client }, () => {
-            callback();
-        });
-    }
-
     setResponseCount = (responseCount) => {
         this.setState({ responseCount: responseCount });
     }
@@ -59,13 +51,29 @@ class Presentation extends React.Component {
     }
 
     addClientHandlers = () => {
-        this.state.client.onmessage = (message) => {
+        this.client.onmessage = (message) => {
+            console.log(message)
             const data = JSON.parse(message.data);
             if (data && data["created"]) {
                 console.log(data)
                 this.setState({ responseCount: this.state.responseCount + 1 })
             }
         };
+    }
+
+    joinAsPresenter(joinCode) {
+        axios.get('sessions/join/', {params: {token: joinCode}})
+            .then((r) => {
+                let sessionId = r.data.id;
+                this.client = new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/?presenter");
+                this.client.onopen = () => {
+                    this.addClientHandlers()
+                    axios.get(`sessions/${sessionId}/`)
+                        .then((r) => {
+                            this.setSessionId(r.data.id)
+                        });
+                }
+            });
     }
 
    render() {
@@ -76,20 +84,15 @@ class Presentation extends React.Component {
                     <div className={"p-2 h-100"}>
                         {this.state.sessionId === null ? (
                                 <JoinScreen
-                                    sessionId={this.state.sessionId}
-                                    client={this.state.client}
                                     currentlyJoined={this.state.currentlyJoined}
                                     quizState={this.state.quizState}
-                                    setSessionId={this.setSessionId}
-                                    setClient={this.setClient}
                                     setQuizState={this.setQuizState}
-                                    addClientHandlers={this.addClientHandlers}
+                                    joinAsPresenter={this.joinAsPresenter}
                                 />
                             ) : this.state.quizState !== "completed" ? (
                                 <QuizDisplay
                                     sessionId={this.state.sessionId}
-                                    client={this.state.client}
-                                    setClient={this.setClient}
+                                    client={this.client}
                                     responseCount={this.state.responseCount}
                                     setResponseCount={this.setResponseCount}
                                     currentlyJoined={this.state.currentlyJoined}

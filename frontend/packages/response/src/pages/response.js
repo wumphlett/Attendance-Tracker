@@ -10,6 +10,7 @@
 // Main
 import React from "react";
 import axios from "axios";
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 // Components
 import { Navbar } from "@frontend/common/build"
 import JoinForm from "./join";
@@ -25,18 +26,19 @@ class Response extends React.Component {
         super(props);
         this.state = {
             sessionId: null,
-            client: null,
             activeQuestion: null,
             quizState: "loading",
             isAcceptingResponses: false,
             endTime: null,
         }
+        this.client = null;
         this.setSessionId = this.setSessionId.bind(this);
         this.setClient = this.setClient.bind(this);
         this.setQuizState = this.setQuizState.bind(this);
-        this.addClientHandlers = this.addClientHandlers.bind(this);
         this.setActiveQuestion = this.setActiveQuestion.bind(this);
         this.postAnswers = this.postAnswers.bind(this);
+        this.addClientHandlers = this.addClientHandlers.bind(this);
+        this.joinAsResponder = this.joinAsResponder.bind(this);
     }
 
     setSessionId = (sessionId) => {
@@ -44,9 +46,8 @@ class Response extends React.Component {
     }
 
     setClient = (client, callback) => {
-        this.setState({ client: client }, () => {
-            callback();
-        });
+        this.client = client
+        callback();
     }
 
     setQuizState = (state) => {
@@ -68,22 +69,6 @@ class Response extends React.Component {
         else if (this.state.quizState === "post-response") {
             console.log("setting to pre-response")
             this.setQuizState("pre-response")
-        }
-    }
-
-    addClientHandlers = (client, setActiveQuestion) => {
-        client.onmessage = (message) => {
-            const data = JSON.parse(message.data)
-            if (data) {
-                console.log(data)
-                if (data.end_time === null) {
-                    setActiveQuestion(data, () => {
-                        this.cycleQuizState()
-                    })
-                } else {
-                    this.setQuizState("completed")
-                }
-            }
         }
     }
 
@@ -110,11 +95,48 @@ class Response extends React.Component {
             answer: answers[0].id
         }).then((r) => {
             if (r.data["created"]) {
-                this.state.client.send(
+                this.client.send(
                     JSON.stringify(r.data)
                 );
             }
         })
+    }
+
+    addClientHandlers = () => {
+        this.client.onmessage = (message) => {
+            const data = JSON.parse(message.data)
+            if (data) {
+                console.log(data)
+                if (data.end_time === null) {
+                    this.setActiveQuestion(data, () => {
+                        this.cycleQuizState()
+                    })
+                } else {
+                    this.setQuizState("completed")
+                }
+            }
+        }
+    }
+
+    joinAsResponder = (joinCode) => {
+        axios.get('sessions/join/', {params: {token: joinCode}})
+            .then((r) => {
+                let sessionId = r.data.id;
+                this.client = new W3CWebSocket("wss://api.auttend.com/ws/" + joinCode + "/")
+                this.client.onopen = () => {
+                    console.log(this.client)
+                    this.client.send("Test")
+                }
+                // console.log(this.client)
+                // this.addClientHandlers();
+                // axios.get(`https://api.auttend.com/api/sessions/${sessionId}/respond/`)
+                //     .then((r) => {
+                //         console.log(this.client)
+                //         this.client.send(JSON.stringify(r.data))
+                //         console.log(r.data)
+                //         this.setActiveQuestion(r.data);
+                //     });
+            })
     }
 
     render() {
@@ -124,10 +146,7 @@ class Response extends React.Component {
                     <div className={"p-2 h-100"}>
                         {this.state.sessionId === null ? (
                             <JoinForm
-                                client={this.state.client}
-                                setClient={this.setClient}
-                                addClientHandlers={this.addClientHandlers}
-                                setActiveQuestion={this.setActiveQuestion}
+                                joinAsResponder={this.joinAsResponder}
                             />
                         ) : this.state.quizState !== "completed" ? (
                             <QuizDisplay
