@@ -51,13 +51,23 @@ class SessionList extends React.Component {
     }
 
     getDate = (endTime) => {
-        let date = ""
-        return date
+        if (endTime) {
+            let rawDate = endTime.split("T")[0]
+            const year = rawDate.split("-")[0]
+            const month = rawDate.split("-")[1]
+            const day = rawDate.split("-")[2]
+            return `${month}-${day}-${year}`
+        } else {
+            return "Ongoing"
+        }
     }
 
     getTime = (endTime) => {
-        let time = ""
-        return time
+        if (endTime) {
+            return endTime.split("T")[1].split(".")[0]
+        } else {
+            return "Ongoing"
+        }
     }
 
     render() {
