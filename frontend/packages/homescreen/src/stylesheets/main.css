@@ -124,3 +124,12 @@
 .btn {
     margin-bottom: 0;
 }
+
+.btn.close-session-pane {
+    display: none;
+    position: absolute;
+}
+
+.card.session-pane:hover .btn.close-session-pane {
+    display: block;
+}

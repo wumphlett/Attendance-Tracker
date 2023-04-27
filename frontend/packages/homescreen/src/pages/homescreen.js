@@ -12,6 +12,7 @@ import React from "react";
 import {Navbar} from "@frontend/common/build"
 import WelcomeCard from "../components/welcome-card";
 import QuizList from "../components/quiz-list";
+import SessionList from "../components/session-list";
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"
@@ -24,9 +25,11 @@ class Homescreen extends React.Component {
 
     this.state = {
       user: {},
-      presentations: []
+      presentations: [],
+      activePresentation: null
     }
     this.setState = this.setState.bind(this)
+    this.setActivePresentation = this.setActivePresentation.bind(this)
   }
 
   componentDidMount() {
@@ -43,11 +46,15 @@ class Homescreen extends React.Component {
     })
   };
 
+  setActivePresentation = (presentation) => {
+    this.setState({ activePresentation: presentation })
+  }
+
   render() {
     return (
       <div className={"primary-dark-theme"}>
         <Navbar/>
-        <div className={"content d-flex flex-column"}>
+        <div className={"content d-flex flex-row"}>
           <div className={"col-md-7 col-12 p-2 h-100 d-flex flex-column"}
                style={{flex: 1}}>                      {/* Available Quizzes */}
             <div>
@@ -57,12 +64,16 @@ class Homescreen extends React.Component {
               <QuizList
                 presentations={this.state.presentations}
                 setUserState={this.setState}
+                setActivePresentation={this.setActivePresentation}
               />
             </div>
           </div>
 
-          <div className={"col-md-5 d-none d-md-block"}>           {/* Quiz Analytics */}
-
+          <div className={"col-md-5 h-100 d-none d-md-block"}>           {/* Quiz Analytics */}
+            <SessionList
+                activePresentation={this.state.activePresentation}
+                setActivePresentation={this.setActivePresentation}
+            />
           </div>
         </div>
       </div>

@@ -25,7 +25,8 @@ class QuizCard extends React.Component {
             presentations: props.presentations,
             inRenamingMode: false,
         }
-        this.setUserState = props.setUserState
+        this.setUserState = props.setUserState;
+        this.setActivePresentation = props.setActivePresentation;
         this.inputRef = React.createRef();
     }
 
@@ -88,7 +89,8 @@ class QuizCard extends React.Component {
 
     render() {
         return (
-            <div className={"card card-body quiz-card secondary-dark-theme mt-2 d-flex flex-row align-items-center"}>
+            <div className={"card card-body quiz-card secondary-dark-theme mt-2 d-flex flex-row align-items-center"}
+            onClick={() => { this.setActivePresentation(this.state.presentation) }}>
                 <div className={"card primary-dark-theme quiz-title-card text-center align-items-center px-2 py-0"}
                 onDoubleClick={this.enterRenamingMode}>
                     {!this.state.inRenamingMode ? (

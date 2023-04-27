@@ -23,6 +23,7 @@ class QuizList extends React.Component {
             presentations: props.presentations,
         }
         this.setUserState = props.setUserState
+        this.setActivePresentation = props.setActivePresentation
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -64,6 +65,7 @@ class QuizList extends React.Component {
                                             presentation={presentation}
                                             presentations={this.state.presentations}
                                             setUserState={this.setUserState}
+                                            setActivePresentation={this.setActivePresentation}
                                         />
                                     </div>
                                 ))}
