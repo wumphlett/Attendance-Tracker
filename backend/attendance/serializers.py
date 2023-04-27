@@ -30,9 +30,11 @@ class QuestionListSerializer(serializers.ModelSerializer):
 
 
 class PresentationListSerializer(serializers.ModelSerializer):
+    question_set = QuestionListSerializer(many=True, read_only=True)
+
     class Meta:
         model = models.Presentation
-        fields = ['id', 'name', 'description']
+        fields = ['id', 'name', 'description', 'question_set']
 
 
 class SessionListSerializer(serializers.ModelSerializer):

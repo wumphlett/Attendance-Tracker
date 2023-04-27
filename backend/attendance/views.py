@@ -44,9 +44,6 @@ class PresentationViewSet(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         serializer = self.get_serializer(self.get_queryset(), context={'request': request}, many=True)
-        for presentation in serializer.data:
-            presentation["num_questions"] = models.Presentation.objects.get(pk=presentation["id"]).question_set.count()
-            print(presentation)
         return Response({"presentations": serializer.data, "user": serializers.UserSerializer(request.user, context={'request': request}).data})
 
 
@@ -92,7 +89,7 @@ class AnswerViewSet(
 
 class SessionViewSet(viewsets.ModelViewSet):
     permission_classes = [SessionPresentersCreateAndRespondersViewOnly]
-    http_method_names = ['get', 'post', 'patch', 'head', 'options']
+    http_method_names = ['get', 'post', 'patch', 'delete', 'head', 'options']
 
     def get_queryset(self):
         return models.Session.objects.filter(presentation__owner=self.request.user)
@@ -221,5 +218,4 @@ class ResponseViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 class APILoginView(cas_views.LoginView):
     def successful_login(self, request, next_page):
         refresh = RefreshToken.for_user(request.user)
-        # TODO only add jwt token info if pres, resp, create
         return HttpResponseRedirect(next_page + f"?refresh={refresh}&access={refresh.access_token}")
