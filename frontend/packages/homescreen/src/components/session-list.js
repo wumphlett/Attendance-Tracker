@@ -25,6 +25,7 @@ class SessionList extends React.Component {
             sessions: []
         }
         this.setActivePresentation = props.setActivePresentation
+        this.getPresentationSessions = this.getPresentationSessions.bind(this)
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
@@ -36,6 +37,7 @@ class SessionList extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.activePresentation !== prevProps.activePresentation && this.props.activePresentation !== null) {
             this.getPresentationSessions();
+            console.log("Test")
         }
     }
 
@@ -43,11 +45,27 @@ class SessionList extends React.Component {
         axios.get(`/sessions/?presentation=${this.state.activePresentation.id}`)
             .then((res) => {
                 if (res.data) {
-                    this.setState({ sessions: res.data }, () => {
-                        console.log(this.state.sessions)
-                    })
+                    let sessions = res.data
+                    sessions = this.massageSessions(sessions)
+                    this.setState({ sessions: sessions })
                 }
             })
+    }
+    
+    // Get the date and time from session end_time and sort sessions in descending order by end_time
+    massageSessions = (sessions) => {
+        for (let i = 0; i < sessions.length; i++) {
+            let endTime = sessions[i].end_time
+            if (endTime === null) {
+                sessions[i].timestamp = Number.POSITIVE_INFINITY
+            } else {
+                sessions[i].timestamp = endTime.replace(/[-T:.Z\s]/g, '')
+            }
+            sessions[i].date = this.getDate(endTime)
+            sessions[i].time = this.getTime(endTime)
+        }
+        sessions.sort((a, b) => parseFloat(b.timestamp) - parseFloat(a.timestamp));
+        return sessions
     }
 
     getDate = (endTime) => {
@@ -87,9 +105,10 @@ class SessionList extends React.Component {
                                         <div className={"d-inline-block pe-2"}>
                                             {this.state.sessions.map((session, index) => (
                                                 <SessionCard
-                                                    date={this.getDate(session.end_time)}
-                                                    time={this.getTime(session.end_time)}
+                                                    date={session.date}
+                                                    time={session.time}
                                                     id={session.id}
+                                                    getPresentationSessions={this.getPresentationSessions}
                                                 />
                                             ))}
                                         </div>
