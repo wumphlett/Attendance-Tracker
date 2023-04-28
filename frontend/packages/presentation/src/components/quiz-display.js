@@ -52,10 +52,10 @@ class QuizDisplay extends React.Component {
                     {this.state.activeQuestion === null ? (<div></div>) : (
                         <div className={"d-flex flex-column h-100"}>
                             <div className={"card question-number-card secondary-dark-theme text-dark-theme p-2 px-3 w-100"}>
-                                <h1 className="text-center pb-0 pt-0"><strong>Question {this.state.activeQuestion.index + 1}</strong></h1>
+                                <h1 className="text-center user-select-none pb-0 pt-0"><strong>Question {this.state.activeQuestion.index + 1}</strong></h1>
                             </div>
                             <div className={"card display-card d-flex flex-column secondary-dark-theme w-100 mt-2 p-2 no-gutters"}>
-                                <div className={"card primary-dark-theme text-dark-theme d-flex flex-column p-2"} style={{ flex: 0.50}}>
+                                <div className={"card primary-dark-theme text-dark-theme user-select-none d-flex flex-column p-2"} style={{ flex: 0.50}}>
                                     <h1><strong>{this.state.activeQuestion.prompt}</strong></h1>
                                     <div style={{ marginTop: 'auto'}}>
                                         <ControlCard

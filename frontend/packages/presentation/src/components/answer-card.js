@@ -30,7 +30,7 @@ class AnswerCard extends React.Component {
 
     render() {
         return (
-            <div className={`card primary-dark-theme d-flex flex-row align-items-center text-dark-theme p-2 h-100
+            <div className={`card primary-dark-theme d-flex flex-row align-items-center text-dark-theme user-select-none p-2 h-100
                 ${this.state.quizState === "post-response" && this.state.answer.is_correct ? 'correct' :
                 this.state.quizState === "post-response" && !this.state.answer.is_correct ? 'incorrect' : 
                     'answer-card'}`}>

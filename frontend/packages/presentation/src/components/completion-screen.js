@@ -38,7 +38,7 @@ class CompletionScreen extends React.Component {
             <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
                 <div className={"col-12 col-md-8 h-100 mx-auto d-flex flex-column justify-content-center h-100"}>
                     <div className={"card secondary-dark-theme text-dark-theme py-3"}>
-                        <h1 className="text-center pb-0 pt-0"><strong>Quiz Complete</strong></h1>
+                        <h1 className="text-center user-select-none pb-0 pt-0"><strong>Quiz Complete</strong></h1>
                         <hr className={"quiz-complete-break mx-auto"} />
                         <div className={"card btn button-card primary-dark-theme text-dark-theme mx-auto w-50"}
                              onClick={this.downloadCSV}>
