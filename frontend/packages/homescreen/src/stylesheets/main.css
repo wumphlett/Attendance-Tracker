@@ -133,3 +133,38 @@
 .card.session-pane:hover .btn.close-session-pane {
     display: block;
 }
+
+.quiz-info {
+    z-index: 1;
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.card.session-card {
+    border: 2px solid rgba(255, 250, 240, 0);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+}
+
+.card.session-card:hover {
+    border: 2px solid rgba(255, 250, 240, .4);
+}
+
+.session-options {
+    background: white;
+    position: relative;
+    z-index: 3;
+    margin-left: auto;
+    display: none;
+}
+
+.card.session-card:hover .session-options {
+    display: flex;
+    flex-direction: row-reverse;
+    /*justify-content: center;*/
+    padding: 0;
+}
