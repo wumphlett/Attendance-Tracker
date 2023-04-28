@@ -25,7 +25,7 @@ class CompletionScreen extends React.Component {
     downloadCSV = (event) => {
         event.stopPropagation();
         axios({
-            url: `/sessions/${this.sessionId}/export/`,
+            url: `/sessions/${this.sessionId}/export/?geolocate=True`,
             method: 'GET',
             responseType: 'blob',
         }).then((response) => {

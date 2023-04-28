@@ -37,7 +37,6 @@ class SessionList extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.activePresentation !== prevProps.activePresentation && this.props.activePresentation !== null) {
             this.getPresentationSessions();
-            console.log("Test")
         }
     }
 
@@ -51,7 +50,7 @@ class SessionList extends React.Component {
                 }
             })
     }
-    
+
     // Get the date and time from session end_time and sort sessions in descending order by end_time
     massageSessions = (sessions) => {
         for (let i = 0; i < sessions.length; i++) {

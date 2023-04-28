@@ -9,6 +9,7 @@
 // Main
 import React from "react";
 import axios from "axios";
+import fileDownload from 'js-file-download';
 // Stylesheets
 import "bootstrap/dist/css/bootstrap.css"
 import "../stylesheets/main.css"
@@ -32,9 +33,19 @@ class SessionCard extends React.Component {
 
     deleteSession = () => {
         axios.delete(`/sessions/${this.state.id}/`).then((res) => {
-            console.log(res)
             this.getPresentationSessions();
         })
+    }
+
+    exportResults = (event) => {
+        event.stopPropagation();
+        axios({
+            url: `/sessions/${this.state.id}/export/?geolocate=True`,
+            method: 'GET',
+            responseType: 'blob',
+        }).then((response) => {
+            fileDownload(response.data, response.headers['content-disposition'].split('"')[1]);
+        });
     }
 
     render() {
@@ -53,6 +64,7 @@ class SessionCard extends React.Component {
                         <button className={"btn btn-danger mb-0 ms-1"} onClick={
                             () => { this.deleteSession() }
                         }>Delete</button>
+                        <button className={"btn btn-success mb-0 mx-1"} onClick={this.exportResults}>Export</button>
                     </div>
                 </div>
             </div>
