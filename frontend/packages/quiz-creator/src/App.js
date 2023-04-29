@@ -1,15 +1,14 @@
 import React from "react"
 import './App.css';
 import QuizCreator from "./pages/quiz-creator";
+import {Redirect} from "@frontend/common/build";
 
 
 function App() {
   return (
     <div>
       {localStorage.getItem('access_token') === null ? (
-        <div>
-          <h3>Redirecting to AUthenticate...</h3>
-        </div>
+        <Redirect />
       ) : (
         <QuizCreator/>
       )}

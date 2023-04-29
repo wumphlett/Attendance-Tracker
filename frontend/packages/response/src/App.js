@@ -1,6 +1,7 @@
 import './App.css';
 import React from "react";
 import Response from "./pages/response";
+import { Redirect } from "@frontend/common/build";
 
 
 function App() {
@@ -18,9 +19,7 @@ function App() {
   return (
       <div>
         {localStorage.getItem('access_token') === null ? (
-            <div>
-              <h3>Redirecting to AUthenticate...</h3>
-            </div>
+            <Redirect />
         ) : (
             <div>
               <Response />
