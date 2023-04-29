@@ -137,6 +137,7 @@
 .quiz-info {
     z-index: 1;
     user-select: none;
+    position: relative;
     display: flex;
     flex-direction: row;
 }
@@ -155,14 +156,17 @@
 }
 
 .session-options {
-    position: relative;
-    z-index: 3;
+    position: absolute;
     margin-left: auto;
     display: none;
+    right: 0;
+    margin-right: 0.5rem;
 }
 
 .card.session-card:hover .session-options {
+    z-index: 3;
     display: flex;
+
     flex-direction: row-reverse;
     /*justify-content: center;*/
     padding: 0;
