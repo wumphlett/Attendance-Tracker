@@ -11,6 +11,8 @@ const register_interceptors = (axios) => {
     }
   }
 
+  axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+  axios.defaults.xsrfCookieName = "csrftoken";
   axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
 
   axios.defaults.baseURL = 'https://api.auttend.com/api/';
