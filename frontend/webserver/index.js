@@ -51,10 +51,10 @@ responseApp.get('/', (req, res) => {
     res.sendFile(path.join(response, 'index.html'));
 });
 
-profApp.listen(80, () => {
-    console.log("Professor app listening on port 80");
+profApp.listen(8000, () => {
+    console.log("Professor app listening on port 8000");
 })
 
-responseApp.listen(81, () => {
-    console.log("Response app listening on port 80");
+responseApp.listen(8001, () => {
+    console.log("Response app listening on port 8001");
 })
