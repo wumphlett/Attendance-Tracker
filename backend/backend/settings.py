@@ -37,7 +37,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Application definition
 
 CORS_ALLOWED_ORIGINS = ["https://auttend.com", "https://api.auttend.com", "https://prof.auttend.com"]
-CSRF_TRUSTED_ORIGINS = ["https://auttend.com", "https://api.auttend.com", "https://prof.auttend.com"]
+CSRF_TRUSTED_ORIGINS = ["https://*.auttend.com", "127.0.0.1"]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = DEBUG
