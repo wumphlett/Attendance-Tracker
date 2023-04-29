@@ -10,7 +10,8 @@
     "build-webserver": "yarn run build && cd webserver && npm start",
     "presentation": "cd packages/presentation && yarn build && cd ../../webserver && npm start",
     "response": "cd packages/response && yarn build && cd ../../webserver && npm start",
-    "homescreen": "cd packages/homescreen && yarn build && cd ../../webserver && npm start"
+    "homescreen": "cd packages/homescreen && yarn build && cd ../../webserver && npm start",
+    "common": "cd packages/common && yarn build && cd ../../webserver && npm start"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",

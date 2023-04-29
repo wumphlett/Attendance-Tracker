@@ -10,6 +10,7 @@
 import React from 'react'
 // Components
 import {Navbar} from "@frontend/common/build";
+import Logo from "@frontend/common/build/images/logo.png"
 import QuestionEditor from "../components/question-editor/question-editor";
 import QuestionSelector from "../components/question-selector/question-selector";
 // Stylesheets
@@ -65,7 +66,7 @@ class QuizCreator extends React.Component {
     return (
       <div>
         <div className={"bg-black"} style={{height: '60px'}}>
-          <Navbar/>
+          <Navbar logo={Logo}/>
         </div>
         <div className="container-fluid content-container page-dark">
           <div className={"row"} style={{height: 'calc(0.75 * (100vh - 60px))'}}>

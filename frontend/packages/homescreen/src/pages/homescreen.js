@@ -9,7 +9,8 @@
 // Main
 import React from "react";
 // Components
-import {Navbar} from "@frontend/common/build"
+import { Navbar } from "@frontend/common/build"
+import Logo from "@frontend/common/build/images/logo.png"
 import WelcomeCard from "../components/welcome-card";
 import QuizList from "../components/quiz-list";
 import SessionList from "../components/session-list";
@@ -53,7 +54,7 @@ class Homescreen extends React.Component {
   render() {
     return (
       <div className={"primary-dark-theme"}>
-        <Navbar/>
+        <Navbar logo={Logo}/>
         <div className={"content d-flex flex-row"}>
           <div className={"col-md-7 col-12 p-2 h-100 d-flex flex-column"}
                style={{flex: 1}}>                      {/* Available Quizzes */}

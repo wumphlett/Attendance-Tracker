@@ -12,6 +12,7 @@ import axios from "axios";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 // Components
 import { Navbar } from "@frontend/common/build"
+import Logo from "@frontend/common/build/images/logo.png"
 import JoinScreen from "../components/join-screen";
 import QuizDisplay from "../components/quiz-display";
 import CompletionScreen from "../components/completion-screen";
@@ -191,7 +192,7 @@ class Presentation extends React.Component {
    render() {
         return (
             <div className={"primary-dark-theme"}>
-                <Navbar />
+                <Navbar logo={Logo}/>
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
                         {this.state.quizState === "loading" ? (
