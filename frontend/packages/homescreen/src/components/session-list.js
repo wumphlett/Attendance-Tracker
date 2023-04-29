@@ -55,36 +55,39 @@ class SessionList extends React.Component {
     massageSessions = (sessions) => {
         for (let i = 0; i < sessions.length; i++) {
             let endTime = sessions[i].end_time
+
+            // Convert the end_time timestamp to local time, date, and timezone
+            const {date, time, timezone} = this.convertToLocalTimezone(endTime)
+            sessions[i].date = date
+            sessions[i].time = time
+            sessions[i].timezone = timezone
+
+            // Change format of timestamp to allow for easier sorting
             if (endTime === null) {
                 sessions[i].timestamp = Number.POSITIVE_INFINITY
             } else {
                 sessions[i].timestamp = endTime.replace(/[-T:.Z\s]/g, '')
             }
-            sessions[i].date = this.getDate(endTime)
-            sessions[i].time = this.getTime(endTime)
         }
         sessions.sort((a, b) => parseFloat(b.timestamp) - parseFloat(a.timestamp));
         return sessions
     }
 
-    getDate = (endTime) => {
-        if (endTime) {
-            let rawDate = endTime.split("T")[0]
-            const year = rawDate.split("-")[0]
-            const month = rawDate.split("-")[1]
-            const day = rawDate.split("-")[2]
-            return `${month}-${day}-${year}`
+    convertToLocalTimezone = (timestamp) => {
+        let date;
+        let time;
+        let timezone;
+        if (timestamp === null) {
+            date = "Ongoing"
+            time = "Ongoing"
+            timezone = ""
         } else {
-            return "Ongoing"
+            const utcDate = new Date(timestamp);
+            date = utcDate.toLocaleDateString('en-US')
+            time = utcDate.toLocaleTimeString('en-US')
+            timezone = utcDate.toLocaleString('en-US', { timeZoneName: 'short' }).split(' ')[3];
         }
-    }
-
-    getTime = (endTime) => {
-        if (endTime) {
-            return endTime.split("T")[1].split(".")[0]
-        } else {
-            return "Ongoing"
-        }
+        return {date, time, timezone}
     }
 
     render() {
@@ -106,6 +109,7 @@ class SessionList extends React.Component {
                                                 <SessionCard
                                                     date={session.date}
                                                     time={session.time}
+                                                    timezone={session.timezone}
                                                     id={session.id}
                                                     getPresentationSessions={this.getPresentationSessions}
                                                 />

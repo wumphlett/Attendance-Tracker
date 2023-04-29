@@ -20,6 +20,7 @@ class SessionCard extends React.Component {
         this.state = {
             date: props.date,
             time: props.time,
+            timezone: props.timezone,
             id: props.id
         }
         this.getPresentationSessions = props.getPresentationSessions
@@ -51,21 +52,15 @@ class SessionCard extends React.Component {
     render() {
         return (
             <div className={"card session-card secondary-dark-theme text-dark-theme p-2 mb-2"}>
-                <div className={"quiz-info col-6"}>
-                    <div className={"col-6"}>
-                        <span><strong>Date: </strong>{this.state.date}</span>
-                    </div>
-                    <div className={"col-6"}>
-                        <span><strong>Time: </strong>{this.state.time}</span>
-                    </div>
+                <div className={"quiz-info"}>
+                    <span className={"me-3"}><strong>Date: </strong>{this.state.date}</span>
+                    <span><strong>Time: </strong>{this.state.time} {this.state.timezone}</span>
                 </div>
-                <div className={"col-6"}>
-                    <div className={"session-options"}>
-                        <button className={"btn btn-danger mb-0 ms-1"} onClick={
-                            () => { this.deleteSession() }
-                        }>Delete</button>
-                        <button className={"btn btn-success mb-0 mx-1"} onClick={this.exportResults}>Export</button>
-                    </div>
+                <div className={"session-options ms-auto"}>
+                    <button className={"btn btn-danger mb-0 ms-1"} onClick={
+                        () => { this.deleteSession() }
+                    }>Delete</button>
+                    <button className={"btn btn-success mb-0 mx-1"} onClick={this.exportResults}>Export</button>
                 </div>
             </div>
         )
