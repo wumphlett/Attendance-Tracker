@@ -31,13 +31,13 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]  # TESTING wildcard debug
+ALLOWED_HOSTS = ["https://*.auttend.com"]
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
-CORS_ALLOWED_ORIGINS = ["https://*.auttend.com", "http://*.auttend.com"]
-CSRF_TRUSTED_ORIGINS = ["https://*.auttend.com", "http://*.auttend.com"]  # TESTING wildcard debug
+CORS_ALLOWED_ORIGINS = ["https://*.auttend.com"]
+CSRF_TRUSTED_ORIGINS = ["https://*.auttend.com"]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = DEBUG
