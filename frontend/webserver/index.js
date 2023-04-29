@@ -16,7 +16,8 @@ const path = require('path');
 // const config = require('./config');
 
 // Create app
-let app = express();
+let profApp = express();
+let responseApp = express();
 
 // Get build directories
 const public = path.normalize(path.join(__dirname, './public'));
@@ -27,30 +28,33 @@ const response = path.normalize(path.join(__dirname, '../packages/response', 'bu
 
 // Configure build directories
 // // app.use(express.static(public));
-app.use(express.static(homescreen));
-app.use(express.static(quiz_creation));
-app.use(express.static(presentation));
-app.use(express.static(response));
+profApp.use(express.static(homescreen));
+profApp.use(express.static(quiz_creation));
+profApp.use(express.static(presentation));
+responseApp.use(express.static(response));
 
 
-app.get('/', (req, res) => {
+profApp.get('/', (req, res) => {
     res.sendFile(path.join(homescreen, 'index.html'));
 });
 
 
-app.get('/create/*', (req, res) => {
+profApp.get('/create/*', (req, res) => {
     res.sendFile(path.join(quiz_creation, 'index.html'));
 });
 
-app.get('/presentation/*', (req, res) => {
+profApp.get('/presentation/*', (req, res) => {
     res.sendFile(path.join(presentation, 'index.html'));
 });
 
-app.get('/response', (req, res) => {
+responseApp.get('/', (req, res) => {
     res.sendFile(path.join(response, 'index.html'));
 });
 
-app.listen(80, () => {
-    console.log("Listening on port 80");
+profApp.listen(80, () => {
+    console.log("Professor app listening on port 80");
 })
 
+responseApp.listen(81, () => {
+    console.log("Response app listening on port 80");
+})
