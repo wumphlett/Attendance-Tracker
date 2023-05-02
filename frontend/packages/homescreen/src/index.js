@@ -5,9 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import axios from 'axios';
-import { register_interceptors } from "@frontend/common/build"
+import { verifyProfessor, register_interceptors } from "@frontend/common/build"
 
 register_interceptors(axios);
+verifyProfessor(axios);
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
