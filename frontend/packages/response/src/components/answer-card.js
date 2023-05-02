@@ -28,26 +28,16 @@ class AnswerCard extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
-            console.log(nextProps.answer)
-            console.log(nextProps.answersSelected)
             return nextProps
         }
     }
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     if (this.state.quizState === "pre-response" && prevState.quizState === "post-response") {
-    //         this.resetSelection();
-    //     }
-    // }
-
     determineAnswerSelection = () => {
         for (let i = 0; i < this.state.answersSelected.length; i++) {
             if (this.state.answer.id === this.state.answersSelected[i].id) {
-                console.log(true)
                 return true
             }
         }
-        console.log(false)
         return false
     }
 
