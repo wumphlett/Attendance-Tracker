@@ -31,6 +31,7 @@ class AnswerSelector extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
+            console.log(nextProps.answersSelected)
             return nextProps
         }
     }
