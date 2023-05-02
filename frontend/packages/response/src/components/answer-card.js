@@ -30,6 +30,7 @@ class AnswerCard extends React.Component {
         if (nextProps !== prevState) {
             console.log(nextProps.answer)
             console.log(nextProps.answersSelected)
+            console.log(nextProps.answersSelected.includes(nextProps.answer))
             return nextProps
         }
     }
