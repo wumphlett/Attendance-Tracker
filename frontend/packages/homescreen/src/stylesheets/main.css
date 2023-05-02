@@ -1,6 +1,9 @@
 .content {
     height: calc(100vh - 60px);
+    width: 100vw;
+    position: absolute;
     margin-top: 60px;
+    flex-direction: column;
 }
 
 .primary-dark-theme {

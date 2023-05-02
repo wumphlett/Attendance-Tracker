@@ -53,9 +53,9 @@ class Homescreen extends React.Component {
 
   render() {
     return (
-      <div className={"primary-dark-theme"}>
+      <div>
         <Navbar logo={Logo}/>
-        <div className={"content d-flex flex-row"}>
+        <div className={"content primary-dark-theme d-flex flex-row"}>
           <div className={"col-md-7 col-12 p-2 h-100 d-flex flex-column"}
                style={{flex: 1}}>                      {/* Available Quizzes */}
             <div>

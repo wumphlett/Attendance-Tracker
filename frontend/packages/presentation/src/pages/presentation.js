@@ -191,9 +191,9 @@ class Presentation extends React.Component {
 
    render() {
         return (
-            <div className={"primary-dark-theme"}>
+            <div>
                 <Navbar logo={Logo}/>
-                <div className={"content"}>
+                <div className={"content primary-dark-theme"}>
                     <div className={"p-2 h-100"}>
                         {this.state.quizState === "loading" ? (
                                 <JoinScreen

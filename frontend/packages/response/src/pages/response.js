@@ -175,8 +175,8 @@ class Response extends React.Component {
 
     render() {
         return (
-            <div className={"primary-dark-theme"}>
-                <div className={"content"}>
+            <div>
+                <div className={"content primary-dark-theme"}>
                     <div className={"p-2 h-100"}>
                         {this.state.quizState === "" ? (
                             <JoinScreen
