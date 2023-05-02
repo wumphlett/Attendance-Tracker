@@ -29,14 +29,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", ".auttend.com"]
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
-CORS_ALLOWED_ORIGINS = ["https://auttend.com", "https://api.auttend.com", "https://prof.auttend.com"]  # TESTING Add 127.0.0.1
+CORS_ALLOWED_ORIGINS = ["https://auttend.com", "https://api.auttend.com", "https://prof.auttend.com"]
 CSRF_TRUSTED_ORIGINS = ["https://*.auttend.com"]
 CSRF_COOKIE_DOMAIN = ".auttend.com"
 
