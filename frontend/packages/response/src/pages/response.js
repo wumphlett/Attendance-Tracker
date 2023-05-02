@@ -12,7 +12,7 @@ import React from "react";
 import axios from "axios";
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 // Components
-import JoinForm from "./join";
+import JoinScreen from "../components/join-screen";
 import QuizDisplay from "../components/quiz-display";
 import CompletionScreen from "../components/completion-screen";
 // Functions
@@ -179,7 +179,7 @@ class Response extends React.Component {
                 <div className={"content"}>
                     <div className={"p-2 h-100"}>
                         {this.state.quizState === "" ? (
-                            <JoinForm
+                            <JoinScreen
                                 joinAsResponder={this.joinAsResponder}
                             />
                         ) : this.state.quizState !== "completed" ? (
