@@ -34,7 +34,7 @@ class CodeDisplay extends React.Component {
                         <h3>Join at auttend.com</h3>
                     </div>
                     <div className={"card label-card primary-dark-theme text-dark-theme col-12 pt-1 pb-0 px-3 text-center d-inline-block"}>
-                        <h3><strong>Quiz Code:</strong></h3>
+                        <h3><strong>Join Code:</strong></h3>
                     </div>
                     <div className={"card code-display-card col-12 mt-3 pb-0 px-3 text-center d-inline-block"}>
                         {this.joinCode}

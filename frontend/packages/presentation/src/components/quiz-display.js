@@ -83,7 +83,7 @@ class QuizDisplay extends React.Component {
                             <div className={"card secondary-dark-theme text-dark-theme d-flex flew-row p-2 px-3 mt-2 mx-auto w-100"}>
                                 <div className={"d-flex flex-row"}>
                                     <div className={"col-6"}><h2 className="text-center user-select-none pb-0 pt-0">Join at auttend.com</h2></div>
-                                    <div className={"col-6"}><h2 className="text-center user-select-none pb-0 pt-0">Quiz Code: {this.joinCode}</h2></div>
+                                    <div className={"col-6"}><h2 className="text-center user-select-none pb-0 pt-0">Join Code: {this.joinCode}</h2></div>
                                 </div>
                             </div>
                         </div>
