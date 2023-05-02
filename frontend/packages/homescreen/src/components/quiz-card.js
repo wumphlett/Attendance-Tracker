@@ -37,7 +37,6 @@ class QuizCard extends React.Component {
     }
 
     onLaunchPress = () => {
-        console.log(this.state.presentation)
         launchQuiz(this.state.presentation)
     }
 

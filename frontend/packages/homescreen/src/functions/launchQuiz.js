@@ -13,7 +13,6 @@ export function launchQuiz(presentation) {
     axios.post('sessions/', { presentation: presentation.id })
         .then((res) => {
             if (res.data.join_code) {
-                console.log(res.data.join_code)
                 window.location.href = `/presentation/${res.data.join_code}`
             } else {
                 console.log ("[ERROR] Unable to create a new presentation session.")

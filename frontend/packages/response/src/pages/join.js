@@ -24,6 +24,21 @@ class JoinForm extends React.Component {
         this.inputRef = React.createRef();
     }
 
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyPress);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyPress);
+    }
+
+    handleKeyPress = (event) => {
+        if (event.keyCode === 13) {
+            // Enter key pressed
+            this.joinAsResponder(this.state.joinCode);
+        }
+    };
+
     handleInputChange = (event) => {
         const joinCode = event.target.value.replace(/[^0-9]/g, '');
         this.setState({ joinCode: joinCode }, () => {
