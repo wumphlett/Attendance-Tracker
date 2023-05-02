@@ -56,7 +56,9 @@ class QuizDisplay extends React.Component {
                             </div>
                             <div className={"card display-card d-flex flex-column secondary-dark-theme w-100 mt-2 p-2 no-gutters"}>
                                 <div className={"card primary-dark-theme text-dark-theme user-select-none d-flex flex-column p-2"} style={{ flex: 0.50}}>
-                                    <h1><strong>{this.state.activeQuestion.prompt}</strong></h1>
+                                    <div className={"h-100 w-100 question-prompt"}>
+                                        <h1 className={"h-100"}><strong>{this.state.activeQuestion.prompt}</strong></h1>
+                                    </div>
                                     <div style={{ marginTop: 'auto'}}>
                                         <ControlCard
                                             joinCode={this.joinCode}

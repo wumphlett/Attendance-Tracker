@@ -93,7 +93,7 @@ class ControlCard extends React.Component {
                             Stop
                         </div>
                     ) : (
-                        <div className="card btn button-card control-button primary-dark-theme text-dark-theme col-12"
+                        <div className="card btn button-card control-button main primary-dark-theme text-dark-theme col-12"
                              onClick={this.onClick}>
                             Next
                         </div>

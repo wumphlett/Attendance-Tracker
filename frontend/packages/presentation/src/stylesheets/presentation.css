@@ -42,35 +42,56 @@
     user-select: none;
 }
 
+/*.card.button-card {*/
+/*    display: flex;*/
+/*    border: 2px solid rgba(255, 250, 240, .4);*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+
 .card.button-card {
     display: flex;
     border: 2px solid rgba(255, 250, 240, .4);
     align-items: center;
     justify-content: center;
+    color: floralwhite;
 }
 
 .card.button-card:hover {
+    background: darkorange;
+}
+
+.card.button-card.main {
+    background: darkorange;
+}
+.card.button-card.main:hover {
+    background: rgba(255, 140, 0, 0.8)
+}
+
+.card.button-card.stop {
     display: flex;
     border: 2px solid rgba(255, 250, 240, .4);
-    background: darkorange;
+    background: rgba(220, 53, 69, 1);
+    align-items: center;
     justify-content: center;
     color: floralwhite;
 }
 
 .card.button-card.stop:hover {
+    background: rgba(220, 53, 69, 0.8);
+}
+
+.card.button-card.start {
     display: flex;
     border: 2px solid rgba(255, 250, 240, .4);
-    background: rgba(220, 53, 69, 1);
+    background: rgba(40, 167, 69, 1);
+    align-items: center;
     justify-content: center;
     color: floralwhite;
 }
 
 .card.button-card.start:hover {
-    display: flex;
-    border: 2px solid rgba(255, 250, 240, .4);
-    background: rgba(40, 167, 69, 1);
-    justify-content: center;
-    color: floralwhite;
+    background: rgba(40, 167, 69, 0.8);
 }
 
 .card.join-button {
@@ -155,4 +176,14 @@
 .answer-div {
     word-wrap: break-word; /* Break words that exceed the width of the div */
     white-space: pre-line; /* Preserve line breaks and wrap lines as needed */
+}
+
+.question-prompt {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: scroll;
+    min-height: 43vh;
+    max-height: 43vh;
 }
