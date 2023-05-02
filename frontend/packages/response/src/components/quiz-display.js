@@ -62,7 +62,7 @@ class QuizDisplay extends React.Component {
                 <div className={"col-12 col-md-8 h-100 py-2 mx-auto"}>
                     {this.state.activeQuestion === null ? (
                         <div className={"text-dark-theme d-flex justify-content-center align-items-center h-100 w-100"}>
-                            <h3><strong>Get Ready...</strong></h3>
+                            <h3 style={{ color: "floralwhite "}}><strong>Get Ready...</strong></h3>
                         </div>
                     ) : (
                         <div className={"card display-card d-flex flex-column secondary-dark-theme h-100 w-100 p-2 no-gutters"}>
