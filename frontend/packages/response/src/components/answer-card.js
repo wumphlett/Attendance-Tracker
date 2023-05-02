@@ -42,7 +42,7 @@ class AnswerCard extends React.Component {
 
     determineAnswerSelection = () => {
         for (let i = 0; i < this.state.answersSelected.length; i++) {
-            if (this.state.answer.id === this.state.answerSelected[i]) {
+            if (this.state.answer.id === this.state.answersSelected[i]) {
                 console.log(true)
                 return true
             }
