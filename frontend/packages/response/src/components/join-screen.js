@@ -29,7 +29,7 @@ class JoinScreen extends React.Component {
                 />
                 <div className={"card label-card secondary-dark-theme text-dark-theme pt-1 pb-0 px-3 text-center d-inline-block"}>
                     <h3><strong>
-                        <a href={"https://prof.autend.com"} style={{ color: "floralwhite" }}>Create a Presentation</a>
+                        <a href={"https://prof.auttend.com"} style={{ color: "floralwhite" }}>Create a Presentation</a>
                     </strong></h3>
                 </div>
             </div>
