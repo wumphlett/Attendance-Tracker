@@ -38,7 +38,7 @@ class QuizDisplay extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.quizState === "pre-response" && prevState.quizState === "post-response") {
+        if (this.state.quizState === "pre-response") {
             this.resetSelection();
         }
     }
