@@ -31,7 +31,6 @@ class AnswerSelector extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
-            console.log(nextProps.answersSelected)
             return nextProps
         }
     }
@@ -66,7 +65,7 @@ class AnswerSelector extends React.Component {
                                         quizState={this.state.quizState}
                                         selectAnswer={this.selectAnswer}
                                         deselectAnswer={this.deselectAnswer}
-                                        isAnswerSelected={this.state.answersSelected.includes(answerChoice)}
+                                        answersSelected={this.state.answersSelected}
                                         isAnswerSubmitted={this.state.isAnswerSubmitted}
                                     />
                                 </div>

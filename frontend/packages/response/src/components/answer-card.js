@@ -19,7 +19,7 @@ class AnswerCard extends React.Component {
             index: props.index,
             answer: props.answer,
             quizState: props.quizState,
-            isAnswerSelected: props.isAnswerSelected,
+            answersSelected: props.answersSelected,
             isAnswerSubmitted: props.isAnswerSubmitted
         }
         this.selectAnswer = props.selectAnswer
@@ -28,7 +28,7 @@ class AnswerCard extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
-            console.log(nextProps.isAnswerSelected)
+            console.log(nextProps.answersSelected)
             return nextProps
         }
     }
