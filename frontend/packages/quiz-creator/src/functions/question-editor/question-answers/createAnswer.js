@@ -14,7 +14,7 @@ export function createAnswer(activeQuestion, setActiveQuestion) {
     question: activeQuestion.id,
     index: activeQuestion.answer_set.length,
     symbol: activeQuestion.answer_set.length.toString(),
-    text: "A Blank Answer",
+    text: "",
     is_correct: false,
   }).then((r) => {
     activeQuestion.answer_set.push(r.data);

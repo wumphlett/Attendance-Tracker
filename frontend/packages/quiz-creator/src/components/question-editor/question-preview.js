@@ -40,18 +40,18 @@ class QuestionPreview extends React.Component {
             </div>
             <div className={"card card-very-dark"} style={{flex: 1}}> {/* Question Content*/}
               <div className={"card-body"}>
-                                <textarea className="textarea question-input"
-                                          placeholder={"Enter a question here..."}
-                                          value={this.props.activeQuestion.text}
-                                          onChange={(event) => handleTextChange(event,
-                                            this.props.activeQuestion,
-                                            this.props.setActiveQuestion)}
-                                          onPaste={(event) => handleTextPaste(event,
-                                            this.props.activeQuestion,
-                                            this.props.setActiveQuestion)}
-                                          onBlur={(event) => handleTextBlur(event,
-                                            this.props.activeQuestion)}
-                                />
+                  <textarea className="textarea question-input"
+                            placeholder={"Enter a question here..."}
+                            value={this.props.activeQuestion.text}
+                            onChange={(event) => handleTextChange(event,
+                              this.props.activeQuestion,
+                              this.props.setActiveQuestion)}
+                            onPaste={(event) => handleTextPaste(event,
+                              this.props.activeQuestion,
+                              this.props.setActiveQuestion)}
+                            onBlur={(event) => handleTextBlur(event,
+                              this.props.activeQuestion)}
+                  />
               </div>
             </div>
           </div>

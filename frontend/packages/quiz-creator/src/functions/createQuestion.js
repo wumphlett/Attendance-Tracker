@@ -13,7 +13,7 @@ export function createQuestion(presentationId, questions, setQuestions, setActiv
   axios.post("questions/", {
     presentation: presentationId,
     index: questions.length,
-    text: "A Blank Question",
+    text: "",
     is_partial_allowed: false,
   }).then((r) => {
     questions.push(r.data)
