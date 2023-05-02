@@ -30,6 +30,9 @@ class CodeDisplay extends React.Component {
         return (
             <div className={"card d-inline-block join-form-card secondary-dark-theme p-4"}>
                 <div className={"d-flex justify-content-center flex-column align-self-center text-dark-theme"}>
+                    <div className={"card label-card primary-dark-theme text-dark-theme col-12 pt-1 pb-0 px-3 mb-2 text-center d-inline-block"}>
+                        <h3>Join at auttend.com</h3>
+                    </div>
                     <div className={"card label-card primary-dark-theme text-dark-theme col-12 pt-1 pb-0 px-3 text-center d-inline-block"}>
                         <h3><strong>Quiz Code:</strong></h3>
                     </div>
