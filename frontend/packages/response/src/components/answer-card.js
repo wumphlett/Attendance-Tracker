@@ -28,6 +28,7 @@ class AnswerCard extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (nextProps !== prevState) {
+            console.log(nextProps.answer)
             console.log(nextProps.answersSelected)
             return nextProps
         }
