@@ -30,9 +30,25 @@ class AnswerCard extends React.Component {
         if (nextProps !== prevState) {
             console.log(nextProps.answer)
             console.log(nextProps.answersSelected)
-            console.log(nextProps.answersSelected.includes(nextProps.answer))
             return nextProps
         }
+    }
+
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if (this.state.quizState === "pre-response" && prevState.quizState === "post-response") {
+    //         this.resetSelection();
+    //     }
+    // }
+
+    determineAnswerSelection = () => {
+        for (let i = 0; i < this.state.answersSelected.length; i++) {
+            if (this.state.answer.id === this.state.answerSelected[i]) {
+                console.log(true)
+                return true
+            }
+        }
+        console.log(false)
+        return false
     }
 
     handleButtonPress = (event) => {
@@ -48,7 +64,7 @@ class AnswerCard extends React.Component {
 
     render() {
         return (
-            <button className={`card primary-dark-theme text-dark-theme p-2 h-100 w-100 overflow-auto text-center btn answer-button selected`}
+            <button className={`card primary-dark-theme text-dark-theme p-2 h-100 w-100 overflow-auto text-center btn answer-button${this.determineAnswerSelection() ? " selected" : ""}`}
             onClick={this.handleButtonPress}
             disabled={this.state.isAnswerSubmitted}>
                 <span className={"pt-0 justify-content-center"}>{this.state.index+1}</span>
