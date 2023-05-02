@@ -72,7 +72,7 @@ class AnswerSelector extends React.Component {
                             ))}
                         </div>
                         <button className="card btn button-card primary-dark-theme text-dark-theme col-12 col-md-9 col-lg-6 mt-3 mb-1 mx-auto"
-                             style={{ height: "60px" }} onClick={this.submitAnswers} disabled={this.state.isAnswerSubmitted || this.state.answersSelected.length === 0 || this.state.quizState === "post-response"}>
+                             style={{ height: "60px" }} onClick={this.submitAnswers} disabled={this.state.answersSelected.length === 0 || this.state.quizState === "post-response"}>
                             <h3><strong>Submit</strong></h3>
                         </button>
                     </div>
