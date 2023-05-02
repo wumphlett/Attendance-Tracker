@@ -94,9 +94,14 @@
     background: rgba(40, 167, 69, 0.8);
 }
 
-.card.join-button {
+.card.button-card.join-button {
     font-weight: bold;
     font-size: 1.5rem;
+    color: floralwhite;
+}
+
+.card.button-card.join-button:hover {
+    color: floralwhite;
 }
 
 .card.control-button {

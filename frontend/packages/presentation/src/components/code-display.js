@@ -29,16 +29,16 @@ class CodeDisplay extends React.Component {
     render() {
         return (
             <div className={"card d-inline-block join-form-card secondary-dark-theme p-4"}>
-                <div className={"d-flex justify-content-center flex-column align-self-center"}>
+                <div className={"d-flex justify-content-center flex-column align-self-center text-dark-theme"}>
                     <div className={"card label-card primary-dark-theme text-dark-theme col-12 pt-1 pb-0 px-3 text-center d-inline-block"}>
                         <h3><strong>Quiz Code:</strong></h3>
                     </div>
                     <div className={"card code-display-card col-12 mt-3 pb-0 px-3 text-center d-inline-block"}>
                         {this.joinCode}
                     </div>
-                    <div className="card btn button-card join-button primary-dark-theme text-dark-theme col-12 mt-3 align-self-center"
+                    <div className="card btn button-card primary-dark-theme text-dark-theme join-button col-12 mt-3 align-self-center"
                          onClick={this.onJoinClicked}>
-                        Start
+                        <h3><strong>Start</strong></h3>
                     </div>
                 </div>
             </div>
