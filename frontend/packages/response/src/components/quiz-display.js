@@ -61,7 +61,7 @@ class QuizDisplay extends React.Component {
             <div className={"h-100 d-flex align-self-center justify-content-center flex-column"}>
                 <div className={"col-12 col-md-8 h-100 py-2 mx-auto"}>
                     {this.state.activeQuestion === null ? (
-                        <div className={"d-flex justify-content-center align-items-center"}>
+                        <div className={"text-dark-theme d-flex justify-content-center align-items-center h-100 w-100"}>
                             <h3><strong>Get Ready...</strong></h3>
                         </div>
                     ) : (

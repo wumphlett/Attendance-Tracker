@@ -76,7 +76,11 @@ class AnswerSelector extends React.Component {
                             <h3><strong>Submit</strong></h3>
                         </button>
                     </div>
-                ) : (<div></div>) }
+                ) : (
+                    <div className={"text-dark-theme d-flex justify-content-center align-items-center h-100 w-100"}>
+                        <h3><strong>Get Ready...</strong></h3>
+                    </div>
+                )}
             </div>
         )
     }
