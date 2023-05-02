@@ -54,19 +54,19 @@ class SessionList extends React.Component {
     // Get the date and time from session end_time and sort sessions in descending order by end_time
     massageSessions = (sessions) => {
         for (let i = 0; i < sessions.length; i++) {
-            let endTime = sessions[i].end_time
+            let startTime = sessions[i].end_time !== null ? sessions[i].start_time : null
 
             // Convert the end_time timestamp to local time, date, and timezone
-            const {date, time, timezone} = this.convertToLocalTimezone(endTime)
+            const {date, time, timezone} = this.convertToLocalTimezone(startTime)
             sessions[i].date = date
             sessions[i].time = time
             sessions[i].timezone = timezone
 
             // Change format of timestamp to allow for easier sorting
-            if (endTime === null) {
+            if (sessions[i].end_time === null) {
                 sessions[i].timestamp = Number.POSITIVE_INFINITY
             } else {
-                sessions[i].timestamp = endTime.replace(/[-T:.Z\s]/g, '')
+                sessions[i].timestamp = startTime.replace(/[-T:.Z\s]/g, '')
             }
         }
         sessions.sort((a, b) => parseFloat(b.timestamp) - parseFloat(a.timestamp));
@@ -78,8 +78,8 @@ class SessionList extends React.Component {
         let time;
         let timezone;
         if (timestamp === null) {
-            date = "Ongoing"
-            time = "Ongoing"
+            date = "ONGOING"
+            time = "ONGOING"
             timezone = ""
         } else {
             const utcDate = new Date(timestamp);

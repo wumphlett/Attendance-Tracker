@@ -24,7 +24,7 @@ class CompletionScreen extends React.Component {
                         <h1 className="text-center pb-0 pt-0"><strong>Quiz Complete</strong></h1>
                         <hr className={"quiz-complete-break mx-auto"} />
                         <div className="card btn button-card primary-dark-theme text-dark-theme mx-auto mt-2 w-50"
-                        onClick={() => {window.location.href = "/response/"}}>
+                        onClick={() => {window.location.href = "/"}}>
                             <h3><strong>Take Another</strong></h3>
                         </div>
                     </div>
