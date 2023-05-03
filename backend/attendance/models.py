@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
 
@@ -40,7 +39,7 @@ class Presentation(models.Model):
 class Question(models.Model):
     presentation = models.ForeignKey(Presentation, on_delete=models.CASCADE)
     index = models.PositiveSmallIntegerField()  # 0-indexed MUST BE CORRECT
-    text = models.TextField()
+    text = models.TextField(blank=True)
     is_partial_allowed = models.BooleanField(default=False)  # TODO current response model does not allow for multiple answers to be selected
 
     class Meta:
@@ -55,7 +54,7 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     index = models.PositiveSmallIntegerField()  # 0-indexed
     symbol = models.CharField(max_length=4)
-    text = models.CharField(max_length=100)
+    text = models.CharField(max_length=100, blank=True)
     is_correct = models.BooleanField(default=False)
 
     class Meta:
