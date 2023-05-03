@@ -162,7 +162,8 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def export(self, request, pk=None):
-        is_geolocated = request.query_params.get('geolocate', True)  # Enforce geolocation by default
+        is_geolocated = request.query_params.get('geolocate', "True")  # Enforce geolocation by default
+        is_geolocated = True if is_geolocated == "True" else False
         session = self.get_object()
 
         response = HttpResponse(content_type='text/csv')
