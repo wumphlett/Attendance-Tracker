@@ -9,7 +9,8 @@
 const verifyProfessor = (axios) => {
     axios.get("presentations/").then((r) => {
         console.log(r.status)
-        if (r.status === 403) {
+    }).catch(error => {
+        if (error.response && error.response.status === 403) {
             window.location.href = "https://auttend.com"
         }
     })
