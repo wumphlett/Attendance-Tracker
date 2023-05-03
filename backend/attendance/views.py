@@ -166,7 +166,7 @@ class SessionViewSet(viewsets.ModelViewSet):
         session = self.get_object()
 
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = f'attachment; filename="sess-exp-{session.start_time.strftime("%Y-%m-%d_%H-%M")}.csv"'
+        response['Content-Disposition'] = f'attachment; filename="{"GEOLOCATED" if is_geolocated else "NOT-GEOLOCATED"}-sess-exp-{session.start_time.strftime("%Y-%m-%d_%H-%M")}.csv"'
 
         writer = csv.writer(response)
 

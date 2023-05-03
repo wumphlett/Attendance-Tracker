@@ -47,6 +47,13 @@ class SessionCard extends React.Component {
         }).then((response) => {
             fileDownload(response.data, response.headers['content-disposition'].split('"')[1]);
         });
+        axios({
+            url: `/sessions/${this.state.id}/export/?geolocate=False`,
+            method: 'GET',
+            responseType: 'blob',
+        }).then((response) => {
+            fileDownload(response.data, response.headers['content-disposition'].split('"')[1]);
+        });
     }
 
     render() {

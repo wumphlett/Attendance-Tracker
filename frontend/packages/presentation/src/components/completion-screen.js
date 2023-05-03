@@ -31,6 +31,13 @@ class CompletionScreen extends React.Component {
         }).then((response) => {
             fileDownload(response.data, response.headers['content-disposition'].split('"')[1]);
         });
+        axios({
+            url: `/sessions/${this.sessionId}/export/?geolocate=False`,
+            method: 'GET',
+            responseType: 'blob',
+        }).then((response) => {
+            fileDownload(response.data, response.headers['content-disposition'].split('"')[1]);
+        });
     }
 
     render() {
